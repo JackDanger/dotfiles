@@ -1,5 +1,5 @@
 dir=`dirname $BASH_ARGV`
-source $dir/common
+source $dir/terminal
 source $dir/git
 source $dir/svn
 source $dir/rails
