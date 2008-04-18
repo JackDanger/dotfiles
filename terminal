@@ -1,0 +1,5 @@
+alias e='$EDITOR'
+alias trail='tail -n 300 -f'
+alias grep='grep --color=auto'
+alias l='ls -la'
+
