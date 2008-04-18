@@ -1,11 +1,16 @@
-source `dirname $BASH_ARGV`/common
-source `dirname $BASH_ARGV`/git
-source `dirname $BASH_ARGV`/svn
-source `dirname $BASH_ARGV`/rails
+dir=`dirname $BASH_ARGV`
+source $dir/common
+source $dir/git
+source $dir/svn
+source $dir/rails
 
 export HISTCONTROL=ignoredups
 
 umask 002
 PS1='\[\033[0;36m\]\u\[\033[0;30m\]@\[\033[0;37m\]\H \[\033[0;31m\]\W\[\033[1;32m\] $(parse_git_branch)\[\033[0;31m\]\$ \[\033[00m\]'
 
-LS_COLORS='no=00:fi=00:di=00;33:ln=04:ex=32:*.sh=32:*.tar=31:*.tgz=31:*.gz=31:*.sit=31:*.jpg=36:*.jpeg=36:*.gif=36:*.psd=36:*.html=35:*.htm=35:*.css=35:'
+if [ `which dircolors` ]; then
+  dircolors $dir/dir_colors;
+else
+  LS_COLORS='no=00:fi=00:di=00;33:ln=04:ex=32:*.sh=32:*.tar=31:*.tgz=31:*.gz=31:*.sit=31:*.jpg=36:*.jpeg=36:*.gif=36:*.psd=36:*.html=35:*.htm=35:*.css=35:';
+fi
