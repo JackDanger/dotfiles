@@ -1,5 +1,5 @@
 alias gemi='sudo gem install --no-rdoc --no-ri'
-alias console='ruby script/server'
+alias console='ruby script/console'
 alias ss='mongrel_rails start'
 alias rs='mongrel_rails restart'
 alias sts='mongrel_rails stop'
