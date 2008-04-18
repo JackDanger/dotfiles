@@ -1,5 +1,7 @@
-source `dirname $BASH_ARGV`/aliasing
-source `dirname $BASH_ARGV`/git 
+source `dirname $BASH_ARGV`/common
+source `dirname $BASH_ARGV`/git
+source `dirname $BASH_ARGV`/svn
+source `dirname $BASH_ARGV`/rails
 
 export HISTCONTROL=ignoredups
 
