@@ -1,5 +1,6 @@
 alias e='$EDITOR'
 alias trail='tail -n 300 -f'
 alias grep='grep --color=auto'
+alias psg='ps aux | grep --color=auto'
 alias l='ls -la'
 
