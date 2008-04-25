@@ -7,12 +7,14 @@ alias gfm='git diff | mate'
 alias ga='git add'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
+alias ammend='git commit -v --amend'
 alias gb='git branch'
 alias gba='git branch -a'
 alias gco='git checkout'
 alias gdc='git-svn dcommit'
 alias gk='gitk -all &'
-alias gd='git rm' 
+alias grm='git rm' 
+alias gmv='git mv' 
 
 
 # swiped from http://www.simplisticcomplexity.com/2008/03/13/show-your-git-branch-name-in-your-prompt/
