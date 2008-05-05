@@ -1,6 +1,7 @@
 alias gs='git status'
 alias gfe='git fetch'
-alias gl='git pull'
+alias gu='git pull'
+alias gl='git log'
 alias gp='git push'
 alias gf='git diff'
 alias gfm='git diff | mate'
