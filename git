@@ -14,9 +14,10 @@ alias gba='git branch -a'
 alias gco='git checkout'
 alias gdc='git-svn dcommit'
 alias gk='gitk -all &'
-alias grm='git rm' 
-alias gmv='git mv' 
-
+alias grm='git rm'
+alias gmv='git mv'
+alias stash='git stash'
+alias unstash='git stash apply'
 
 # swiped from http://www.simplisticcomplexity.com/2008/03/13/show-your-git-branch-name-in-your-prompt/
 
