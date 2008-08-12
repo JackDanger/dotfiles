@@ -18,9 +18,3 @@ alias grm='git rm'
 alias gmv='git mv'
 alias stash='git stash'
 alias unstash='git stash apply'
-
-# swiped from http://www.simplisticcomplexity.com/2008/03/13/show-your-git-branch-name-in-your-prompt/
-
-function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}

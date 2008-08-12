@@ -1,13 +1,15 @@
 dir=`dirname $BASH_ARGV`
 source $dir/terminal
+source $dir/git-completion.bash
 source $dir/git
 source $dir/svn
 source $dir/rails
 
 export HISTCONTROL=ignoredups
+shopt -s histappend
 
 umask 002
-PS1='\[\033[0;36m\]\u\[\033[0;30m\]@\[\033[0;37m\]\H \[\033[0;31m\]\W\[\033[1;32m\] $(parse_git_branch)\[\033[0;31m\]\$ \[\033[00m\]'
+PS1='\[\033[0;36m\]\u\[\033[0;30m\]@\[\033[0;37m\]\H \[\033[0;31m\]\W\[\033[1;32m\]$ (__git_ps1)\[\033[0;31m\]\$ \[\033[00m\]'
 
 if [ `which dircolors` ]; then
   eval `dircolors $dir/dir_colors`;
