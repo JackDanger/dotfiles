@@ -18,3 +18,7 @@ alias grm='git rm'
 alias gmv='git mv'
 alias stash='git stash'
 alias unstash='git stash apply'
+
+# do bash completion on popular commands
+complete -o default -o nospace -F _git_checkout gco
+
