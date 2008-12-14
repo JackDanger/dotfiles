@@ -21,4 +21,6 @@ alias unstash='git stash apply'
 
 # do bash completion on popular commands
 complete -o default -o nospace -F _git_checkout gco
+complete -o default -o nospace -F _git_push gp
+complete -o default -o nospace -F _git_log gl
 
