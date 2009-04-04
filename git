@@ -18,6 +18,7 @@ alias grm='git rm'
 alias gmv='git mv'
 alias stash='git stash'
 alias unstash='git stash apply'
+alias last_commit="git log -n 1 --pretty=format:%H"
 
 # do bash completion on popular commands
 complete -o default -o nospace -F _git_checkout gco
