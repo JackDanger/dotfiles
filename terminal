@@ -3,4 +3,5 @@ alias trail='tail -n 300 -f'
 alias grep='grep --color=auto'
 alias psg='ps aux | grep --color=auto'
 alias l='ls -la'
+alias ip='ipconfig getifaddr en1'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*i\""
