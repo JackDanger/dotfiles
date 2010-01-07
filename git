@@ -26,3 +26,8 @@ complete -o default -o nospace -F _git_checkout gco
 complete -o default -o nospace -F _git_push gp
 complete -o default -o nospace -F _git_log gl
 
+# install hub with:
+# curl -s http://defunkt.github.com/hub/standalone > ~/bin/hub && chmod 755 !#:4
+if [ -f ~/bin/hub ]; then
+  alias git=hub
+fi
