@@ -25,6 +25,7 @@ alias gpick="git cherry-pick"
 # do bash completion on popular commands
 complete -o default -o nospace -F _git_checkout gco
 complete -o default -o nospace -F _git_push gp
+complete -o default -o nospace -F _git_pull gu
 complete -o default -o nospace -F _git_log gl
 
 # install hub with:
