@@ -22,6 +22,7 @@ alias last_commit="git log -n 1 --pretty=format:%H"
 alias gsp="git commit -m 'updating subproject'"
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
+alias current_branch="__git_current_branch"
 # do bash completion on popular commands
 complete -o default -o nospace -F _git_checkout gco
 complete -o default -o nospace -F _git_push gp

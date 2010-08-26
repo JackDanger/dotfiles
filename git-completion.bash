@@ -74,6 +74,17 @@ __git_ps1 ()
 	fi
 }
 
+__git_current_branch () {
+	local b="$(git symbolic-ref HEAD 2>/dev/null)"
+	if [ -n "$b" ]; then
+		if [ -n "$1" ]; then
+			printf "$1" "${b##refs/heads/}"
+		else
+			printf "%s" "${b##refs/heads/}"
+		fi
+	fi
+}
+
 __gitcomp ()
 {
 	local all c s=$'\n' IFS=' '$'\t'$'\n'
