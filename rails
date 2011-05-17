@@ -1,4 +1,4 @@
-alias gemi='sudo gem install --no-rdoc --no-ri'
+alias bedit='EDITOR=mate bundle open'
 alias console='ruby script/rails console'
 alias ss='mongrel_rails start'
 alias rs='mongrel_rails restart'
@@ -10,4 +10,4 @@ alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
 alias migrate='rake db:migrate db:test:clone_structure db:schema:dump && annotate'
 alias rtest="ruby -I\"lib:test\" `echo \`gem which rake\` | sed s/.rb$// | awk '{print $1\"/rake_test_loader.rb\"}'`"
-alias last_migration="find db/migrate/ | tail -n 1 | xargs mate"
+alias last_migration="find db/migrate/ | tail -n 1 | xargs vim"
