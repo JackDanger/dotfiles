@@ -1,13 +1,8 @@
 alias bedit='EDITOR=mate bundle open'
 alias console='ruby script/rails console'
-alias ss='mongrel_rails start'
-alias rs='mongrel_rails restart'
-alias sts='mongrel_rails stop'
-alias ssd='mongrel_rails start -d'
-alias psm='ps aux | grep mongrel'
-alias tcap='rake && cap'
 alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
 alias migrate='rake db:migrate db:test:clone_structure db:schema:dump && annotate'
 alias rtest="ruby -I\"lib:test\" `echo \`gem which rake\` | sed s/.rb$// | awk '{print $1\"/rake_test_loader.rb\"}'`"
 alias last_migration="find db/migrate/ | tail -n 1 | xargs vim"
+alias idle_postgres="ps aux | grep postgres | grep idle | awk '{print \$2}' | xargs kill"
