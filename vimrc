@@ -97,7 +97,7 @@ set pastetoggle=<F2>
 set et
 set sw=2
 set smarttab
-set guifont=Iconsolata\ 14
+set guifont=Iconsolata\ 16
 set ruler
 set nocompatible
 set modelines=0
