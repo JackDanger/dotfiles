@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/www/cloops'
-let g:netrw_dirhist_2='/www/jackdanger.github.com'
-let g:netrw_dirhist_3='/www/jackdanger.github.com/_layouts'
