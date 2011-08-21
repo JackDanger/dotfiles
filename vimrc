@@ -92,6 +92,19 @@ endif
 
 set pastetoggle=<F2> 
 
+" Use english for spellchecking, but don't spellcheck by default
+if version >= 700
+  set spl=en spell
+  set nospell
+endif
+
+" /the matches 'The' and 'the'.
+" /The only matches 'The'
+set ignorecase
+set smartcase
+
+" Escape clears search highlighting
+nnoremap <esc> :noh<return><esc>
 
 " Taken from my original .vimrc:
 set et
