@@ -1,6 +1,6 @@
 alias gs='git status'
 alias gfe='git fetch'
-alias gu='git pull --no-tags'
+alias gu='git pull --no-tags --recurse-submodules'
 alias gl='git log'
 alias gp='git push'
 alias gf='git diff'
