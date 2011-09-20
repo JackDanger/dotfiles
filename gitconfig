@@ -1,0 +1,82 @@
+[user]
+  name = Jack Danger Canty
+  email = jackdanger@squareup.com
+
+[alias]
+  ci = commit -va
+  co = checkout
+  st = status -a
+  praise = blame 
+  lh = !git-lh
+
+[apply]
+  whitespace = strip
+
+[diff]
+  color = auto
+  rename = copy 
+
+[pager]
+  color = true 
+
+[status]
+  color = auto 
+
+[core]
+  excludesfile = ~/.gitignore
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow 
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = green
+  changed = yellow 
+  untracked = cyan
+[github]
+  user = JackDanger
+  token = 6c85beea83506ded200b5d7438edbc26
+[push]
+  config = default
+  default = tracking
+[rebase]
+  autosquash = true
+[alias]
+  c = commit -m
+  a = add
+  di = diff
+  dic = diff --cached
+  pl = pull
+  ps = push
+  plre = pull --rebase
+  st = status
+  out = log origin..HEAD
+  st = status
+  ci = commit
+  co = checkout
+  cp = cherry-pick
+  b = branch
+  changed = diff --name-status -r
+  add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  au = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  ch = diff --name-status -r
+  cosu = !sh -c 'git checkout $0 && git submodule update --init'
+  ignored = "!git ls-files --others --exclude-standard"
+  lg = log --all --graph --abbrev-commit --date=relative --pretty=format:'%h -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset'
+  track = !sh -c 'git branch --track "$0" "origin/$0" && git checkout "$0"'
+  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+  touchdown = merge --no-ff
+  integrate = merge --no-ff
+  td = merge --no-ff
+  lastauthor = log -1 --format='%Cgreen%an <%ae>'
+  reauthor = commit --amend --reset-author -C HEAD
+  publish = push -u origin HEAD
