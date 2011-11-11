@@ -3,7 +3,7 @@ alias trail='tail -n 300 -f'
 alias rub='ruby'
 alias grep='grep --color=auto'
 alias psg='ps aux | grep --color=auto'
-alias l='ls -la'
+alias l='ls -lAG'
 alias ip='ipconfig getifaddr en1'
 alias warmup='yes > /dev/null'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
