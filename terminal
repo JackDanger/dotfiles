@@ -1,7 +1,7 @@
 alias e='$EDITOR'
 alias trail='tail -n 300 -f'
 alias rub='ruby'
-alias grep='grep --color=auto'
+#alias grep='grep -r -i --color=auto'
 alias psg='ps aux | grep --color=auto'
 alias l='ls -lAG'
 alias ip='ipconfig getifaddr en1'
