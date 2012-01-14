@@ -2,9 +2,9 @@ alias e='$EDITOR'
 alias trail='tail -n 300 -f'
 alias rub='ruby'
 #alias grep='grep -r -i --color=auto'
-alias psg='ps aux | grep --color=auto'
+alias psgrep='ps aux | grep --color=auto'
 alias l='ls -lAG'
 alias ip='ipconfig getifaddr en1'
-alias warmup='yes > /dev/null'
+alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
