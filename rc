@@ -5,8 +5,17 @@ source $dir/git
 source $dir/svn
 source $dir/rails
 
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s checkwinsize
+
+force_color_prompt=yes
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
 
 umask 002
 
@@ -19,3 +28,5 @@ else
 fi
 
 export LS_COLORS
+
+
