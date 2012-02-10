@@ -3,6 +3,7 @@ alias console='ruby script/rails console'
 alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
 alias restart='touch tmp/restart.txt'
+alias rspec='rspec -c'
 alias migrate='rake db:migrate db:test:prepare db:schema:dump'
 alias rtest="ruby -I\"lib:test\" `echo \`gem which rake\` | sed s/.rb$// | awk '{print $1\"/rake_test_loader.rb\"}'`"
 alias spec='bundle exec spec -c -X'
