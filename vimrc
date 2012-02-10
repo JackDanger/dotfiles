@@ -4,3 +4,4 @@ command Wq wq
 command WQ wq
 command Q q
 
+color vividchalk
