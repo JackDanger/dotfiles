@@ -1,6 +1,5 @@
 alias gs='git status'
 alias gu='git pull --no-tags --recurse-submodules'
-alias gfe='git fetch'
 alias gl='git log'
 alias gp='git push'
 alias gf='git diff'
@@ -17,6 +16,7 @@ alias unstash='git stash apply'
 alias fetch='git fetch --no-tags'
 alias last_commit="git log -n 1 --pretty=format:%H"
 alias gsp="git commit -m 'updating subproject'"
+alias gps="git pull && git submodule update --init --recursive"
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias current_branch="__git_current_branch"
