@@ -14,9 +14,10 @@ alias gmv='git mv'
 alias stash='git stash'
 alias unstash='git stash apply'
 alias fetch='git fetch --no-tags'
+alias rebase='git rebase'
 alias last_commit="git log -n 1 --pretty=format:%H"
 alias gsp="git commit -m 'updating subproject'"
-alias gps="git pull && git submodule update --init --recursive"
+alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias current_branch="__git_current_branch"
