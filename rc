@@ -3,7 +3,7 @@ source $dir/terminal
 source $dir/git-completion.bash
 source $dir/git
 source $dir/svn
-source $dir/rails
+source $dir/ruby
 
 export HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
