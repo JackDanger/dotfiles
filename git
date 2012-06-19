@@ -2,6 +2,8 @@ alias gs='git status'
 alias gu='git pull --no-tags --recurse-submodules'
 alias gur='git pull --rebase --no-tags --recurse-submodules'
 alias gl='git log'
+alias glp='git log -p'
+alias log="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gp='git push'
 alias gf='git diff'
 alias ga='git add'
