@@ -2,9 +2,9 @@
 function task() {
   [[ $1 =~ ^\/ ]] && cd $1
   if [[ $1 == '' ]]; then
-    [[ $task == '' ]] && echo "Enter a directory or a task that you're currently working on"
-    export task="";
+    [[ -f /tmp/.task ]] || echo "Enter a directory or a task that you're currently working on"
+    rm -f /tmp/.task
   else
-    export task=`basename $1`
+    basename $1 > /tmp/.task
   fi
 }
