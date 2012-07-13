@@ -5,6 +5,6 @@ function task() {
     [[ -f /tmp/.task ]] || echo "Enter a directory or a task that you're currently working on"
     rm -f /tmp/.task
   else
-    basename $1 > /tmp/.task
+    echo $1 > /tmp/.task
   fi
 }

@@ -1,6 +1,6 @@
 dir=`dirname $BASH_ARGV`
 source $dir/terminal
-source $dir/workflow
+source $dir/task
 source $dir/git-completion.bash
 source $dir/git
 source $dir/svn
@@ -20,7 +20,7 @@ force_color_prompt=yes
 
 umask 002
 
-PS1='\[\033[0;36m\]\u\[\033[0;30m\]@\[\033[0;37m\]\H \[\033[1;34m\]$([[ "$task" ]] && echo $task:)\[\033[0;31m\]\W\[\033[1;32m\] $(__git_ps1)\[\033[0;31m\]\$ \[\033[00m\]'
+PS1='\[\033[0;36m\]\u\[\033[0;30m\]@\[\033[0;37m\]\H \[\033[1;34m\]$([[ -f /tmp/.task ]] && basename `cat /tmp/.task`:)\[\033[0;31m\]\W\[\033[1;32m\] $(__git_ps1)\[\033[0;31m\]\$ \[\033[00m\]'
 
 if [ `which dircolors` ]; then
   eval `dircolors $dir/dir_colors`;
