@@ -11,3 +11,4 @@ alias xspec='bundle exec spec -c -X'
 alias rspec="rspec -c"
 alias last_migration="vim \`find db/migrate/ | tail -n 1\`"
 alias idle_postgres="ps aux | grep postgres | grep idle | awk '{print \$2}' | xargs kill"
+alias db_reset="rake db:drop db:create db:migrate db:test:prepare"
