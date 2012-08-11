@@ -15,7 +15,7 @@ alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
 alias stash='git stash'
-alias unstash='git stash apply'
+alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'
 alias rebase='git rebase'
 alias last_commit="git log -n 1 --pretty=format:%H"
@@ -24,10 +24,6 @@ alias gps="git pull --no-tags --recurse-submodules && git submodule update --ini
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias current_branch="__git_current_branch"
-# do bash completion on popular commands
-complete -o default -o nospace -F _git_checkout gco
-complete -o default -o nospace -F _git_push gp
-complete -o default -o nospace -F _git_pull gu
 
 # install hub with:
 # curl -s http://defunkt.github.com/hub/standalone > ~/bin/hub && chmod 755 !#:4
