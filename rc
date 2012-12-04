@@ -3,7 +3,6 @@ source $dir/terminal
 source $dir/task
 source $dir/git-completion.bash
 source $dir/git
-source $dir/svn
 source $dir/ruby
 
 export HISTCONTROL=ignoredups:ignorespace
