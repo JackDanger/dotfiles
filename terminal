@@ -11,8 +11,29 @@ alias top='top -o cpu'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
 g() {
+
+  # mimic $BASH_ARGV
+  i=0; args=[]; butlast=[];
+  for arg; do
+    args[i]=$arg;
+    i=$i+1;
+  done
+
+  # pull out all but the last argument into a new array
+  size=`expr ${#args[*]} - 1`
+  for index in ${!args[*]}; do
+    if [ $index -ne $size ]; then
+      butlast[$index]=${args[$index]}
+    fi
+  done
+
   if [ -t 0 ]; then
-    egrep -ri "$*" *;
+    if [ -e ${!#} ]; then
+      arr=("${butlast[*]}")
+      egrep -ri "$arr" ${!#};
+    else
+      egrep -ri "$*" *;
+    fi
   else
     egrep -i "$*"
   fi
