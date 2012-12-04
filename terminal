@@ -1,3 +1,4 @@
+#!/bin/bash
 alias e='$EDITOR'
 alias trail='tail -n 300 -f'
 alias rub='ruby'
@@ -9,3 +10,10 @@ alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
 alias top='top -o cpu'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
+g() {
+  if [ -t 0 ]; then
+    egrep -ri "$*" *;
+  else
+    egrep -i "$*"
+  fi
+}

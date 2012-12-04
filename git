@@ -24,9 +24,3 @@ alias gps="git pull --no-tags --recurse-submodules && git submodule update --ini
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias current_branch="__git_current_branch"
-
-# install hub with:
-# curl -s http://defunkt.github.com/hub/standalone > ~/bin/hub && chmod 755 !#:4
-if [ -f ~/bin/hub ]; then
-  alias git=hub
-fi
