@@ -30,9 +30,9 @@ g() {
   if [ -t 0 ]; then
     if [ -e ${!#} ]; then
       arr=("${butlast[*]}")
-      egrep -ri "$arr" ${!#};
+      egrep --exclude="*log" -ri "$arr" ${!#};
     else
-      egrep -ri "$*" *;
+      egrep --exclude="*log" -ri "$*" *;
     fi
   else
     egrep -i "$*"
