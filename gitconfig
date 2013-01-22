@@ -1,6 +1,6 @@
 [user]
-  name = Jack Danger Canty
-  email = jackdanger@squareup.com
+	name = Jack Danger Canty
+	email = jackdanger@squareup.com
 
 [alias]
   ci = commit -va
@@ -24,6 +24,7 @@
 
 [core]
   excludesfile = ~/.gitignore
+	editor = /usr/bin/vim
 
 [color]
   branch = auto

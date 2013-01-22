@@ -1,0 +1,6 @@
+--- 
+benchmark: false
+verbose: true
+gem: --no-rdoc --no-ri
+:sources:
+- http://mirrors.squareup.com/rubygems/

@@ -7,10 +7,12 @@ alias log="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset 
 alias gp='git push'
 alias gd='git diff'
 alias ga='git add'
+alias gap='git add --patch'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
 alias gba='git branch -a'
+alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | cut -d / -f 3-"
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
@@ -18,9 +20,37 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'
 alias rebase='git rebase'
+alias grc='git rebase --continue'
 alias last_commit="git log -n 1 --pretty=format:%H"
 alias gsp="git commit -m 'updating subproject'"
 alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias current_branch="__git_current_branch"
+alias me_and="pair me_and"
+alias just_me="pair just_me"
+
+# stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
+function make-completion-wrapper () {
+    local function_name="$2"
+    local arg_count=$(($#-3))
+    local comp_function_name="$1"
+    shift 2
+    local function="
+function $function_name {
+    ((COMP_CWORD+=$arg_count))
+    COMP_WORDS=( "$@" \${COMP_WORDS[@]:1} )
+    "$comp_function_name"
+    return 0
+}"
+    eval "$function"
+}
+
+# we create a _git_checkout_mine function that will do the completion for "gco"
+# using the completion function "_git"
+make-completion-wrapper _git _git_checkout_mine git checkout
+
+# we tell bash to actually use _git_checkout_mine to complete "gco"
+complete -o bashdefault -o default -o nospace -F _git_checkout_mine gco
+complete -o bashdefault -o default -o nospace -F _git_checkout_mine gl
+complete -o bashdefault -o default -o nospace -F _git_checkout_mine glp

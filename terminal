@@ -1,15 +1,10 @@
 #!/bin/bash
-alias e='$EDITOR'
-alias trail='tail -n 300 -f'
-alias rub='ruby'
-#alias grep='grep -r -i --color=auto'
-alias l='ls -lAG'
-alias install_rekon='curl -s rekon.basho.com | sh'
-alias ip='ipconfig getifaddr en1'
-alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
-alias top='top -o cpu'
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
+
+function profile {
+  $EDITOR ~/.bash_profile && source ~/.bash_profile
+}
+
 g() {
 
   # mimic $BASH_ARGV
@@ -30,7 +25,7 @@ g() {
   if [ -t 0 ]; then
     if [ -e ${!#} ]; then
       arr=("${butlast[*]}")
-      egrep --exclude="*log" -ri "$arr" ${!#};
+      egrep --exclude="*log" -ri "$butlast" ${!#};
     else
       egrep --exclude="*log" -ri "$*" *;
     fi

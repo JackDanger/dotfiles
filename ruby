@@ -11,3 +11,25 @@ alias xspec='bundle exec spec -c -X'
 alias last_migration="vim \`find db/migrate/ | tail -n 1\`"
 alias idle_postgres="ps aux | grep postgres | grep idle | awk '{print \$2}' | xargs kill"
 alias db_reset="rake db:drop db:create db:migrate db:test:prepare"
+# Rails
+function sc {
+  if [ -x ./script/console ]; then
+    bundle exec ./script/console $@
+  else
+    bundle exec rails console $@
+  fi
+}
+function sd {
+  if [ -x ./script/dbconsole ]; then
+    bundle exec ./script/dbconsole $@
+  else
+    bundle exec rails dbconsole $@
+  fi
+}
+function ss {
+  if [ -x ./script/server ]; then
+    bundle exec ./script/server $@
+  else
+    bundle exec rails server $@
+  fi
+}
