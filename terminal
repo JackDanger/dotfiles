@@ -5,6 +5,19 @@ function profile {
   $EDITOR ~/.bash_profile && source ~/.bash_profile
 }
 
+# g()
+#
+# Usage:
+#
+# $ g that thing
+#   => egrep -ri "that thing" *{except ./log}
+#
+# $ g that thing    # if 'thing' is a directory
+#   => egrep -ri "that" ./thing/
+#
+# $ echo "some Stuff" | g stuff
+#   => echo "some Stuff" | egrep -ri "stuff"
+#
 g() {
 
   # mimic $BASH_ARGV
