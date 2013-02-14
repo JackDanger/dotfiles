@@ -12,6 +12,7 @@ alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
 alias gba='git branch -a'
+alias merged?="git branch --contains HEAD | grep master"
 alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | cut -d / -f 3-"
 alias gco='git checkout'
 alias grm='git rm'
@@ -26,7 +27,7 @@ alias gsp="git commit -m 'updating subproject'"
 alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
-alias current_branch="__git_current_branch"
+alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 alias me_and="pair me_and"
 alias just_me="pair just_me"
 
