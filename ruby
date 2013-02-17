@@ -1,4 +1,4 @@
-alias bedit='EDITOR=/Applications/TextMate.app/Contents/MacOS/TextMate bundle open'
+alias bedit='EDITOR=subl bundle open'
 alias console='ruby script/rails console'
 alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
