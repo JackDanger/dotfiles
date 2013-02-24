@@ -14,7 +14,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " By pressing ctrl + r in the visual mode you will be prompted to enter text to replace with. Press enter and then confirm each change you agree with 'y' or decline with 'n'.
 " This command will override your register 'h' so you can choose other one ( by changing 'h' in the command above to other lower case letter ) that you don't use.
 
-" F2 to paste without indents
+" Press F2 to paste without weird autointents
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
@@ -42,3 +42,6 @@ map <C-h> <C-w>h
 map <C-j> <C-w><C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+" type 'jj' in insert mode to escape.
+inoremap jj <ESC>
