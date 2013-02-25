@@ -23,6 +23,7 @@ alias fetch='git fetch --no-tags'
 alias rebase='git rebase'
 alias grc='git rebase --continue'
 alias last_commit="git log -n 1 --pretty=format:%H"
+alias publish="git push -u origin HEAD && git cmp"
 alias gsp="git commit -m 'updating subproject'"
 alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
 alias git-unadd="git rm --cached"
