@@ -81,3 +81,5 @@
   lastauthor = log -1 --format='%Cgreen%an <%ae>'
   reauthor = commit --amend --reset-author -C HEAD
   publish = push -u origin HEAD
+[rerere]
+	enabled = 1

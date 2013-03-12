@@ -27,6 +27,8 @@ nmap <leader><space> :call whitespace#strip_trailing()<CR>
 set showmode
 set autowrite
 set nowritebackup
+set nobackup
+set noswapfile
 set showcmd
 set autoread        " reload files when changed on disk
 set encoding=utf-8
