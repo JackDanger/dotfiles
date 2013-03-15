@@ -12,7 +12,7 @@ alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
 alias gba='git branch -a'
-alias merged?="git branch --contains HEAD | grep master"
+alias merged="git branch --contains HEAD | grep master"
 alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | cut -d / -f 3-"
 alias gco='git checkout'
 alias grm='git rm'
@@ -33,26 +33,30 @@ alias me_and="pair me_and"
 alias just_me="pair just_me"
 
 # stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
-function make-completion-wrapper () {
-    local function_name="$2"
-    local arg_count=$(($#-3))
-    local comp_function_name="$1"
-    shift 2
-    local function="
-function $function_name {
-    ((COMP_CWORD+=$arg_count))
-    COMP_WORDS=( "$@" \${COMP_WORDS[@]:1} )
-    "$comp_function_name"
-    return 0
-}"
-    eval "$function"
-}
+if [[ -n $ZSH ]];
+then
+else
+  function make-completion-wrapper () {
+      local function_name="$2"
+      local arg_count=$(($#-3))
+      local comp_function_name="$1"
+      shift 2
+      local function="
+  function $function_name {
+      ((COMP_CWORD+=$arg_count))
+      COMP_WORDS=( "$@" \${COMP_WORDS[@]:1} )
+      "$comp_function_name"
+      return 0
+  }"
+      eval "$function"
+  }
 
-# we create a _git_checkout_mine function that will do the completion for "gco"
-# using the completion function "_git"
-make-completion-wrapper _git _git_checkout_mine git checkout
+  # we create a _git_checkout_mine function that will do the completion for "gco"
+  # using the completion function "_git"
+  make-completion-wrapper _git _git_checkout_mine git checkout
 
-# we tell bash to actually use _git_checkout_mine to complete "gco"
-complete -o bashdefault -o default -o nospace -F _git_checkout_mine gco
-complete -o bashdefault -o default -o nospace -F _git_checkout_mine gl
-complete -o bashdefault -o default -o nospace -F _git_checkout_mine glp
+  # we tell bash to actually use _git_checkout_mine to complete "gco"
+  complete -o bashdefault -o default -o nospace -F _git_checkout_mine gco
+  complete -o bashdefault -o default -o nospace -F _git_checkout_mine gl
+  complete -o bashdefault -o default -o nospace -F _git_checkout_mine glp
+fi;
