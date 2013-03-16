@@ -13,6 +13,7 @@ alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
 alias gba='git branch -a'
 alias merged="git branch --contains HEAD | grep master"
+alias unmerged="git branch --no-merged master"
 alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | cut -d / -f 3-"
 alias gco='git checkout'
 alias grm='git rm'
