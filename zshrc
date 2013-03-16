@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-ZSH_CUSTOM=$HOME/.bash/zsh
+ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -38,10 +38,10 @@ plugins=(python)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-source ~/.bash/aliases
-source ~/.bash/terminal
-source ~/.bash/task
-source ~/.bash/git
-source ~/.bash/ruby
-source ~/.bash/z.sh
+source ~/.dotfiles/aliases
+source ~/.dotfiles/terminal
+source ~/.dotfiles/task
+source ~/.dotfiles/git
+source ~/.dotfiles/ruby
+source ~/.dotfiles/z.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
