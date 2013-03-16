@@ -44,3 +44,4 @@ source ~/.bash/task
 source ~/.bash/git
 source ~/.bash/ruby
 source ~/.bash/z.sh
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"

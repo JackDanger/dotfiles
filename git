@@ -33,9 +33,7 @@ alias me_and="pair me_and"
 alias just_me="pair just_me"
 
 # stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
-if [[ -n $ZSH ]];
-then
-else
+if [[ -z $ZSH ]]; then
   function make-completion-wrapper () {
       local function_name="$2"
       local arg_count=$(($#-3))
