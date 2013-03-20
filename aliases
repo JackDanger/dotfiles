@@ -16,3 +16,5 @@ alias psgrep="ps aux | grep -v grep | egrep -i"
 
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
+
+[[ -f ~/.aliases.local ]] && . ~/.aliases.local

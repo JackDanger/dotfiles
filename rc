@@ -35,5 +35,6 @@ else
   export LSCOLORS=bxgxfxfxcxdxexaxaxaxax
 fi
 
+[ -f ~/.profile.local ] && . ~/.profile.local
 
 
