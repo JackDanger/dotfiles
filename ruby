@@ -1,5 +1,6 @@
+[ -f ~/.bundler-exec.sh ] && source ~/.bundler-exec.sh
+
 alias bedit='EDITOR=subl bundle open'
-alias console='ruby script/rails console'
 alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
 alias restart='touch tmp/restart.txt'
@@ -20,6 +21,7 @@ function sc {
     bundle exec rails console $@
   fi
 }
+alias console='sc'
 function sd {
   if [ -x ./script/dbconsole ]; then
     bundle exec ./script/dbconsole $@

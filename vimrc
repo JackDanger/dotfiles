@@ -47,3 +47,6 @@ map <C-l> <C-w>l
 
 " type 'jj' in insert mode to escape.
 inoremap jj <ESC>
+
+" Connect to system clipboard
+set clipboard=unnamed
