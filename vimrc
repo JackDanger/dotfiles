@@ -51,8 +51,5 @@ inoremap jj <ESC>
 " Connect to system clipboard
 set clipboard=unnamed
 
-" Not quite sure what this does to word wrapping
-set tw=10000 | norm gggQG
-
 " Autosave
 :au FocusLost * silent! wa
