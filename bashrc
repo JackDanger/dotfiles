@@ -23,7 +23,6 @@ force_color_prompt=yes
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
 umask 002
 
 PS1='\[\033[1;34m\]$([[ -f /tmp/.task ]] && basename `cat /tmp/.task`:)\[\033[0;31m\]\W\[\033[1;32m\] $(__git_ps1 | sed s/^\ //)\[\033[0;31m\]\$ \[\033[00m\]'

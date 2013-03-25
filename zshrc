@@ -15,6 +15,9 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
 
+# Don't rename my tmux windows
+DISABLE_AUTO_TITLE=true
+
 # Comment this out to disable bi-weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
 
@@ -45,6 +48,8 @@ source ~/.dotfiles/git
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+PATH=$PATH:~/bin
 
 # Fix autocorrect
 if [ -f ~/.zsh_nocorrect ]; then
