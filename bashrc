@@ -37,6 +37,4 @@ fi
 # Here we go!
 set -o vi
 
-[ -f ~/.profile.local ] && . ~/.profile.local
-
 
