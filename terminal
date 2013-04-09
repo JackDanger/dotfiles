@@ -49,3 +49,11 @@ g() {
     egrep -i --color "$*"
   fi
 }
+
+PATH=$PATH:~/bin
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:/sq/config_files/bin
+export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/share/python:$PATH
+export PATH=/sq/topsoil/bin:$PATH

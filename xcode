@@ -1,0 +1,1 @@
+alias clean_xcode_builds="rm -rf ~/Library/Application\ Support/iPhone\ Simulator/*/Applications/*"

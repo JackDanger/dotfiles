@@ -38,18 +38,19 @@ DISABLE_AUTO_TITLE=true
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(python)
 
+# Don't mess with my tmux window histories
+unsetopt share_history
+
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-source ~/.dotfiles/aliases
 source ~/.dotfiles/terminal
+source ~/.dotfiles/aliases
 source ~/.dotfiles/task
 source ~/.dotfiles/git
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-PATH=$PATH:~/bin
 
 # Fix autocorrect
 if [ -f ~/.zsh_nocorrect ]; then

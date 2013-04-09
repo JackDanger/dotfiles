@@ -25,6 +25,7 @@
 [core]
   excludesfile = ~/.gitignore
 	editor = /usr/bin/vim
+  pager = less -FRSX
 
 [color]
   branch = auto
