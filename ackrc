@@ -1,0 +1,5 @@
+--type-add=ruby=.haml,.rake,.sass
+--pager=less -rFSX
+--sort-files
+--ignore-directory=log
+--ignore-directory=tmp
