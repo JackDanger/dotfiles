@@ -34,6 +34,8 @@ else
   export LSCOLORS=bxgxfxfxcxdxexaxaxaxax
 fi
 
+alias profile="vim ~/.bashrc && . ~/.bashrc"
+
 # Here we go!
 set -o vi
 

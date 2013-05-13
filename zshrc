@@ -51,6 +51,7 @@ source ~/.dotfiles/z.sh
 
 PATH=$PATH:~/bin
 
+alias profile="vim ~/.zshrc && . ~/.zshrc"
 # Fix multi-terminal history
 unsetopt SHARE_HISTORY
 
@@ -60,3 +61,5 @@ if [ -f ~/.zsh_nocorrect ]; then
     alias $COMMAND="nocorrect $COMMAND"
   done < ~/.zsh_nocorrect
 fi
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
