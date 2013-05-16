@@ -3,3 +3,4 @@
 --sort-files
 --ignore-directory=log
 --ignore-directory=tmp
+--ignore-file=match:/^tags$/
