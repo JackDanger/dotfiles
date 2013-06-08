@@ -55,6 +55,10 @@ alias profile="vim ~/.zshrc && . ~/.zshrc"
 # Fix multi-terminal history
 unsetopt SHARE_HISTORY
 
+# Fix the "no matches found" error when trying to
+# pass an asterisk to a command
+unsetopt nomatch 2>/dev/null
+
 # Fix autocorrect
 if [ -f ~/.zsh_nocorrect ]; then
   while read -r COMMAND; do
