@@ -4,11 +4,11 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
 alias e='$EDITOR'
-alias v='vim'
+alias v='/usr/local/bin/vim'
 
 alias trail='tail -n 300 -f'
 alias rub='ruby'
-alias ack='ack -i'
+alias ack='ack --smart-case'
 
 alias ip='ipconfig getifaddr en0'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
