@@ -7,7 +7,6 @@ alias e='$EDITOR'
 alias v='/usr/local/bin/vim'
 
 alias trail='tail -n 300 -f'
-alias rub='ruby'
 alias ack='ack --smart-case'
 
 alias ip='ipconfig getifaddr en0'
@@ -16,6 +15,7 @@ alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
 alias top='top -o cpu'
 alias psgrep="ps aux | grep -v grep | egrep -i"
 
+alias timestamp="date +%Y%m%d%H%M%S"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
 
