@@ -5,6 +5,8 @@ alias ....="cd ../../.."
 alias l='ls -lAG'
 alias e='$EDITOR'
 alias v='/usr/local/bin/vim'
+alias a='ag'
+alias g='ag'
 
 alias trail='tail -n 300 -f'
 alias ack='ack --smart-case'
