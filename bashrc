@@ -1,15 +1,3 @@
-dir=`dirname $BASH_ARGV`
-source $dir/aliases
-source $dir/terminal
-source $dir/task
-source $dir/git-prompt.sh
-source $dir/git-completion.sh
-source $dir/git
-source $dir/ruby
-source $dir/z.sh
-
-
-[ -d ~/bin ] && export PATH=$PATH:~/bin
 export EDITOR=/usr/bin/vim
 
 export HISTCONTROL=ignoredups:ignorespace
@@ -39,4 +27,4 @@ alias profile="vim ~/.bashrc && . ~/.bashrc"
 # Here we go!
 set -o vi
 
-
+source ~/.dotfiles/profile

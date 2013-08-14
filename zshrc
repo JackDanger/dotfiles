@@ -35,29 +35,8 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(python bundler)
 
-# Don't mess with my tmux window histories
-unsetopt share_history
-
 source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-source ~/.dotfiles/terminal
-source ~/.dotfiles/aliases
-source ~/.dotfiles/task
-source ~/.dotfiles/git
-source ~/.dotfiles/ruby
-source ~/.dotfiles/z.sh
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-PATH=$PATH:~/bin
-
 alias profile="vim ~/.zshrc && . ~/.zshrc"
-# Fix multi-terminal history
-unsetopt SHARE_HISTORY
-
-# Fix the "no matches found" error when trying to
-# pass an asterisk to a command
-unsetopt nomatch 2>/dev/null
 
 # Fix autocorrect
 if [ -f ~/.zsh_nocorrect ]; then
@@ -66,4 +45,4 @@ if [ -f ~/.zsh_nocorrect ]; then
   done < ~/.zsh_nocorrect
 fi
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+source ~/.dotfiles/profile
