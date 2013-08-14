@@ -6,6 +6,7 @@ source ~/.dotfiles/z.sh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 PATH=$PATH:~/bin
+PATH=$PATH:~/.dotfiles/bin
 
 # Fix multi-terminal history
 unsetopt SHARE_HISTORY
