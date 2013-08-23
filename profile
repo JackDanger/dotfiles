@@ -3,7 +3,6 @@ source ~/.dotfiles/aliases
 source ~/.dotfiles/git
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 PATH=$PATH:~/bin
 PATH=$PATH:~/.dotfiles/bin
@@ -15,5 +14,7 @@ unsetopt SHARE_HISTORY
 # pass an asterisk to a command
 unsetopt nomatch 2>/dev/null
 
+# RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
