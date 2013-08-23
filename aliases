@@ -22,3 +22,17 @@ alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
 
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
+
+function camelcase {
+  if [[ -z $1 ]]; then
+    gsed 's/\(^[a-z]\)\|_\([a-z]\)/\U\1\U\2/g'
+  else
+    echo $* | camelcase
+  fi
+}
+function c {
+  if [[ -n $TMUX ]]; then
+    tmux rename-window $(basename $1)
+  fi
+  cd $1
+}
