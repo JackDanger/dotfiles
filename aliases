@@ -32,7 +32,7 @@ function camelcase {
 }
 function c {
   if [[ -n $TMUX ]]; then
-    tmux rename-window $(basename $1)
+    tmux rename-window $(basename $1 | camelcase)
   fi
   cd $1
 }
