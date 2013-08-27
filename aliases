@@ -8,6 +8,7 @@ alias v='/usr/local/bin/vim'
 alias a='ag'
 alias g='ag'
 
+alias grab='cat | pbcopy'
 alias trail='tail -n 300 -f'
 alias ack='ack --smart-case'
 
