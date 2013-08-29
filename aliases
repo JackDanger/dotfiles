@@ -24,6 +24,10 @@ alias clj='rlwrap clj'
 
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
 
+function name {
+  find . -name "*$**"
+}
+
 function camelcase {
   if [[ -z $1 ]]; then
     gsed 's/\(^[a-z]\)\|_\([a-z]\)/\U\1\U\2/g'
