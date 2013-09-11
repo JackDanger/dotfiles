@@ -4,8 +4,8 @@ source ~/.dotfiles/git
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
 
-PATH=$PATH:~/bin
-PATH=$PATH:~/.dotfiles/bin
+PATH=~/bin:$PATH
+PATH=~/.dotfiles/bin:$PATH
 
 # Fix multi-terminal history
 unsetopt SHARE_HISTORY
