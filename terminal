@@ -11,48 +11,6 @@ function profile {
 
 [ -f ~/.profile.local ] && . ~/.profile.local
 
-# g()/search()
-#
-# Usage:
-#
-# $ g that thing
-#   => egrep -ri "that thing" *{except ./log}
-#
-# $ g that thing    # if 'thing' is a directory
-#   => egrep -ri "that" ./thing/
-#
-# $ echo "some Stuff" | g stuff
-#   => echo "some Stuff" | egrep -ri "stuff"
-#
-alias search="g"
-g() {
-
-  # mimic $BASH_ARGV
-  i=0; args=[]; butlast=[];
-  for arg; do
-    args[i]=$arg;
-    i=$i+1;
-  done
-
-  # pull out all but the last argument into a new array
-  size=`expr ${#args[*]} - 1`
-  for index in ${!args[*]}; do
-    if [ $index -ne $size ]; then
-      butlast[$index]=${args[$index]}
-    fi
-  done
-
-  if [ -t 0 ]; then
-    if [ -e ${!#} ]; then
-      arr=("${butlast[*]}")
-      egrep --exclude="*log" --color -ri "$butlast" ${!#};
-    else
-      egrep --exclude="*log" --color -ri "$*" *;
-    fi
-  else
-    egrep -i --color "$*"
-  fi
-}
 
 PATH=$PATH:~/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
