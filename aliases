@@ -25,7 +25,17 @@ alias clj='rlwrap clj'
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
 
 function name {
-  find . -name "*$**"
+  dir=$2;
+  [[ -n $dir ]] || dir=.
+  find $dir -name "*$1*"
+}
+
+function dotfiles {
+  cd ~/.dotfiles
+  git commit -a -m "$*"
+  git pull --rebase
+  git push
+  cd -
 }
 
 function camelcase {
