@@ -1,0 +1,67 @@
+#!/bin/bash
+
+CMD=$1
+PAIR=$2
+
+# set up aliases like so:
+# alias me_and="gitpair me_and"
+# alias just_me="gitpair just_me"
+#
+# USAGE: me_and xavier
+
+config=~/.gitpair
+touch $config
+
+myemail=`head -n 1 $config | cut -d "|" -f 1`
+myname=`head -n 1 $config | cut -d "|" -f 2,3,4`
+
+ 
+if [ "$myname" == "" ] || [ "$myemail" == "" ]; then
+  myemail=`git config --global user.email | sed s/@squareup.com//g`
+  myname=`git config --global user.name`
+  echo "$myemail|$myname" > $config
+fi
+
+if [ "$CMD" != "me_and" ] &&
+   [ "$CMD" != "just_me" ]; then
+  echo "USAGE 1: me_and xavier"
+  echo "Specify the email address of the user you're pairing with"
+  echo ""
+  echo "USAGE 2: just_me"
+  echo "Set the current git user to just you"
+  exit 1
+fi
+
+if [ "just_me" == $CMD ]; then
+  git config --global user.name "$myname"
+  git config --global user.email "$myemail@squareup.com"
+  echo "Setting git author to $myname"
+  exit 0
+fi
+
+if [ "me_and" == $CMD ]; then
+
+  pair=`egrep "^$PAIR\|" $config`
+  if [ "$pair" == "" ]; then
+    echo "What is $PAIR's full name?"
+    theiremail=$PAIR
+    read theirname
+    if [ "$theirname" == "" ]; then
+      echo 'no name given, not changing pair'
+      exit
+    fi
+    echo "$theiremail|$theirname" >> $config
+  else
+    theiremail=`echo $pair | cut -d "|" -f 1`
+    theirname=`echo $pair | cut -d "|" -f 2,3,4`
+  fi
+
+  echo pairing with $theirname
+
+  name="$myname & $theirname"
+  email="github+$myemail+$theiremail@squareup.com"
+  git config --global user.name "$name"
+  git config --global user.email "$email"
+
+  exit 0
+fi
