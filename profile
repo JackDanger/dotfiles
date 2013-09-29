@@ -7,12 +7,16 @@ source ~/.dotfiles/z.sh
 PATH=~/bin:$PATH
 PATH=~/.dotfiles/bin:$PATH
 
-# Fix multi-terminal history
-unsetopt SHARE_HISTORY
+if [[ -n `which unsetopt` ]]; then
+  # Fix multi-terminal history
+  unsetopt SHARE_HISTORY
 
-# Fix the "no matches found" error when trying to
-# pass an asterisk to a command
-unsetopt nomatch 2>/dev/null
+  # Fix the "no matches found" error when trying to
+  # pass an asterisk to a command
+  unsetopt nomatch 2>/dev/null
+else
+  echo "Unsetopt doesn't exist"
+fi
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
