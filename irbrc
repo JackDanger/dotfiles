@@ -29,7 +29,7 @@ IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-save-history"
 # Use awesome_print instead of #inspect, when available
 IRB::Irb.class_eval do
   def output_value
-    begin; require 'ap'; rescue LoadError; end
+    begin; require 'ap'; rescue LoadError; puts 'Not using awesome_print'; end
     if @context.last_value.respond_to?(:awesome_inspect)
       printf @context.return_format, @context.last_value.awesome_inspect
     else
