@@ -2,7 +2,6 @@ export RUBY_GC_MALLOC_LIMIT=90000000
 export RUBY_FREE_MIN=200000
 
 alias bedit='EDITOR=subl bundle open'
-
 alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
 alias restart='touch tmp/restart.txt'

@@ -1,8 +1,10 @@
 source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/git
+source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
+[[ -f ~/.profile.local ]] && . ~/.profile.local
 
 PATH=~/bin:$PATH
 PATH=~/.dotfiles/bin:$PATH
