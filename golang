@@ -1,1 +1,1 @@
-alias fmt="gofmt -tabwidth=2 -tabs=false -w"
+alias fmt="gofmt -tabwidth=2 -tabs=false -w=true"
