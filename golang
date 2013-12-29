@@ -1,1 +1,7 @@
+#/bin/bash
+
 alias fmt="gofmt -tabwidth=2 -tabs=false -w=true"
+# Edit a go package
+function gov {
+  vim `find $GOPATH/src -name "[^\/]*.git" | grep $1`
+}
