@@ -21,6 +21,7 @@ alias psgrep="ps aux | grep -v grep | egrep -i"
 alias timestamp="date +%Y%m%d%H%M%S"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
+alias ccat='pygmentize -g'
 
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
 
