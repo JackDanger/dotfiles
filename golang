@@ -3,5 +3,13 @@
 alias fmt="gofmt -tabwidth=2 -tabs=false -w=true"
 # Edit a go package
 function gov {
-  vim `find $GOPATH/src -name "[^\/]*.git" | grep $1`
+  vim `golang-package $1`
+}
+
+function gocd {
+  cd `golang-package $1`
+}
+
+function golang-package {
+  find $GOPATH/src -name "[^\/]*.git" | grep $1
 }
