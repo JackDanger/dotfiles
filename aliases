@@ -22,6 +22,7 @@ alias timestamp="date +%Y%m%d%H%M%S"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
 alias ccat='pygmentize -g'
+alias cless='pygmentize -g | less -r'
 
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
 
