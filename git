@@ -11,6 +11,7 @@ alias gap='git add --patch'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
+alias fixup='git commit --amend . -C HEAD'
 alias gba='git branch -a'
 alias merged="git branch --contains HEAD | grep master"
 alias unmerged="git branch --no-merged master"
