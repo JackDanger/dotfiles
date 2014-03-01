@@ -1,10 +1,11 @@
+[[ -f ~/.profile.before ]] && . ~/.profile.before
+
 source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/git
 source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
-[[ -f ~/.profile.local ]] && . ~/.profile.local
 
 PATH=~/bin:$PATH
 PATH=~/.dotfiles/bin:$PATH
@@ -24,3 +25,4 @@ fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
+[[ -f ~/.profile.local ]] && . ~/.profile.local

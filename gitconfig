@@ -53,20 +53,9 @@
 [rebase]
   autosquash = true
 [alias]
-  c = commit -m
-  a = add
-  di = diff
   dic = diff --cached
-  pl = pull
-  ps = push
-  plre = pull --rebase
-  st = status
   out = log origin..HEAD
-  st = status
-  ci = commit
-  co = checkout
   cp = cherry-pick
-  b = branch
   changed = diff --name-status -r
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
   au = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
