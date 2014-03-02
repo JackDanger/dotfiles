@@ -25,4 +25,7 @@ fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
+# Vi!
+set -o vi
+
 [[ -f ~/.profile.local ]] && . ~/.profile.local
