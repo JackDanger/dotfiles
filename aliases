@@ -4,13 +4,21 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
 alias e='$EDITOR'
+alias a='ag'
+alias g='ag'
+
 if [[ -z "$(which fzf)" ]]; then
   alias v='/usr/local/bin/vim'
 else
-  alias v='/usr/local/bin/vim $(fzf)'
+  function smartvim() {
+    if [[ -z "$1" ]]; then
+      /usr/local/bin/vim $(fzf)
+    else
+      /usr/local/bin/vim $*
+    fi
+  }
+  alias v='smartvim'
 fi
-alias a='ag'
-alias g='ag'
 
 alias grab='cat | pbcopy'
 alias trail='tail -n 300 -f'
