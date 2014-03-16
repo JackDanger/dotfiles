@@ -4,7 +4,11 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
 alias e='$EDITOR'
-alias v='/usr/local/bin/vim'
+if [[ -z "$(which fzf)" ]]; then
+  alias v='/usr/local/bin/vim'
+else
+  alias v='/usr/local/bin/vim $(fzf)'
+fi
 alias a='ag'
 alias g='ag'
 
@@ -16,7 +20,6 @@ alias ip='ipconfig getifaddr en0'
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
 alias top='top -o cpu'
-alias psgrep="ps aux | grep -v grep | egrep -i"
 
 alias timestamp="date +%Y%m%d%H%M%S"
 alias jsonpretty='python -mjson.tool'

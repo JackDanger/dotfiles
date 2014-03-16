@@ -51,5 +51,8 @@ inoremap jj <ESC>
 " Connect to system clipboard
 set clipboard=unnamed
 
+" Let's use `brew install fzf`
+set rtp+=~/.fzf
+
 " Autosave
 :au FocusLost * silent! wa
