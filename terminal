@@ -13,6 +13,9 @@ function profile {
 
 [ -f ~/.profile.local ] && . ~/.profile.local
 
+builtinhelp() {
+  man bash | less -p "^       $1 "
+}
 
 PATH=$PATH:~/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
