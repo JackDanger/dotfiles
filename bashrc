@@ -25,6 +25,6 @@ fi
 alias profile="vim ~/.bashrc && . ~/.bashrc"
 
 # Here we go!
-set -o vi
+#set -o vi
 
 source ~/.dotfiles/profile

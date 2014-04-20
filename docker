@@ -1,0 +1,1 @@
+alias last-container="sudo docker ps | tail -n -1 | awk '{print }'"
