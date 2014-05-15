@@ -7,7 +7,7 @@ command Wq wq
 command WQ wq
 command Q q
 
-color vividchalk
+"color vividchalk
 
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " From http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text

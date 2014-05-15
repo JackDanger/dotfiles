@@ -11,5 +11,5 @@ function gocd {
 }
 
 function golang-package {
-  find $GOPATH/src/*.(com|org|net)/*/* -maxdepth 0 | grep $1
+  find $GOPATH/src/(square|*.(com|org|net))/*/* -maxdepth 1 | grep $1 | head -n 1
 }
