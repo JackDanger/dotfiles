@@ -21,7 +21,7 @@ else
 fi
 
 alias grab='cat | pbcopy'
-alias trail='tail -n 300 -f'
+alias trail='tail -n 300 -F'
 alias ack='ack --smart-case'
 
 alias ip='ipconfig getifaddr en0'
