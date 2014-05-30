@@ -6,7 +6,7 @@ alias glp='git log -p'
 alias log="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 alias gp='git push'
 alias gd='git diff'
-alias ga='git add'
+alias ga='git add -A'
 alias gap='git add --patch'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
