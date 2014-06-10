@@ -41,6 +41,11 @@ plugins= #(python bundler)
 source $ZSH/oh-my-zsh.sh
 alias profile="vim ~/.zshrc && . ~/.zshrc"
 
+# Direnv
+if [[ -n "$(which direnv > /dev/null 2>&1)" ]]; then
+  eval "$(direnv hook $0)"
+fi
+
 # Fix autocorrect
 if [ -f ~/.zsh_nocorrect ]; then
   while read -r COMMAND; do
