@@ -2,11 +2,7 @@ alias bedit='EDITOR=subl bundle open'
 alias routes='rake routes | less'
 alias clone='rake db:test:clone_structure'
 alias restart='touch tmp/restart.txt'
-alias rspec='bundle exec rspec -c'
 alias migrate='rake db:migrate db:test:prepare db:schema:dump'
-alias spec='bundle exec spec -c'
-alias xspec='bundle exec spec -c -X'
-alias rspec='bundle exec rspec -c'
 alias last_migration="vim \`find db/migrate/ | tail -n 1\`"
 # Rails
 function sc {

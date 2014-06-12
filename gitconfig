@@ -1,6 +1,6 @@
 [user]
-	name = Jack Danger Canty
-	email = jackdanger@squareup.com
+	name = Jack Danger Canty & Alyssa Pohahau
+	email = github+jackdanger+alyssapohahau@squareup.com
 
 [apply]
   whitespace = strip
@@ -46,4 +46,8 @@
 [rebase]
   autosquash = true
 [rerere]
-	enabled = 1
+  enabled = 1
+
+[alias]
+  reauthor = commit --amend --reset-author -C HEAD
+

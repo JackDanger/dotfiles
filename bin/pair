@@ -59,7 +59,7 @@ if [ "me_and" == $CMD ]; then
   echo pairing with $theirname
 
   name="$myname & $theirname"
-  email="github+$myemail+$theiremail@squareup.com"
+  email="git+$myemail+$theiremail@squareup.com"
   git config --global user.name "$name"
   git config --global user.email "$email"
 

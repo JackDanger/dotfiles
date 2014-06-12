@@ -42,7 +42,7 @@ source $ZSH/oh-my-zsh.sh
 alias profile="vim ~/.zshrc && . ~/.zshrc"
 
 # Direnv
-if [[ -n "$(which direnv > /dev/null 2>&1)" ]]; then
+if [[ -n "$(which direnv)" ]]; then
   eval "$(direnv hook $0)"
 fi
 
