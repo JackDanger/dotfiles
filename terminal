@@ -17,6 +17,17 @@ builtinhelp() {
   man bash | less -p "^       $1 "
 }
 
+# Split stdin into separate words
+words () {
+  while read line
+  do
+    for word in $=line
+    do
+      echo $word
+    done
+  done
+}
+
 PATH=$PATH:~/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:/sq/config_files/bin
