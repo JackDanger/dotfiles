@@ -19,6 +19,7 @@ alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --forma
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
+alias copyhead='git rev-parse HEAD | pbcopy'
 alias stash='git stash'
 alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'

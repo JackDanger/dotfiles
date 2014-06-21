@@ -29,7 +29,7 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
 alias top='top -o cpu'
 
-alias timestamp="date +%Y%m%d%H%M%S"
+alias timestamp="date +%Y-%m-%d-%H-%M-%S"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
 alias ccat='pygmentize -g'
