@@ -28,6 +28,9 @@ words () {
   done
 }
 
+# Parent pid
+ppid () { ps -p ${1:-$$} -o ppid=; }
+
 PATH=$PATH:~/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:/sq/config_files/bin
