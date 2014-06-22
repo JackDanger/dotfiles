@@ -25,7 +25,7 @@ alias trail='tail -n 300 -F'
 alias ack='ack --smart-case'
 
 alias ip='ipconfig getifaddr en0'
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
 alias top='top -o cpu'
 
