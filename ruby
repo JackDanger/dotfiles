@@ -27,3 +27,10 @@ function ss {
     bundle exec rails server $@
   fi
 }
+
+# RSpec
+function rspec_last {
+  local last_changed=$(ls -t `gs | grep spec | awk '{print $2 }'` | head -n 1)
+  echo "Testing $last_changed"
+  rspec $last_changed
+}
