@@ -30,7 +30,7 @@ function ss {
 
 # RSpec
 function rspec_last {
-  local last_changed=$(ls -t `gs | grep spec | awk '{print $2 }'` | head -n 1)
+  local last_changed=$(find spec -type f -name *_spec.rb -exec ls -1t "{}" + | head -n 1)
   echo "Testing $last_changed"
   rspec $last_changed
 }
