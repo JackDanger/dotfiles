@@ -17,6 +17,10 @@ builtinhelp() {
   man bash | less -p "^       $1 "
 }
 
+recent () {
+  find * -type f -name '*[^.log]' -exec ls -1t "{}" + | head -n 10
+}
+
 # Split stdin into separate words
 words () {
   while read line
@@ -33,8 +37,6 @@ ppid () { ps -p ${1:-$$} -o ppid=; }
 
 PATH=$PATH:~/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:/sq/config_files/bin
 export PATH=/usr/local/sbin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/share/python:$PATH
-export PATH=/sq/topsoil/bin:$PATH
