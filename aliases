@@ -7,6 +7,14 @@ alias e='$EDITOR'
 alias a='ag'
 alias g='ag'
 
+# no-ops for when I mis-vim my windows
+function k()   { :}
+function kk()  { :}
+function kkk() { :}
+function j()   { :}
+function jj()  { :}
+function jjj() { :}
+
 if [[ -z "$(which fzf)" ]]; then
   alias v='/usr/local/bin/vim'
 else
