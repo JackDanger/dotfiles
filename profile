@@ -11,6 +11,8 @@ source ~/.dotfiles/z.sh
 PATH=~/bin:$PATH
 PATH=~/.dotfiles/bin:$PATH
 
+export EDITOR=vim
+
 if [[ -n `which unsetopt` ]]; then
   # Fix multi-terminal history
   unsetopt SHARE_HISTORY
