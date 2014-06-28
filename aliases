@@ -72,3 +72,12 @@ function c {
   fi
   cd $1
 }
+
+function tac {
+  local line
+  if IFS= read -r line
+  then
+    tac
+    printf '%s\n' "$line"
+  fi
+}
