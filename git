@@ -32,8 +32,8 @@ alias gps="git pull --no-tags --recurse-submodules && git submodule update --ini
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
-alias me_and="pair me_and"
-alias just_me="pair just_me"
+alias me_and="command pair me_and"
+alias just_me="command pair just_me"
 
 # stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
 if [[ -z $ZSH ]]; then

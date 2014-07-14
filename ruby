@@ -34,3 +34,7 @@ function rspec_last {
   echo "Testing $last_changed"
   rspec $last_changed
 }
+function rspec_time {
+  local specs=$*
+  bundle exec rspec $specs -f d -p 2>/dev/null
+}
