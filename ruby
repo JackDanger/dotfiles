@@ -31,8 +31,12 @@ function ss {
 # RSpec
 function rspec_last {
   local last_changed=$(find spec -type f -name *_spec.rb -exec ls -1t "{}" + | head -n 1)
-  echo "Testing $last_changed"
-  rspec $last_changed
+  local line=$1
+  if [ -n "$line" ]; then
+    line=":$line"
+  fi
+  echo "Testing $last_changed$line"
+  rspec "$last_changed$line"
 }
 function rspec_time {
   local specs=$*
