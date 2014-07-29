@@ -20,7 +20,6 @@ set pastetoggle=<F2>
 
 map <leader>l :Align
 nmap <leader>a :Ack 
-nmap <leader>p :CtrlPClearCache<CR>:CtrlP<CR>
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 
@@ -53,6 +52,8 @@ set clipboard=unnamed
 
 " Let's use `brew install fzf`
 set rtp+=~/.fzf
+
+map <C-p> :FZF<CR>
 
 " Autosave
 :au FocusLost * silent! wa

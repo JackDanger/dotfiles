@@ -57,3 +57,4 @@ if [ -f ~/.zsh_nocorrect ]; then
 fi
 
 source ~/.dotfiles/profile
+source ~/.fzf.zsh
