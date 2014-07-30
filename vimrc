@@ -23,6 +23,7 @@ map <leader>l :Align
 nmap <leader>a :Ack 
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
+nmap <leader>h :nohl<CR>
 
 set showmode
 set autowrite
