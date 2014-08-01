@@ -36,7 +36,6 @@ words () {
 ppid () { ps -p ${1:-$$} -o ppid=; }
 
 PATH=$PATH:~/bin
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH=/usr/local/sbin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/share/python:$PATH
