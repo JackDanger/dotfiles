@@ -47,3 +47,14 @@ function rspec_time {
   local specs=$*
   bundle exec rspec $specs -f d -p 2>/dev/null
 }
+
+function naked_pry {
+echo "  %w(pry method_source coderay slop).each do |name|    "
+echo "    puts name                                          "
+echo "    Dir[%Q|#{\$GEM_HOME}/gems/#{name}-*|].each do |g|   "
+echo "      p %Q|#{g}/lib|                                   "
+echo "      \$LOAD_PATH << %Q|#{g}/lib|                       "
+echo "    end                                                "
+echo "  end                                                  "
+echo "  require 'pry'                                        "
+}

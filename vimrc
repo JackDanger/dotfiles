@@ -40,6 +40,10 @@ set wildmode=longest,list,full
 
 autocmd VimResized * :wincmd =
 
+" Surround a word with \s
+nmap <leader>s ysiw
+
+
 " CTRL+direction to move panes
 map <C-h> <C-w>h
 map <C-j> <C-w><C-w>j
