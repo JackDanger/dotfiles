@@ -50,7 +50,7 @@ function rspec_time {
 
 function naked_pry {
 echo "  %w(pry method_source coderay slop).each do |name|"
-echo "    Dir[%Q|#{\$GEM_HOME}/gems/#{name}-*|].each do |g|"
+echo "    Dir[%Q|#{ENV['GEM_HOME']}/gems/#{name}-*|].each do |g|"
 echo "      \$LOAD_PATH << %Q|#{g}/lib|"
 echo "    end"
 echo "  end"

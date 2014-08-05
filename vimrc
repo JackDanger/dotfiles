@@ -6,6 +6,7 @@ let mapleader = '\'
 command Wq wq
 command WQ wq
 command Q q
+nmap EE :e!<CR>
 nmap QQ :q!<CR>
 
 "color vividchalk
