@@ -41,7 +41,11 @@ function rspec_last {
     line=":$line"
   fi
   echo "Testing $last_changed$line"
-  rspec "$last_changed$line"
+  if [[ -f bin/rspec ]] && [[ -z $SKIP_SPRING ]]; then
+    bin/rspec "$last_changed$line"
+  else
+    rspec "$last_changed$line"
+  fi
 }
 function rspec_time {
   local specs=$*
@@ -49,10 +53,10 @@ function rspec_time {
 }
 
 function naked_pry {
-echo "  %w(pry method_source coderay slop).each do |name|"
-echo "    Dir[%Q|#{ENV['GEM_HOME']}/gems/#{name}-*|].each do |g|"
-echo "      \$LOAD_PATH << %Q|#{g}/lib|"
-echo "    end"
+echo "%w(yard binding_of_caller byebug pry method_source coderay slop).each do |name|"
+echo "  Dir[%Q|#{ENV['GEM_HOME']}/gems/#{name}-*|].each do |g|"
+echo "    \$LOAD_PATH << %Q|#{g}/lib|"
 echo "  end"
-echo "  require 'pry'"
+echo "end"
+echo "require 'pry'"
 }

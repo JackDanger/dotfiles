@@ -4,7 +4,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
 alias e='$EDITOR'
-alias a='ag'
+alias a='ag --ignore log'
 alias g='ag'
 
 # no-ops for when I mis-vim my windows

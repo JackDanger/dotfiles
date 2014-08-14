@@ -43,6 +43,7 @@ autocmd VimResized * :wincmd =
 
 " Surround a word with \s
 nmap <leader>s ysiw
+nmap <leader>S ysiW
 
 
 " CTRL+direction to move panes
