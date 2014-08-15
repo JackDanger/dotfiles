@@ -1,17 +1,16 @@
-#!/bin/bash
+if [[ -z $TERMINAL_LOADED ]]; then
+TERMINAL_LOADED=TERMINAL_LOADED
 
 export PAGER="less -FRSX"
 
+function add_to_path {
+  local DIR=$1
+  echo ":$PATH:" | grep ":$DIR:" -q || PATH=$PATH:$DIR
+}
 
 if [[ -z `which seq` ]]; then
   seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
 fi
-
-function profile {
-  $EDITOR ~/.profile.local && source ~/.profile.local
-}
-
-[ -f ~/.profile.local ] && . ~/.profile.local
 
 builtinhelp() {
   man bash | less -p "^       $1 "
@@ -35,7 +34,9 @@ words () {
 # Parent pid
 ppid () { ps -p ${1:-$$} -o ppid=; }
 
-PATH=$PATH:~/bin
-export PATH=/usr/local/sbin:$PATH
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/share/python:$PATH
+add_to_path ~/bin
+add_to_path /usr/local/sbin
+add_to_path /usr/local/bin
+add_to_path /usr/local/share/python
+
+fi # end $TERMINAL_LOADED

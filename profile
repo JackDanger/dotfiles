@@ -1,3 +1,6 @@
+if [[ -z $PROFILE_LOADED ]]; then
+PROFILE_LOADED=PROFILE_LOADED
+
 [[ -f ~/.profile.before ]] && . ~/.profile.before
 
 source ~/.dotfiles/terminal
@@ -8,8 +11,8 @@ source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
 source ~/.dotfiles/z.sh
 
-PATH=~/bin:$PATH
-PATH=~/.dotfiles/bin:$PATH
+add_to_path ~/bin
+add_to_path ~/.dotfiles/bin
 
 export EDITOR=vim
 
@@ -24,12 +27,17 @@ else
   echo "Unsetopt doesn't exist"
 fi
 
-# RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# RVM (once)
+echo $PATH | grep .rvm >/dev/null || [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+add_to_path ~/.rvm/bin
 
 # Vi!
 #set -o vi
 
+function profile {
+  $EDITOR ~/.profile.local && source ~/.profile.local
+}
+
 [[ -f ~/.profile.local ]] && . ~/.profile.local
+
+fi # end $PROFILE_LOADED

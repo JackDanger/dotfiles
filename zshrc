@@ -4,6 +4,7 @@ ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
 # COWBOY TIME
 setopt nocorrectall
+DISABLE_CORRECTION=true
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -45,9 +46,9 @@ source $ZSH/oh-my-zsh.sh
 alias profile="vim ~/.zshrc && . ~/.zshrc"
 
 # Direnv
-if [[ -n "$(which direnv)" ]]; then
-  eval "$(direnv hook $0)"
-fi
+#if [[ -n "$(which direnv)" ]]; then
+#  eval "$(direnv hook $0)"
+#fi
 
 # Fix autocorrect
 if [ -f ~/.zsh_nocorrect ]; then
