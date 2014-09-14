@@ -28,7 +28,7 @@ else
 fi
 
 # RVM (once)
-echo $PATH | grep .rvm >/dev/null || [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+grep .rvm >/dev/null<<<$PATH || [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 add_to_path ~/.rvm/bin
 
 # Vi!
