@@ -42,6 +42,5 @@ ppid () { ps -p ${1:-$$} -o ppid=; }
 add_to_path ~/bin
 add_to_path /usr/local/sbin
 add_to_path /usr/local/bin
-add_to_path /usr/local/share/python
 
 fi # end $TERMINAL_LOADED
