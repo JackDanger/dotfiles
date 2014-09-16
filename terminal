@@ -5,7 +5,13 @@ export PAGER="less -FRSX"
 
 function add_to_path {
   local DIR=$1
-  echo ":$PATH:" | grep ":$DIR:" -q || PATH=$PATH:$DIR
+  grep $DIR -c <<< $PATH
+  if [ "$(grep $DIR -c <<< $PATH)" -eq "1" ]; then
+    PATH=$DIR:$(sed s,$DIR,, <<< $PATH)
+    PATH=$(sed -E s,:+,:,g <<< $PATH)
+  else
+    PATH=$DIR:$PATH
+  fi
 }
 
 if [[ -z `which seq` ]]; then

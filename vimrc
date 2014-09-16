@@ -59,7 +59,7 @@ inoremap jj <ESC>
 set clipboard=unnamed
 
 " Let's use `brew install fzf`
-set rtp+=~/.fzf
+set rtp+=~/.fzf/
 
 map <C-p> :FZF<CR>
 
