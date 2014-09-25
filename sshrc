@@ -1,0 +1,110 @@
+# Start with the regular session
+source /etc/bashrc
+
+# Checking if sshrc works
+export TOTES="defined"
+
+# Datacenterz
+
+if [[ -d /data/app ]]; then
+  alias l='ls -lao'
+  alias v='vim'
+  for app in $(ls -1 /data/app | grep -v hoist); do
+    alias $app="sudo -u $app -i"
+  done
+fi
+
+# in case I can't sudo lsof
+function uid_listening_on  {
+  port=$1
+  hexport=`bc <<<"obase=16; $port" | awk '{printf "%04d\n", $0;}'`
+  tail -n +2 /proc/net/tcp | grep "$hexport"| cut -b 16-20,77-85 | awk '{print $2}' | egrep -v '^0$'
+}
+
+# On your mac:
+# h -> ssh hoist.sjc1
+# h sjc1b -> ssh hoist.sjc1b
+# in the DC:
+# h -> hoist
+# h web -> hoist info web
+# h deploy web -> hoist deploy web
+function h {
+  if [[ -n "$(uname -a | grep Darwin)" ]]; then
+    if [[ -z $1 ]]; then
+      ssh hoist.sjc1
+    else
+      ssh hoist.$*
+    fi
+  else
+    if [[ -n $1 ]] && [[ -z $2 ]]; then
+      hoist info $1
+    else
+      hoist $*
+    fi
+  fi
+}
+
+function recently-built {
+  local PROJECT=$1
+  hoist info $PROJECT \
+    | grep recently-built \
+    | egrep -o '[0-9a-g]{40}' \
+    | head -n 1
+}
+
+psgrep() {
+  PS_CMD="$(which ps)"
+  PS_OPTS="ux"
+  GREP_CMD="$(which grep)"
+  GREP_OPTS=""
+  PSGREP_VERSION="1.0.6"
+
+  usage()
+  {
+      echo "Usage: $0 [options] <search terms>
+
+  Options:
+      -n          Don't print header
+      -a          Search processes of all users
+      -b          Search using BSD's ps format (ux) [default]
+      -l          Search using Linux's ps format (-ef)
+      -s          Search using simplified format (PID, user, command)
+      -o <opts>   Search using custom ps output format
+      -i          Ignore case in searches
+      -e          Use extended regexps (egrep)
+      -p          Use perl regexps (grep -P)
+      -h          View this message
+      -v          View version information"
+      return 1
+  }
+
+  if [ $# -lt 1 ]; then
+    usage
+  else
+
+    while getopts "nablso:iephv" opt; do
+        case $opt in
+            h) usage;;
+            v) version_info;;
+            n) NO_HEADER=1;;
+            a) PS_OPTS="aux";;
+            b) PS_OPTS="ux";;
+            l) PS_OPTS="-ef";;
+            s) PS_OPTS="-eo pid,euser,comm";;
+            o) PS_OPTS="-eo $OPTARG";;
+            i) GREP_CMD="${GREP_CMD} -i";;
+            e) GREP_CMD="${GREP_CMD} -E";;
+            p) GREP_CMD="${GREP_CMD} -P";;
+        esac
+    done
+
+    # now the actual execution
+    HEADER=$($PS_CMD $PS_OPTS | head -n1)
+    RESULT=$($PS_CMD $PS_OPTS | $GREP_CMD -- "$1" | $GREP_CMD -v "$GREP_CMD" | $GREP_CMD -v "$0")
+    if [ "$RESULT" ]; then
+        [ ! "$NO_HEADER" ] && echo "$HEADER"
+        echo "$RESULT"
+    fi
+  fi
+}
+
