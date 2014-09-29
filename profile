@@ -9,7 +9,6 @@ source ~/.dotfiles/docker
 source ~/.dotfiles/git
 source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
-source ~/.dotfiles/z.sh
 
 add_to_path ~/bin
 add_to_path ~/.dotfiles/bin
