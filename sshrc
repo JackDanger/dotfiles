@@ -6,6 +6,8 @@ export TOTES="defined"
 
 # Datacenterz
 
+if [[ -n "$DATACENTER" ]]; then
+
 if [[ -d /data/app ]]; then
   alias l='ls -lao'
   alias v='vim'
@@ -108,3 +110,4 @@ psgrep() {
   fi
 }
 
+fi # if [[ -n "$DATACENTER" ]]
