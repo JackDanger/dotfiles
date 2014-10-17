@@ -6,7 +6,7 @@ alias migrate='rake db:migrate db:test:prepare db:schema:dump'
 alias last_migration="vim \`find db/migrate/ | tail -n 1\`"
 function def {
   local phrase=$1
-  phrase='def (self.)?'$phrase
+  phrase='(def|class|module) (self.)?'$phrase
   ag $phrase $2
 }
 # Rails
