@@ -3,6 +3,7 @@
 let mapleader = '\'
 
 " Alias these common mistypes, Shitf+w -> w
+command W w
 command Wq wq
 command WQ wq
 command Q q
@@ -38,6 +39,9 @@ set encoding=utf-8
 set listchars=tab:\ \ ,trail:▫
 set wildmenu
 set wildmode=longest,list,full
+
+" recognize markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 autocmd VimResized * :wincmd =
 
