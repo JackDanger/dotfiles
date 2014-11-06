@@ -1,6 +1,10 @@
 if [[ -z $TERMINAL_LOADED ]]; then
 TERMINAL_LOADED=TERMINAL_LOADED
 
+if df | grep crouton > /dev/null; then
+  setfont Uni3-TerminusBoldVGA16 2>/dev/null
+fi
+
 export PAGER="less -FRSX"
 
 function add_to_path {
