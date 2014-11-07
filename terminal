@@ -1,5 +1,5 @@
 if [[ -z $TERMINAL_LOADED ]]; then
-TERMINAL_LOADED=TERMINAL_LOADED
+export TERMINAL_LOADED=TERMINAL_LOADED
 
 if [[ -f /.crouton_targets ]]; then
   setfont Uni3-TerminusBoldVGA16 2>/dev/null

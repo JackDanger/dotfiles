@@ -28,3 +28,4 @@ alias profile="vim ~/.bashrc && . ~/.bashrc"
 #set -o vi
 
 source ~/.dotfiles/profile
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
