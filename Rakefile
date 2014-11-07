@@ -6,6 +6,7 @@ task :install do
     "bashrc"                => "~/.bashrc",
     "zshrc"                 => "~/.zshrc",
     "oh-my-zsh"             => "~/.oh-my-zsh",
+    "gitconfig"             => "~/.gitconfig",
     "tmux.conf"             => "~/.tmux.conf",
   }.each do |source, destination|
      `ln -s ~/.dotfiles/#{source} #{destination}`

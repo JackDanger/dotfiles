@@ -20,9 +20,9 @@ if [[ -z "$(which fzf)" ]]; then
 else
   function smartvim() {
     if [[ -z "$1" ]]; then
-      /usr/local/bin/vim $(fzf)
+      vim $(fzf)
     else
-      /usr/local/bin/vim $*
+      vim $*
     fi
   }
   alias v='smartvim'
