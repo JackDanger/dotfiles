@@ -36,6 +36,10 @@ set showcmd
 set autoread        " reload files when changed on disk
 set encoding=utf-8
 
+" keep the curser in the middle of the screen
+map <leader>o :set scrolloff=99999<CR>
+map <leader>O :set scrolloff=0<CR>
+
 set listchars=tab:\ \ ,trail:▫
 set wildmenu
 set wildmode=longest,list,full
