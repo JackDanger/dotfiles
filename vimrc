@@ -103,3 +103,27 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+" ********************************
+"
+" Custom Jack Danger vim
+"
+" ********************************
+
+set ruler
+
+" Use Pathogen
+execute pathogen#infect()
+
+" Use local golang plugin
+filetype off
+filetype plugin indent off
+set runtimepath+=$GOROOT/misc/vim
+filetype plugin indent on
+syntax on
+
+" `go fmt` before save
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
+set tabstop=2
+set shiftwidth=2
+set expandtab " Overwritten for go, useful everywhere else
