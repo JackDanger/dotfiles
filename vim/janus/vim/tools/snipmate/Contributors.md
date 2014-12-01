@@ -8,11 +8,14 @@ It is currently maintained by [Rok Garbas](rok@garbas.si), [Marc
 Weber](marco-oweber@gmx.de), and [Adnan Zafar](https://github.com/ajzafar) with
 additional contributions from:
 
+* [907th](https://github.com/907th)
+* [adkron](https://github.com/adkron)
 * [alderz](https://github.com/alderz)
 * [asymmetric](https://github.com/asymmetric)
 * [bpugh](https://github.com/bpugh)
 * [bruno-](https://github.com/bruno-)
 * [darkwise](https://github.com/darkwise)
+* [fish-face](https://github.com/fish-face)
 * [henrik](https://github.com/henrik)
 * [holizz](https://github.com/holizz)
 * [honza](https://github.com/honza)
@@ -23,6 +26,7 @@ additional contributions from:
 * [jherdman](https://github.com/jherdman)
 * [kozo2](https://github.com/kozo2)
 * [lilydjwg](https://github.com/lilydjwg)
+* [lpil](https://github.com/lpil)
 * [marutanm](https://github.com/marutanm)
 * [MicahElliott](https://github.com/MicahElliott)
 * [muffinresearch](https://github.com/muffinresearch)

@@ -6,7 +6,12 @@
 "             "// modules: " and containing space delimited list of vala
 "             modules, used by the file, so this script can build correct
 "             --pkg arguments.
-"             Alternatively you can set g:syntastic_vala_modules array
+"             Add another special comment line into your vala file starting
+"             with "// vapidirs: " followed by a space delimited list of
+"             the vapi directories so this script can build with the correct
+"             --vapidir arguments
+"             Alternatively you can set the g:syntastic_vala_modules array
+"             and/or the g:syntastic_vala_vapidirs array
 "             in your .vimrc or .lvimrc with localvimrc plugin
 "             (http://www.vim.org/scripts/script.php?script_id=441).
 "             Valac compiler is not the fastest thing in the world, so you
@@ -27,9 +32,12 @@ if exists("g:loaded_syntastic_vala_valac_checker")
 endif
 let g:loaded_syntastic_vala_valac_checker = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 function! SyntaxCheckers_vala_valac_GetHighlightRegex(pos)
-    let strlength = strlen(matchstr(a:pos['text'], '\m\^\+$'))
-    return '\%>' . (a:pos.col-1) . 'c.*\%<' . (a:pos.col+strlength+1) . 'c'
+    let length = strlen(matchstr(a:pos['text'], '\m\^\+$'))
+    return '\%>' . (a:pos['col'] - 1) . 'c\%<' . (a:pos['col'] + length) . 'c'
 endfunction
 
 function! s:GetValaModules()
@@ -48,9 +56,26 @@ function! s:GetValaModules()
     return split(strpart(modules_str, 12), '\s\+')
 endfunction
 
+function! s:GetValaVapiDirs()
+    if exists('g:syntastic_vala_vapi_dirs')
+        if type(g:syntastic_vala_vapi_dirs) == type('')
+            return split(g:syntastic_vala_vapi_dirs, '\s\+')
+        elseif type(g:syntastic_vala_vapi_dirs) == type([])
+            return copy(g:syntastic_vala_vapi_dirs)
+        else
+            echoerr 'g:syntastic_vala_vapi_dirs must be either a list, or a string: fallback to in-file modules string'
+        endif
+    endif
+
+    let vapi_line = search('^//\s*vapidirs:\s*','n')
+    let vapi_str = getline(vapi_line)
+    return split( substitute( vapi_str, '^//\s*vapidirs:\s*', '', 'g' ), '\s\+' )
+endfunction
+
 function! SyntaxCheckers_vala_valac_GetLocList() dict
     let vala_pkg_args = join(map(s:GetValaModules(), '"--pkg ".v:val'), ' ')
-    let makeprg = self.makeprgBuild({ 'args': '-C ' . vala_pkg_args })
+    let vala_vapi_args = join(map(s:GetValaVapiDirs(), '"--vapidir ".v:val'), ' ')
+    let makeprg = self.makeprgBuild({ 'args': '-C ' . vala_pkg_args . " " . vala_vapi_args })
 
     let errorformat =
         \ '%A%f:%l.%c-%\d%\+.%\d%\+: %t%[a-z]%\+: %m,'.
@@ -65,3 +90,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'vala',
     \ 'name': 'valac'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

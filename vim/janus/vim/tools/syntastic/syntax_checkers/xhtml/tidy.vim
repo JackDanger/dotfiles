@@ -18,34 +18,37 @@
 if exists("g:loaded_syntastic_xhtml_tidy_checker")
     finish
 endif
-let g:loaded_syntastic_xhtml_tidy_checker=1
+let g:loaded_syntastic_xhtml_tidy_checker = 1
 
 if !exists('g:syntastic_xhtml_tidy_ignore_errors')
     let g:syntastic_xhtml_tidy_ignore_errors = []
 endif
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 " TODO: join this with html.vim DRY's sake?
 function! s:TidyEncOptByFenc()
     let tidy_opts = {
-                \'utf-8'       : '-utf8',
-                \'ascii'       : '-ascii',
-                \'latin1'      : '-latin1',
-                \'iso-2022-jp' : '-iso-2022',
-                \'cp1252'      : '-win1252',
-                \'macroman'    : '-mac',
-                \'utf-16le'    : '-utf16le',
-                \'utf-16'      : '-utf16',
-                \'big5'        : '-big5',
-                \'cp932'       : '-shiftjis',
-                \'sjis'        : '-shiftjis',
-                \'cp850'       : '-ibm858',
-                \}
+            \ 'utf-8':        '-utf8',
+            \ 'ascii':        '-ascii',
+            \ 'latin1':       '-latin1',
+            \ 'iso-2022-jp':  '-iso-2022',
+            \ 'cp1252':       '-win1252',
+            \ 'macroman':     '-mac',
+            \ 'utf-16le':     '-utf16le',
+            \ 'utf-16':       '-utf16',
+            \ 'big5':         '-big5',
+            \ 'cp932':        '-shiftjis',
+            \ 'sjis':         '-shiftjis',
+            \ 'cp850':        '-ibm858',
+        \ }
     return get(tidy_opts, &fileencoding, '-utf8')
 endfunction
 
 function! s:IgnoreError(text)
-    for i in g:syntastic_xhtml_tidy_ignore_errors
-        if stridx(a:text, i) != -1
+    for item in g:syntastic_xhtml_tidy_ignore_errors
+        if stridx(a:text, item) != -1
             return 1
         endif
     endfor
@@ -54,7 +57,7 @@ endfunction
 
 function! SyntaxCheckers_xhtml_tidy_GetLocList() dict
     let encopt = s:TidyEncOptByFenc()
-    let makeprg = self.makeprgBuild({ 'args': encopt . ' -xml -e' })
+    let makeprg = self.makeprgBuild({ 'args_after': encopt . ' -xml -e' })
 
     let errorformat=
         \ '%Wline %l column %v - Warning: %m,' .
@@ -79,3 +82,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'xhtml',
     \ 'name': 'tidy'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

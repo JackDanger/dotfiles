@@ -9,15 +9,21 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_go_golint_checker")
     finish
 endif
-let g:loaded_syntastic_go_golint_checker=1
+let g:loaded_syntastic_go_golint_checker = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_go_golint_GetLocList() dict
     let makeprg = self.makeprgBuild({})
 
-    let errorformat = '%f:%l:%c: %m,%-G%.%#'
+    let errorformat =
+        \ '%f:%l:%c: %m,' .
+        \ '%-G%.%#'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
@@ -28,3 +34,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'go',
     \ 'name': 'golint'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

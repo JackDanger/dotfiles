@@ -1,6 +1,22 @@
 require 'spec_helper'
 
 describe "Indenting" do
+  specify "method chaining" do
+    assert_correct_indenting <<-EOF
+      some_object.
+        method_one.
+        method_two.
+        method_three
+    EOF
+
+    assert_correct_indenting <<-EOF
+      some_object
+        .method_one
+        .method_two
+        .method_three
+    EOF
+  end
+
   specify "arrays" do
     assert_correct_indenting <<-EOF
       foo = [one,
@@ -160,4 +176,26 @@ describe "Indenting" do
         'b'
     EOF
   end
+
+  specify "continuations in an if-clause condition" do
+    # See https://github.com/vim-ruby/vim-ruby/issues/215 for details
+    assert_correct_indenting <<-EOF
+      if foo || bar ||
+          bong &&
+          baz || bing
+        puts "foo"
+      end
+    EOF
+  end
+
+  specify "continuations with round brackets" do
+    # See https://github.com/vim-ruby/vim-ruby/issues/17 for details
+    assert_correct_indenting <<-EOF
+      foo and
+        (bar and
+         baz) and
+        bing
+    EOF
+  end
+
 end

@@ -1,10 +1,7 @@
-" World.vim -- The World prototype for tlib#input#List()
 " @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
-" @Created:     2007-05-01.
-" @Last Change: 2013-12-03.
-" @Revision:    0.1.1307
+" @Revision:    1396
 
 " :filedoc:
 " A prototype used by |tlib#input#List|.
@@ -75,6 +72,7 @@ let s:prototype = tlib#Object#New({
             \ 'resize_vertical': 0,
             \ 'restore_from_cache': [],
             \ 'filtered_items': [],
+            \ 'resume_state': '', 
             \ 'retrieve_eval': '',
             \ 'return_agent': '',
             \ 'rv': '',
@@ -92,6 +90,7 @@ let s:prototype = tlib#Object#New({
             \ 'temp_prompt': [],
             \ 'timeout': 0,
             \ 'timeout_resolution': 2,
+            \ 'tabpagenr': -1,
             \ 'type': '', 
             \ 'win_wnr': -1,
             \ 'win_height': -1,
@@ -115,6 +114,22 @@ function! s:prototype.Set_display_format(value) dict "{{{3
         let self.display_format = 'world.FormatFilename(%s)'
     else
         let self.display_format = a:value
+    endif
+endf
+
+
+" :nodoc:
+function! s:prototype.DisplayFormat(list) dict "{{{3
+    let display_format = self.display_format
+    if !empty(display_format)
+        if has_key(self, 'InitFormatName')
+            call self.InitFormatName()
+        endif
+        let cache = self.fmt_display
+        " TLogVAR display_format, fmt_entries
+        return map(copy(a:list), 'self.FormatName(cache, display_format, v:val)')
+    else
+        return a:list
     endif
 endf
 
@@ -181,6 +196,32 @@ else
 
 
     " :nodoc:
+    function! s:prototype.UseFilenameIndicators() dict "{{{3
+        return g:tlib_inputlist_filename_indicators || has_key(self, 'filename_indicators')
+    endf
+
+
+    " :nodoc:
+    function! s:prototype.InitFormatName() dict "{{{3 
+        if self.UseFilenameIndicators()
+            let self._buffers = {}
+            for bufnr in range(1, bufnr('$'))
+                let filename = fnamemodify(bufname(bufnr), ':p')
+                " TLogVAR filename
+                let bufdef = {
+                            \ 'bufnr': bufnr,
+                            \ }
+                " '&buflisted'
+                for opt in ['&modified', '&bufhidden']
+                    let bufdef[opt] = getbufvar(bufnr, opt)
+                endfor
+                let self._buffers[filename] = bufdef
+            endfor
+        endif
+    endf
+
+
+    " :nodoc:
     function! s:prototype.FormatFilename(file) dict "{{{3
         " TLogVAR a:file
         let width = self.width_filename
@@ -196,36 +237,34 @@ else
         if strwidth(fname) > width
             let fname = strpart(fname, 0, width - 3) .'...'
         endif
-        let dnmax = &co - max([width, strwidth(fname)]) - 10 - self.index_width - &fdc
-        if g:tlib_inputlist_filename_indicators
-            let dnmax -= 2
-        endif
-        if strwidth(dname) > dnmax
-            let dname = '...'. strpart(dname, len(dname) - dnmax)
-        endif
-        let marker = []
-        let use_indicators = g:tlib_inputlist_filename_indicators || has_key(self, 'filename_indicators')
+        let dnmax = &co - max([width, strwidth(fname)]) - 8 - self.index_width - &fdc
+        let use_indicators = self.UseFilenameIndicators()
         " TLogVAR use_indicators
+        let marker = []
         if use_indicators
             call insert(marker, '[')
-            let bnr = bufnr(a:file)
-            " TLogVAR a:file, bnr, self.bufnr
-            if bnr != -1
-                if bnr == self.bufnr
-                    call add(marker, '%')
-                else
-                    call add(marker, bnr)
+            if g:tlib_inputlist_filename_indicators
+                let bufdef = get(self._buffers, a:file, {})
+                " let bnr = bufnr(a:file)
+                let bnr = get(bufdef, 'bufnr', -1)
+                " TLogVAR a:file, bnr, self.bufnr
+                if bnr != -1
+                    if bnr == self.bufnr
+                        call add(marker, '%')
+                    else
+                        call add(marker, bnr)
+                    endif
+                    if get(bufdef, '&modified', 0)
+                        call add(marker, '+')
+                    endif
+                    if get(bufdef, '&bufhidden', '') == 'hide'
+                        call add(marker, 'h')
+                    endif
+                    " if !get(bufdef, '&buflisted', 1)
+                    "     call add(marker, 'u')
+                    " endif
+                    " echom "DBG" a:file string(get(self,'filename_indicators'))
                 endif
-                if getbufvar(bnr, '&modified')
-                    call add(marker, '+')
-                endif
-                if getbufvar(bnr, '&bufhidden') == 'hide'
-                    call add(marker, 'h')
-                endif
-                " if !buflisted(bnr)
-                "     call add(marker, 'u')
-                " endif
-                " echom "DBG" a:file string(get(self,'filename_indicators'))
             endif
             if has_key(self, 'filename_indicators') && has_key(self.filename_indicators, a:file)
                 if len(marker) > 1
@@ -240,9 +279,16 @@ else
         else
             call add(marker, '|')
         endif
+        let markers = join(marker, '')
+        if !empty(markers)
+            let dnmax -= len(markers)
+        endif
+        if strwidth(dname) > dnmax
+            let dname = '...'. strpart(dname, len(dname) - dnmax)
+        endif
         return printf("%-*s %s %s",
                     \ self.width_filename + len(fname) - strwidth(fname),
-                    \ fname, join(marker, ''), dname)
+                    \ fname, markers, dname)
     endf
 
 endif
@@ -454,6 +500,7 @@ function! s:prototype.SetPrefIdx() dict "{{{3
     let pref_idx = -1
     let pref_weight = -1
     " TLogVAR self.filter_pos, self.filter_neg
+    " let t0 = localtime() " DBG
     for idx in range(1, self.llen)
         let item = self.GetItem(idx)
         let weight = self.matcher.AssessName(self, item)
@@ -463,6 +510,7 @@ function! s:prototype.SetPrefIdx() dict "{{{3
             let pref_weight = weight
         endif
     endfor
+    " TLogVAR localtime() - t0
     " TLogVAR pref_idx
     " TLogDBG self.GetItem(pref_idx)
     if pref_idx == -1
@@ -640,7 +688,7 @@ endf
 function! s:prototype.SetInitialFilter(filter) dict "{{{3
     " let self.initial_filter = [[''], [a:filter]]
     if type(a:filter) == 3
-        let self.initial_filter = copy(a:filter)
+        let self.initial_filter = deepcopy(a:filter)
     else
         let self.initial_filter = [[a:filter]]
     endif
@@ -762,11 +810,16 @@ function! s:prototype.UseInputListScratch() dict "{{{3
     if !exists('b:tlib_list_init')
         call tlib#autocmdgroup#Init()
         autocmd TLib VimResized <buffer> call feedkeys("\<c-j>", 't')
+        " autocmd TLib WinLeave <buffer> let b:tlib_world_event = 'WinLeave' | call feedkeys("\<c-j>", 't')
         let b:tlib_list_init = 1
     endif
     if !exists('w:tlib_list_init')
         " TLogVAR scratch
-        syntax match InputlListIndex /^\d\+:/
+        if has_key(self, 'index_next_syntax')
+            exec 'syntax match InputlListIndex /^\d\+:\s/ nextgroup='. self.index_next_syntax
+        else
+            syntax match InputlListIndex /^\d\+:\s/
+        endif
         syntax match InputlListCursor /^\d\+\* .*$/ contains=InputlListIndex
         syntax match InputlListSelected /^\d\+# .*$/ contains=InputlListIndex
         hi def link InputlListIndex Constant
@@ -921,23 +974,24 @@ function! s:prototype.DisplayHelp() dict "{{{3
     let self.temp_lines = self.InitHelp()
     call self.PushHelp('<Esc>', self.key_mode == 'default' ? 'Abort' : 'Reset keymap')
     call self.PushHelp('Enter, <cr>', 'Pick the current item')
-    call self.PushHelp('<M-Number>',  'Pick an item')
     call self.PushHelp('Mouse', 'L: Pick item, R: Show menu')
+    call self.PushHelp('<M-Number>',  'Select an item')
     call self.PushHelp('<BS>, <C-BS>', 'Reduce filter')
     call self.PushHelp('<S-Esc>, <F10>', 'Enter command')
 
     if self.key_mode == 'default'
-        call self.PushHelp('<C|M-r>',     'Reset the display')
+        call self.PushHelp('<C|M-r>',      'Reset the display')
         call self.PushHelp('Up/Down',      'Next/previous item')
-        call self.PushHelp('<C|M-q>',     'Edit top filter string')
+        call self.PushHelp('<C|M-q>',      'Edit top filter string')
         call self.PushHelp('Page Up/Down', 'Scroll')
+        call self.PushHelp('<S-Space>',    'Enter * Wildcard')
         if self.allow_suspend
             call self.PushHelp('<C|M-z>', 'Suspend/Resume')
             call self.PushHelp('<C-o>', 'Switch to origin')
         endif
         if stridx(self.type, 'm') != -1
             call self.PushHelp('<S-Up/Down>', '(Un)Select items')
-            call self.PushHelp('#, <C-Space>', '(Un)Select the current item')
+            call self.PushHelp('#', '(Un)Select the current item')
             call self.PushHelp('<C|M-a>', '(Un)Select all items')
             call self.PushHelp('<F9>', '(Un)Restrict view to selection')
             " \ '<c-\>        ... Show only selected',
@@ -1069,9 +1123,10 @@ function! s:prototype.DisplayList(...) dict "{{{3
         if self.state =~ '\<display\>'
             call self.Resize(self.GetResize(ll), eval(get(self, 'resize_vertical', 0)))
             call tlib#normal#WithRegister('gg"tdG', 't')
+            let lines = copy(list)
+            " let lines = map(lines, 'substitute(v:val, ''[[:cntrl:][:space:]]'', " ", "g")')
             let w = winwidth(0) - &fdc
             " let w = winwidth(0) - &fdc - 1
-            let lines = copy(list)
             let lines = map(lines, 'printf("%-'. w .'.'. w .'s", substitute(v:val, ''[[:cntrl:][:space:]]'', " ", "g"))')
             " TLogVAR lines
             call append(0, lines)
@@ -1162,7 +1217,7 @@ function! s:prototype.Query() dict "{{{3
     if g:tlib_inputlist_shortmessage
         let query = 'Filter: '. self.DisplayFilter()
     else
-        let query = self.query .' (filter: '. self.DisplayFilter() .'; press "?" for help)'
+        let query = self.query .' (filter: '. self.DisplayFilter() .'; press <F1> for help)'
     endif
     return query
 endf
@@ -1234,6 +1289,9 @@ endf
 " :nodoc:
 function! s:prototype.SwitchWindow(where) dict "{{{3
     " TLogDBG string(tlib#win#List())
+    if self.tabpagenr != tabpagenr()
+        call tlib#tab#Set(self.tabpagenr)
+    endif
     let wnr = get(self, a:where.'_wnr')
     " TLogVAR self, wnr
     return tlib#win#Set(wnr)
@@ -1308,5 +1366,10 @@ function! s:prototype.RestoreOrigin(...) dict "{{{3
     exec 'buffer! '. self.bufnr
     call setpos('.', self.cursor)
     " TLogDBG "RestoreOrigin1 ". string(tlib#win#List())
+endf
+
+
+function! s:prototype.Suspend() dict "{{{3
+    call tlib#agent#Suspend(self, self.rv)
 endf
 

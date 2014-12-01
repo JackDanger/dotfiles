@@ -8,8 +8,11 @@ if exists("g:loaded_syntastic_sh_shellcheck_checker")
 endif
 let g:loaded_syntastic_sh_shellcheck_checker = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 function! SyntaxCheckers_sh_shellcheck_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'args': '-f gcc' })
+    let makeprg = self.makeprgBuild({ 'args_after': '-f gcc' })
 
     let errorformat =
         \ '%f:%l:%c: %trror: %m,' .
@@ -34,3 +37,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'sh',
     \ 'name': 'shellcheck' })
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

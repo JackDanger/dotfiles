@@ -16,15 +16,19 @@
 if exists("g:loaded_syntastic_yaml_jsyaml_checker")
     finish
 endif
-let g:loaded_syntastic_yaml_jsyaml_checker=1
+let g:loaded_syntastic_yaml_jsyaml_checker = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_yaml_jsyaml_GetLocList() dict
     if !exists('s:js_yaml_new')
-        let s:js_yaml_new =
-            \ syntastic#util#versionIsAtLeast(syntastic#util#getVersion(self.getExec() . ' --version'), [2])
+        let ver = syntastic#util#getVersion(self.getExecEscaped() . ' --version')
+        call self.log(self.getExec() . ' version =', ver)
+        let s:js_yaml_new = syntastic#util#versionIsAtLeast(ver, [2])
     endif
 
-    let makeprg = self.makeprgBuild({ 'args': s:js_yaml_new ? '' : '--compact' })
+    let makeprg = self.makeprgBuild({ 'args_after': (s:js_yaml_new ? '' : '--compact') })
 
     let errorformat =
         \ 'Error on line %l\, col %c:%m,' .
@@ -41,3 +45,8 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'yaml',
     \ 'name': 'jsyaml',
     \ 'exec': 'js-yaml'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

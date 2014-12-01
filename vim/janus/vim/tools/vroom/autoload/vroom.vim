@@ -25,6 +25,10 @@ if !exists("g:vroom_cucumber_path")
   let g:vroom_cucumber_path = './script/cucumber '
 endif
 
+if !exists("g:vroom_cucumber_options")
+  let g:vroom_cucumber_options = ''
+endif
+
 if !exists("g:vroom_detect_spec_helper")
   let g:vroom_detect_spec_helper = 0
 endif
@@ -106,6 +110,15 @@ function vroom#RunNearestTest(...)
   call s:RunNearestTest(opts)
 endfunction
 
+" Public: Run the last executed test.
+function vroom#RunLastTest()
+  if exists('g:vroom_last_cmd')
+    call s:Run(g:vroom_last_cmd)
+  else
+    echo 'No test was run.'
+  endif
+endfunction
+
 " }}}
 " Internal helper functions {{{
 
@@ -163,7 +176,7 @@ function s:DetermineRunner(filename)
   if match(a:filename, '_spec.rb') != -1
     return s:test_runner_prefix . g:vroom_spec_command . s:color_flag
   elseif match(a:filename, '\.feature') != -1
-    return s:test_runner_prefix . g:vroom_cucumber_path . s:color_flag
+    return s:test_runner_prefix . g:vroom_cucumber_path . g:vroom_cucumber_options . s:color_flag
   elseif match(a:filename, "_test.rb") != -1
     return s:test_runner_prefix . g:vroom_test_unit_command
   end
@@ -187,6 +200,7 @@ endfunction
 
 " Internal: Runs a command though vim or vmux
 function s:Run(cmd)
+  let g:vroom_last_cmd = a:cmd
   if g:vroom_use_vimux
     call VimuxRunCommand(a:cmd)
   elseif g:vroom_use_dispatch && exists(':Dispatch')
@@ -196,12 +210,11 @@ function s:Run(cmd)
   end
 endfunction
 
-" Internal: Clear the screen prior to running specs
+" Internal: Clear the screen prior to running specs for vimux
+" Otherwise, prefix the command with a clear.
 function s:ClearScreen()
   if g:vroom_use_vimux
     call VimuxRunCommand("clear")
-  else
-    :silent !clear
   endif
 endfunction
 
@@ -238,6 +251,7 @@ function s:SetTestRunnerPrefix(filename)
   call s:IsUsingBundleExec(a:filename)
   call s:IsUsingBinstubs()
   call s:IsUsingSpring()
+  call s:IsClearScreenEnabled()
 endfunction
 
 " Internal: Check for .zeus.sock and use zeus instead of bundler
@@ -288,6 +302,14 @@ endfunction
 function s:IsUsingSpring()
   if g:vroom_use_spring
     let s:test_runner_prefix = "spring "
+  endif
+endfunction
+
+" Internal: Check to see if we should clear the screen and prefixes
+"           s:test_runner_prefix as neessary
+function s:IsClearScreenEnabled()
+  if g:vroom_clear_screen && !g:vroom_use_vimux
+    let s:test_runner_prefix = "clear; " . s:test_runner_prefix
   endif
 endfunction
 

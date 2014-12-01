@@ -13,7 +13,7 @@ let g:loaded_unimpaired = 1
 function! s:MapNextFamily(map,cmd)
   let map = '<Plug>unimpaired'.toupper(a:map)
   let cmd = '".(v:count ? v:count : "")."'.a:cmd
-  let end = '"<CR>'
+  let end = '"<CR>'.(a:cmd == 'l' || a:cmd == 'c' ? 'zv' : '')
   execute 'nnoremap <silent> '.map.'Previous :<C-U>exe "'.cmd.'previous'.end
   execute 'nnoremap <silent> '.map.'Next     :<C-U>exe "'.cmd.'next'.end
   execute 'nnoremap <silent> '.map.'First    :<C-U>exe "'.cmd.'first'.end
@@ -43,7 +43,6 @@ function! s:entries(path)
   call map(files,'substitute(v:val,"[\\/]$","","")')
   call filter(files,'v:val !~# "[\\\\/]\\.\\.\\=$"')
 
-  " filter out &suffixes
   let filter_suffixes = substitute(escape(&suffixes, '~.*$^'), ',', '$\\|', 'g') .'$'
   call filter(files, 'v:val !~# filter_suffixes')
 
@@ -87,8 +86,8 @@ function! s:fnameescape(file) abort
   endif
 endfunction
 
-nnoremap <silent> <Plug>unimpairedDirectoryNext     :<C-U>edit <C-R>=<SID>fnameescape(<SID>FileByOffset(v:count1))<CR><CR>
-nnoremap <silent> <Plug>unimpairedDirectoryPrevious :<C-U>edit <C-R>=<SID>fnameescape(<SID>FileByOffset(-v:count1))<CR><CR>
+nnoremap <silent> <Plug>unimpairedDirectoryNext     :<C-U>edit <C-R>=fnamemodify(<SID>fnameescape(<SID>FileByOffset(v:count1)), ':.')<CR><CR>
+nnoremap <silent> <Plug>unimpairedDirectoryPrevious :<C-U>edit <C-R>=fnamemodify(<SID>fnameescape(<SID>FileByOffset(-v:count1)), ':.')<CR><CR>
 nmap ]f <Plug>unimpairedDirectoryNext
 nmap [f <Plug>unimpairedDirectoryPrevious
 
@@ -167,20 +166,34 @@ nmap ]<Space> <Plug>unimpairedBlankDown
 
 function! s:Move(cmd, count, map) abort
   normal! m`
-  exe 'move'.a:cmd.a:count
+  silent! exe 'move'.a:cmd.a:count
   norm! ``
   silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
 endfunction
 
-nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-nnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-xnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move--'.v:count1<CR>``
-xnoremap <silent> <Plug>unimpairedMoveDown :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move''>+'.v:count1<CR>``
+function! s:MoveSelectionUp(count) abort
+  normal! m`
+  silent! exe "'<,'>move'<--".a:count
+  norm! ``
+  silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+endfunction
+
+function! s:MoveSelectionDown(count) abort
+  normal! m`
+  exe "'<,'>move'>+".a:count
+  norm! ``
+  silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+endfunction
+
+nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
 
 nmap [e <Plug>unimpairedMoveUp
 nmap ]e <Plug>unimpairedMoveDown
-xmap [e <Plug>unimpairedMoveUp
-xmap ]e <Plug>unimpairedMoveDown
+xmap [e <Plug>unimpairedMoveSelectionUp
+xmap ]e <Plug>unimpairedMoveSelectionDown
 
 " }}}1
 " Option toggling {{{1
@@ -195,6 +208,9 @@ function! s:option_map(letter, option)
   exe 'nnoremap co'.a:letter.' :set <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
 endfunction
 
+nnoremap [ob :set background=light<CR>
+nnoremap ]ob :set background=dark<CR>
+nnoremap cob :set background=<C-R>=&background == 'dark' ? 'light' : 'dark'<CR><CR>
 call s:option_map('c', 'cursorline')
 call s:option_map('u', 'cursorcolumn')
 nnoremap [od :diffthis<CR>
@@ -210,53 +226,57 @@ call s:option_map('w', 'wrap')
 nnoremap [ox :set cursorline cursorcolumn<CR>
 nnoremap ]ox :set nocursorline nocursorcolumn<CR>
 nnoremap cox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcolumn' : 'cursorline cursorcolumn'<CR><CR>
+nnoremap [ov :set virtualedit+=all<CR>
+nnoremap ]ov :set virtualedit-=all<CR>
+nnoremap cov :set <C-R>=(&virtualedit =~# "all") ? 'virtualedit-=all' : 'virtualedit+=all'<CR><CR>
 
 function! s:setup_paste() abort
   let s:paste = &paste
+  let s:mouse = &mouse
   set paste
+  set mouse=
 endfunction
 
 nnoremap <silent> <Plug>unimpairedPaste :call <SID>setup_paste()<CR>
 
-nnoremap <silent> yp  :call <SID>setup_paste()<CR>a
-nnoremap <silent> yP  :call <SID>setup_paste()<CR>i
 nnoremap <silent> yo  :call <SID>setup_paste()<CR>o
 nnoremap <silent> yO  :call <SID>setup_paste()<CR>O
-nnoremap <silent> yA  :call <SID>setup_paste()<CR>A
-nnoremap <silent> yI  :call <SID>setup_paste()<CR>I
-nnoremap <silent> ygi :call <SID>setup_paste()<CR>gi
-nnoremap <silent> ygI :call <SID>setup_paste()<CR>gI
 
 augroup unimpaired_paste
   autocmd!
   autocmd InsertLeave *
         \ if exists('s:paste') |
         \   let &paste = s:paste |
+        \   let &mouse = s:mouse |
         \   unlet s:paste |
+        \   unlet s:mouse |
         \ endif
 augroup END
 
 " }}}1
 " Put {{{1
 
-function! s:putline(how) abort
+function! s:putline(how, map) abort
   let [body, type] = [getreg(v:register), getregtype(v:register)]
   call setreg(v:register, body, 'l')
   exe 'normal! "'.v:register.a:how
   call setreg(v:register, body, type)
+  if type !=# 'V'
+    silent! call repeat#set("\<Plug>unimpairedPut".a:map)
+  endif
 endfunction
 
-nnoremap <silent> <Plug>unimpairedPutAbove :call <SID>putline('[p')<CR>
-nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline(']p')<CR>
+nnoremap <silent> <Plug>unimpairedPutAbove :call <SID>putline('[p', 'Above')<CR>
+nnoremap <silent> <Plug>unimpairedPutBelow :call <SID>putline(']p', 'Below')<CR>
 
 nmap [p <Plug>unimpairedPutAbove
 nmap ]p <Plug>unimpairedPutBelow
-nnoremap <silent> >P :call <SID>putline('[p')<CR>>']
-nnoremap <silent> >p :call <SID>putline(']p')<CR>>']
-nnoremap <silent> <P :call <SID>putline('[p')<CR><']
-nnoremap <silent> <p :call <SID>putline(']p')<CR><']
-nnoremap <silent> =P :call <SID>putline('[p')<CR>=']
-nnoremap <silent> =p :call <SID>putline(']p')<CR>=']
+nnoremap <silent> >P :call <SID>putline('[p', 'Above')<CR>>']
+nnoremap <silent> >p :call <SID>putline(']p', 'Below')<CR>>']
+nnoremap <silent> <P :call <SID>putline('[p', 'Above')<CR><']
+nnoremap <silent> <p :call <SID>putline(']p', 'Below')<CR><']
+nnoremap <silent> =P :call <SID>putline('[p', 'Above')<CR>=']
+nnoremap <silent> =p :call <SID>putline(']p', 'Below')<CR>=']
 
 " }}}1
 " Encoding and decoding {{{1

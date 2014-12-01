@@ -106,6 +106,10 @@ USAGE                                                 *:Gist* *gist-vim-usage*
 >
     :Gist -ls
 <
+- Open the gist on browser after you post or update it.
+>
+    :Gist -b
+<
 ==============================================================================
 TIPS                                                           *gist-vim-tips*
 
@@ -146,7 +150,10 @@ If you want to show your private gists with ":Gist -l": >
 If you want your gist to be private by default: >
 
     let g:gist_post_private = 1
+<
+If you want your gist to be anonymous by default: >
 
+    let g:gist_post_anonymous = 1
 <
 If you want to edit all files for gists containing more than one: >
 
@@ -155,7 +162,7 @@ If you want to edit all files for gists containing more than one: >
 
 If you want to use on GitHub Enterprise: >
 
-    let g:github_api_url = 'http://your-github-enterprise-domain/api/v3'
+    let g:gist_api_url = 'http://your-github-enterprise-domain/api/v3'
 <
 
 If you want to update a gist, embed >
@@ -233,7 +240,7 @@ REQUIREMENTS                                           *gist-vim-requirements*
 ==============================================================================
 SETUP                                                       *gist-vim-setup*
 
-This plugin uses GitHub API v3. Setting value is stored in `~/.gist.vim`.
+This plugin uses GitHub API v3. Setting value is stored in `~/.gist-vim`.
 gist-vim have two ways to access APIs.
 
 First, you need to set your GitHub username in global git config:
@@ -265,6 +272,8 @@ Then, add following into your ~/.vimrc
     let g:gist_use_password_in_gitconfig = 1
 <
 This is not secure at all, so strongly discouraged.
+
+NOTE: the username is optional if you only send anonymous gists.
 
 ==============================================================================
 FAQ                                                           *gist-vim-faq*

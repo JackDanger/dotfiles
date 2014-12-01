@@ -16,8 +16,16 @@ endif
 
 let g:loaded_syntastic_ruby_rubylint_checker = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 function! SyntaxCheckers_ruby_rubylint_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'args': 'analyze --presenter=syntastic' })
+    if !exists('s:rubylint_new')
+        let ver = syntastic#util#getVersion(self.getExecEscaped() . ' --version')
+        call self.log(self.getExec() . ' version =', ver)
+        let s:rubylint_new = syntastic#util#versionIsAtLeast(ver, [2])
+    endif
+    let makeprg = self.makeprgBuild({ 'args': (s:rubylint_new ? '' : 'analyze ') . '--presenter=syntastic' })
 
     let errorformat = '%f:%t:%l:%c: %m'
 
@@ -31,4 +39,7 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'name': 'rubylint',
     \ 'exec': 'ruby-lint'})
 
-" vim: set ts=4 sts=4 sw=4:
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

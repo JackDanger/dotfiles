@@ -8,42 +8,45 @@
 "             Want To Public License, Version 2, as published by Sam Hocevar.
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
-"
-" To enable this plugin, edit the .vimrc like this:
-"
-"   let g:syntastic_javascript_checker = "closurecompiler"
-"
-" and set the path to the Google Closure Compiler:
-"
-"   let g:syntastic_javascript_closure_compiler_path = '/path/to/google-closure-compiler.jar'
-"
-" It takes additional options for Google Closure Compiler with the variable
-" g:syntastic_javascript_closure_compiler_options.
-"
 
 if exists("g:loaded_syntastic_javascript_closurecompiler_checker")
     finish
 endif
-let g:loaded_syntastic_javascript_closurecompiler_checker=1
+let g:loaded_syntastic_javascript_closurecompiler_checker = 1
 
-if !exists("g:syntastic_javascript_closure_compiler_options")
-    let g:syntastic_javascript_closure_compiler_options = ""
-endif
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_javascript_closurecompiler_IsAvailable() dict
-    return executable("java") && exists("g:syntastic_javascript_closure_compiler_path")
+    call syntastic#log#deprecationWarn('javascript_closure_compiler_path', 'javascript_closurecompiler_path')
+
+    if !executable(self.getExec())
+        return 0
+    endif
+
+    let cp = get(g:, 'syntastic_javascript_closurecompiler_path', '')
+    call self.log('g:syntastic_javascript_closurecompiler_path =', cp)
+
+    let jar = expand(cp)
+    call self.log('filereadable(' . string(jar) . ') = ' . filereadable(jar))
+
+    return filereadable(jar)
 endfunction
 
 function! SyntaxCheckers_javascript_closurecompiler_GetLocList() dict
-    if exists("g:syntastic_javascript_closure_compiler_file_list")
-        let file_list = join(readfile(g:syntastic_javascript_closure_compiler_file_list), ' ')
+    call syntastic#log#deprecationWarn('javascript_closure_compiler_options', 'javascript_closurecompiler_args')
+    call syntastic#log#deprecationWarn('javascript_closure_compiler_file_list', 'javascript_closurecompiler_file_list')
+
+    let flist = expand(get(g:, 'syntastic_javascript_closurecompiler_file_list', ''))
+    if filereadable(flist)
+        let file_list = map( readfile(flist), 'expand(v:var)' )
     else
-        let file_list = syntastic#util#shexpand('%')
+        let file_list = [expand('%')]
     endif
 
     let makeprg = self.makeprgBuild({
-        \ 'exe': 'java -jar ' . g:syntastic_javascript_closure_compiler_path,
-        \ 'args': g:syntastic_javascript_closure_compiler_options . ' --js' ,
+        \ 'exe_after': ['-jar', expand(g:syntastic_javascript_closurecompiler_path)],
+        \ 'args_after': '--js',
         \ 'fname': file_list })
 
     let errorformat =
@@ -63,3 +66,7 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'name': 'closurecompiler',
     \ 'exec': 'java'})
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

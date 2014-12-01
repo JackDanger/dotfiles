@@ -39,15 +39,26 @@ COMMANDS                                        *dispatch-commands*
                         {command} and use its 'errorformat' to dispatch a
                         |:Make| for the given {command} and [arguments].  If
                         no compiler plugin is found, the generic format
-                        %+G%.%# is used.
+                        %+I%.%# is used.
 
-                        :Dispatch picks a compiler by looking for
-                        CompilerSet makeprg={program} in compiler plugins.
+                        :Dispatch picks a compiler by looking for either
+                        CompilerSet makeprg={program}\ [arguments] or
+                        CompilerSet makeprg={command} in compiler plugins.
                         To force a given {program} to use a given {compiler},
                         create ~/.vim/after/compiler/{compiler}.vim and add to
                         it a line like the following: >
 
                         " CompilerSet makeprg={program}
+<
+                        If you need more control, *g:dispatch_compilers* can
+                        be set to a dictionary with commands for keys and
+                        compiler plugins for values.  Use an empty value to
+                        skip the matched string and try again with the rest of
+                        the command.
+>
+                        let g:dispatch_compilers = {
+                              \ 'latex': 'tex',
+                              \ 'bundle exec': ''}
 <
                                                 *b:dispatch*
 :Dispatch[!]            Invoke |:Dispatch| with the command and arguments
@@ -71,9 +82,14 @@ COMMANDS                                        *dispatch-commands*
                         with no arguments.
 
                                                 *dispatch-:Start*
-:Start {command}        Start a process in a new, focused window.
+:Start {command}        Start a process in a new, focused window.  If
+                        {command} and the current working directory match
+                        previous :Start invocation, focus it instead, if
+                        possible.
 
-:Start! {command}       Start a process in a new, unfocused window.
+:Start! {command}       Start a process in a new, unfocused window.  If
+                        {command} and the current working directory match
+                        previous :Start invocation, do nothing.
 
                                                 *b:start*
 :Start[!]               With no arguments, |:Start| the command given by
@@ -82,6 +98,11 @@ COMMANDS                                        *dispatch-commands*
 :Start[!] -title={title} {command}
                         Start a process in a window titled {title}.  This is
                         not normally used interactively.
+
+                                                *dispatch-:Spawn*
+:Spawn[!] [command]     Like |:Start|, but always spawn a new process rather
+                        than focusing an existing one.  The default is always
+                        to spawn a new 'shell'.
 
 STRATEGIES                                      *dispatch-strategies*
 
@@ -97,6 +118,8 @@ list.  (All other strategies use the GUI subsystem to get this to work.)
 The tmux strategy can be used from the GUI as well.  Either start Vim from
 inside of tmux or assign g:tmux_session.  This will use a new window for
 foreground makes rather than a split.
+
+Tmux 1.6 or newer is required.
 
 GNU Screen ~
 
@@ -116,8 +139,8 @@ for foreground |:Make| invocations.
 
 X11 ~
 
-Uses $TERMINAL, x-terminal-emulator, or xterm.  Used only for |:Start|, as its
-insistence on stealing focus makes it infuriating for much else.
+Uses $TERMINAL, x-terminal-emulator, or xterm.  Used for |:Start| and, if
+wmctrl installed to aid in switching the focus back, |:Start!|.
 
 Headless ~
 

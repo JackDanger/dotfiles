@@ -22,7 +22,7 @@ setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetRubyIndent(v:lnum)
-setlocal indentkeys=0{,0},0),0],!^F,o,O,e,:
+setlocal indentkeys=0{,0},0),0],!^F,o,O,e,:,.
 setlocal indentkeys+==end,=else,=elsif,=when,=ensure,=rescue,==begin,==end
 setlocal indentkeys+==private,=protected,=public
 
@@ -55,9 +55,10 @@ let s:skip_expr =
       \ "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_strcom."'"
 
 " Regex used for words that, at the start of a line, add a level of indent.
-let s:ruby_indent_keywords = '^\s*\zs\<\%(module\|class\|def\|if\|for' .
-      \ '\|while\|until\|else\|elsif\|case\|when\|unless\|begin\|ensure' .
-      \ '\|rescue\):\@!\>' .
+let s:ruby_indent_keywords =
+      \ '^\s*\zs\<\%(module\|class\|if\|for' .
+      \   '\|while\|until\|else\|elsif\|case\|when\|unless\|begin\|ensure\|rescue' .
+      \   '\|\%(public\|protected\|private\)\=\s*def\):\@!\>' .
       \ '\|\%([=,*/%+-]\|<<\|>>\|:\s\)\s*\zs' .
       \    '\<\%(if\|for\|while\|until\|case\|unless\|begin\):\@!\>'
 
@@ -70,7 +71,8 @@ let s:ruby_deindent_keywords =
 " TODO: the do here should be restricted somewhat (only at end of line)?
 let s:end_start_regex =
       \ '\C\%(^\s*\|[=,*/%+\-|;{]\|<<\|>>\|:\s\)\s*\zs' .
-      \ '\<\%(module\|class\|def\|if\|for\|while\|until\|case\|unless\|begin\):\@!\>' .
+      \ '\<\%(module\|class\|if\|for\|while\|until\|case\|unless\|begin' .
+      \   '\|\%(public\|protected\|private\)\=\s*def\):\@!\>' .
       \ '\|\%(^\|[^.:@$]\)\@<=\<do:\@!\>'
 
 " Regex that defines the middle-match for the 'end' keyword.
@@ -88,21 +90,28 @@ let s:end_skip_expr = s:skip_expr .
 let s:non_bracket_continuation_regex = '\%([\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
 
 " Regex that defines continuation lines.
-" TODO: this needs to deal with if ...: and so on
 let s:continuation_regex =
       \ '\%(%\@<![({[\\.,:*/%+]\|\<and\|\<or\|\%(<%\)\@<![=-]\|\W[|&?]\|||\|&&\)\s*\%(#.*\)\=$'
 
+" Regex that defines continuable keywords
+let s:continuable_regex =
+      \ '\C\%(^\s*\|[=,*/%+\-|;{]\|<<\|>>\|:\s\)\s*\zs' .
+      \ '\<\%(if\|for\|while\|until\|unless\):\@!\>'
+
 " Regex that defines bracket continuations
 let s:bracket_continuation_regex = '%\@<!\%([({[]\)\s*\%(#.*\)\=$'
+
+" Regex that defines end of bracket continuation followed by another continuation
+let s:bracket_switch_continuation_regex = '^\([^(]\+\zs).\+\)\+'.s:continuation_regex
 
 " Regex that defines the first part of a splat pattern
 let s:splat_regex = '[[,(]\s*\*\s*\%(#.*\)\=$'
 
 " Regex that describes all indent access modifiers
-let s:access_modifier_regex = '\C^\s*\%(private\|public\|protected\)\s*\%(#.*\)\=$'
+let s:access_modifier_regex = '\C^\s*\%(public\|protected\|private\)\s*\%(#.*\)\=$'
 
 " Regex that describes the indent access modifiers (excludes public)
-let s:indent_access_modifier_regex = '\C^\s*\%(private\|protected\)\s*\%(#.*\)\=$'
+let s:indent_access_modifier_regex = '\C^\s*\%(protected\|private\)\s*\%(#.*\)\=$'
 
 " Regex that defines blocks.
 "
@@ -117,6 +126,9 @@ let s:block_regex =
       \ '\%(\<do:\@!\>\|%\@<!{\)\s*\%(|\s*(*\s*\%([*@&]\=\h\w*,\=\s*\)\%(,\s*(*\s*[*@&]\=\h\w*\s*)*\s*\)*|\)\=\s*\%(#.*\)\=$'
 
 let s:block_continuation_regex = '^\s*[^])}\t ].*'.s:block_regex
+
+" Regex that describes a leading operator (only a method call's dot for now)
+let s:leading_operator_regex = '^\s*[.]'
 
 " 2. Auxiliary Functions {{{1
 " ======================
@@ -177,7 +189,11 @@ function s:GetMSL(lnum)
     " Otherwise, terminate search as we have found our MSL already.
     let line = getline(lnum)
 
-    if s:Match(lnum, s:splat_regex)
+    if s:Match(msl, s:leading_operator_regex)
+      " If the current line starts with a leading operator, keep its indent
+      " and keep looking for an MSL.
+      let msl = lnum
+    elseif s:Match(lnum, s:splat_regex)
       " If the above line looks like the "*" of a splat, use the current one's
       " indentation.
       "
@@ -440,6 +456,11 @@ function GetRubyIndent(...)
     return 0
   endif
 
+  " If the current line starts with a leading operator, add a level of indent.
+  if s:Match(clnum, s:leading_operator_regex)
+    return indent(s:GetMSL(clnum)) + &sw
+  endif
+
   " 3.3. Work on the previous line. {{{2
   " -------------------------------
 
@@ -474,9 +495,19 @@ function GetRubyIndent(...)
     endif
   endif
 
+  if s:Match(lnum, s:continuable_regex) && s:Match(lnum, s:continuation_regex)
+    return indent(s:GetMSL(lnum)) + &sw + &sw
+  endif
+
   " If the previous line ended with a block opening, add a level of indent.
   if s:Match(lnum, s:block_regex)
     return indent(s:GetMSL(lnum)) + &sw
+  endif
+
+  " If the previous line started with a leading operator, use its MSL's level
+  " of indent
+  if s:Match(lnum, s:leading_operator_regex)
+    return indent(s:GetMSL(lnum))
   endif
 
   " If the previous line ended with the "*" of a splat, add a level of indent
@@ -555,10 +586,14 @@ function GetRubyIndent(...)
   let p_lnum = lnum
   let lnum = s:GetMSL(lnum)
 
-  " If the previous line wasn't a MSL and is continuation return its indent.
-  " TODO: the || s:IsInString() thing worries me a bit.
+  " If the previous line wasn't a MSL.
   if p_lnum != lnum
-    if s:Match(p_lnum, s:non_bracket_continuation_regex) || s:IsInString(p_lnum,strlen(line))
+    " If previous line ends bracket and begins non-bracket continuation decrease indent by 1.
+    if s:Match(p_lnum, s:bracket_switch_continuation_regex)
+      return ind - 1
+    " If previous line is a continuation return its indent.
+    " TODO: the || s:IsInString() thing worries me a bit.
+    elseif s:Match(p_lnum, s:non_bracket_continuation_regex) || s:IsInString(p_lnum,strlen(line))
       return ind
     endif
   endif

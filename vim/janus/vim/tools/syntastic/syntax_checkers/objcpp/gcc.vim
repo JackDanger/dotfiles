@@ -15,20 +15,20 @@ if exists('g:loaded_syntastic_objcpp_gcc_checker')
 endif
 let g:loaded_syntastic_objcpp_gcc_checker = 1
 
-if !exists('g:syntastic_objcpp_compiler')
-    let g:syntastic_objcpp_compiler = 'gcc'
+if !exists('g:syntastic_objcpp_compiler_options')
+    let g:syntastic_objcpp_compiler_options = '-std=gnu99'
 endif
-
-function! SyntaxCheckers_objcpp_gcc_IsAvailable() dict
-    return executable(expand(g:syntastic_objcpp_compiler))
-endfunction
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists('g:syntastic_objcpp_compiler_options')
-    let g:syntastic_objcpp_compiler_options = '-std=gnu99'
-endif
+function! SyntaxCheckers_objcpp_gcc_IsAvailable() dict
+    if !exists('g:syntastic_c_compiler')
+        let g:syntastic_objcpp_compiler = executable(self.getExec()) ? self.getExec() : 'clang'
+    endif
+    call self.log('g:syntastic_objcpp_compiler =', g:syntastic_objcpp_compiler)
+    return executable(expand(g:syntastic_objcpp_compiler))
+endfunction
 
 function! SyntaxCheckers_objcpp_gcc_GetLocList() dict
     return syntastic#c#GetLocList('objcpp', 'gcc', {
@@ -51,7 +51,7 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'objcpp',
-    \ 'name': 'gcc'})
+    \ 'name': 'gcc' })
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

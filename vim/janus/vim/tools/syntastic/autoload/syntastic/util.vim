@@ -1,4 +1,4 @@
-if exists("g:loaded_syntastic_util_autoload")
+if exists('g:loaded_syntastic_util_autoload') || !exists("g:loaded_syntastic_plugin")
     finish
 endif
 let g:loaded_syntastic_util_autoload = 1
@@ -6,43 +6,71 @@ let g:loaded_syntastic_util_autoload = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists("g:syntastic_delayed_redraws")
-    let g:syntastic_delayed_redraws = 0
-endif
-
-let s:redraw_delayed = 0
-let s:redraw_full = 0
-
-if g:syntastic_delayed_redraws
-    " CursorHold / CursorHoldI events are triggered if user doesn't press a
-    " key for &updatetime ms.  We change it only if current value is the default
-    " value, that is 4000 ms.
-    if &updatetime == 4000
-        let &updatetime = 500
-    endif
-
-    augroup syntastic
-        autocmd CursorHold,CursorHoldI * call syntastic#util#redrawHandler()
-    augroup END
-endif
-
 " Public functions {{{1
 
-function! syntastic#util#isRunningWindows()
+function! syntastic#util#isRunningWindows() " {{{2
     return has('win16') || has('win32') || has('win64')
-endfunction
+endfunction " }}}2
 
-function! syntastic#util#DevNull()
+function! syntastic#util#DevNull() " {{{2
     if syntastic#util#isRunningWindows()
         return 'NUL'
     endif
     return '/dev/null'
-endfunction
+endfunction " }}}2
 
 " Get directory separator
-function! syntastic#util#Slash() abort
-    return !exists("+shellslash") || &shellslash ? '/' : '\'
-endfunction
+function! syntastic#util#Slash() abort " {{{2
+    return (!exists("+shellslash") || &shellslash) ? '/' : '\'
+endfunction " }}}2
+
+" Create a temporary directory
+function! syntastic#util#tmpdir() " {{{2
+    let tempdir = ''
+
+    if (has('unix') || has('mac')) && executable('mktemp')
+        " TODO: option "-t" to mktemp(1) is not portable
+        let tmp = $TMPDIR != '' ? $TMPDIR : $TMP != '' ? $TMP : '/tmp'
+        let out = split(system('mktemp -q -d ' . tmp . '/vim-syntastic-' . getpid() . '-XXXXXXXX'), "\n")
+        if v:shell_error == 0 && len(out) == 1
+            let tempdir = out[0]
+        endif
+    endif
+
+    if tempdir == ''
+        if has('win32') || has('win64')
+            let tempdir = $TEMP . syntastic#util#Slash() . 'vim-syntastic-' . getpid()
+        elseif has('win32unix')
+            let tempdir = s:CygwinPath('/tmp/vim-syntastic-'  . getpid())
+        elseif $TMPDIR != ''
+            let tempdir = $TMPDIR . '/vim-syntastic-' . getpid()
+        else
+            let tempdir = '/tmp/vim-syntastic-' . getpid()
+        endif
+    endif
+
+    return tempdir
+endfunction " }}}2
+
+" Recursively remove a directory
+function! syntastic#util#rmrf(what) " {{{2
+    if  getftype(a:what) ==# 'dir'
+        if !exists('s:rmrf')
+            let s:rmrf =
+                \ has('unix') || has('mac') ? 'rm -rf' :
+                \ has('win32') || has('win64') ? 'rmdir /S /Q' :
+                \ has('win16') || has('win95') || has('dos16') || has('dos32') ? 'deltree /Y' : ''
+        endif
+
+        if s:rmrf != ''
+            silent! call system(s:rmrf . ' ' . syntastic#util#shescape(a:what))
+        else
+            call s:_rmrf(a:what)
+        endif
+    else
+        silent! call delete(a:what)
+    endif
+endfunction " }}}2
 
 "search the first 5 lines of the file for a magic number and return a map
 "containing the args and the executable
@@ -54,30 +82,38 @@ endfunction
 "returns
 "
 "{'exe': '/usr/bin/perl', 'args': ['-f', '-bar']}
-function! syntastic#util#parseShebang()
-    for lnum in range(1,5)
+function! syntastic#util#parseShebang() " {{{2
+    for lnum in range(1, 5)
         let line = getline(lnum)
-
         if line =~ '^#!'
-            let exe = matchstr(line, '\m^#!\s*\zs[^ \t]*')
-            let args = split(matchstr(line, '\m^#!\s*[^ \t]*\zs.*'))
-            return {'exe': exe, 'args': args}
+            let line = substitute(line, '\v^#!\s*(\S+/env(\s+-\S+)*\s+)?', '', '')
+            let exe = matchstr(line, '\m^\S*\ze')
+            let args = split(matchstr(line, '\m^\S*\zs.*'))
+            return { 'exe': exe, 'args': args }
         endif
     endfor
 
-    return {'exe': '', 'args': []}
-endfunction
+    return { 'exe': '', 'args': [] }
+endfunction " }}}2
+
+" Get the value of a variable.  Allow local variables to override global ones.
+function! syntastic#util#var(name, ...) " {{{2
+    return
+        \ exists('b:syntastic_' . a:name) ? b:syntastic_{a:name} :
+        \ exists('g:syntastic_' . a:name) ? g:syntastic_{a:name} :
+        \ a:0 > 0 ? a:1 : ''
+endfunction " }}}2
 
 " Parse a version string.  Return an array of version components.
-function! syntastic#util#parseVersion(version)
-    return split(matchstr( a:version, '\v^\D*\zs\d+(\.\d+)+\ze' ), '\m\.')
-endfunction
+function! syntastic#util#parseVersion(version) " {{{2
+    return map(split(matchstr( a:version, '\v^\D*\zs\d+(\.\d+)+\ze' ), '\m\.'), 'str2nr(v:val)')
+endfunction " }}}2
 
 " Run 'command' in a shell and parse output as a version string.
 " Returns an array of version components.
-function! syntastic#util#getVersion(command)
+function! syntastic#util#getVersion(command) " {{{2
     return syntastic#util#parseVersion(system(a:command))
-endfunction
+endfunction " }}}2
 
 " Verify that the 'installed' version is at least the 'required' version.
 "
@@ -85,53 +121,65 @@ endfunction
 " the "missing" elements will be assumed to be 0 for the purposes of checking.
 "
 " See http://semver.org for info about version numbers.
-function! syntastic#util#versionIsAtLeast(installed, required)
-    for index in range(max([len(a:installed), len(a:required)]))
-        if len(a:installed) <= index
-            let installed_element = 0
-        else
-            let installed_element = a:installed[index]
-        endif
-        if len(a:required) <= index
-            let required_element = 0
-        else
-            let required_element = a:required[index]
-        endif
-        if installed_element != required_element
-            return installed_element > required_element
+function! syntastic#util#versionIsAtLeast(installed, required) " {{{2
+    return syntastic#util#compareLexi(a:installed, a:required) >= 0
+endfunction " }}}2
+
+" Almost lexicographic comparison of two lists of integers. :) If lists
+" have different lengths, the "missing" elements are assumed to be 0.
+function! syntastic#util#compareLexi(a, b) " {{{2
+    for idx in range(max([len(a:a), len(a:b)]))
+        let a_element = str2nr(get(a:a, idx, 0))
+        let b_element = str2nr(get(a:b, idx, 0))
+        if a_element != b_element
+            return a_element > b_element ? 1 : -1
         endif
     endfor
     " Everything matched, so it is at least the required version.
-    return 1
-endfunction
+    return 0
+endfunction " }}}2
+
+" strwidth() was added in Vim 7.3; if it doesn't exist, we use strlen()
+" and hope for the best :)
+let s:width = function(exists('*strwidth') ? 'strwidth' : 'strlen')
+lockvar s:width
+
+function! syntastic#util#screenWidth(str, tabstop) " {{{2
+    let chunks = split(a:str, "\t", 1)
+    let width = s:width(chunks[-1])
+    for c in chunks[:-2]
+        let cwidth = s:width(c)
+        let width += cwidth + a:tabstop - cwidth % a:tabstop
+    endfor
+    return width
+endfunction " }}}2
 
 "print as much of a:msg as possible without "Press Enter" prompt appearing
-function! syntastic#util#wideMsg(msg)
+function! syntastic#util#wideMsg(msg) " {{{2
     let old_ruler = &ruler
     let old_showcmd = &showcmd
 
-    "convert tabs to spaces so that the tabs count towards the window width
-    "as the proper amount of characters
-    let msg = substitute(a:msg, "\t", repeat(" ", &tabstop), "g")
-    let msg = strpart(msg, 0, winwidth(0)-1)
+    "This is here because it is possible for some error messages to
+    "begin with \n which will cause a "press enter" prompt.
+    let msg = substitute(a:msg, "\n", "", "g")
 
-    "This is here because it is possible for some error messages to begin with
-    "\n which will cause a "press enter" prompt. I have noticed this in the
-    "javascript:jshint checker and have been unable to figure out why it
-    "happens
-    let msg = substitute(msg, "\n", "", "g")
+    "convert tabs to spaces so that the tabs count towards the window
+    "width as the proper amount of characters
+    let chunks = split(msg, "\t", 1)
+    let msg = join(map(chunks[:-2], 'v:val . repeat(" ", &tabstop - s:width(v:val) % &tabstop)'), '') . chunks[-1]
+    let msg = strpart(msg, 0, &columns - 1)
 
     set noruler noshowcmd
     call syntastic#util#redraw(0)
 
     echo msg
 
-    let &ruler=old_ruler
-    let &showcmd=old_showcmd
-endfunction
+    let &ruler = old_ruler
+    let &showcmd = old_showcmd
+endfunction " }}}2
 
 " Check whether a buffer is loaded, listed, and not hidden
-function! syntastic#util#bufIsActive(buffer)
+function! syntastic#util#bufIsActive(buffer) " {{{2
     " convert to number, or hell breaks loose
     let buf = str2nr(a:buffer)
 
@@ -147,11 +195,11 @@ function! syntastic#util#bufIsActive(buffer)
     endfor
 
     return 0
-endfunction
+endfunction " }}}2
 
 " start in directory a:where and walk up the parent folders until it
 " finds a file matching a:what; return path to that file
-function! syntastic#util#findInParent(what, where)
+function! syntastic#util#findInParent(what, where) " {{{2
     let here = fnamemodify(a:where, ':p')
 
     let root = syntastic#util#Slash()
@@ -162,14 +210,17 @@ function! syntastic#util#findInParent(what, where)
         let root = here[0] . root[1:]
     endif
 
-    while !empty(here)
+    let old = ''
+    while here != ''
         let p = split(globpath(here, a:what), '\n')
 
         if !empty(p)
             return fnamemodify(p[0], ':p')
-        elseif here ==? root
+        elseif here ==? root || here ==? old
             break
         endif
+
+        let old = here
 
         " we use ':h:h' rather than ':h' since ':p' adds a trailing '/'
         " if 'here' is a directory
@@ -177,10 +228,10 @@ function! syntastic#util#findInParent(what, where)
     endwhile
 
     return ''
-endfunction
+endfunction " }}}2
 
 " Returns unique elements in a list
-function! syntastic#util#unique(list)
+function! syntastic#util#unique(list) " {{{2
     let seen = {}
     let uniques = []
     for e in a:list
@@ -190,20 +241,20 @@ function! syntastic#util#unique(list)
         endif
     endfor
     return uniques
-endfunction
+endfunction " }}}2
 
 " A less noisy shellescape()
-function! syntastic#util#shescape(string)
+function! syntastic#util#shescape(string) " {{{2
     return a:string =~ '\m^[A-Za-z0-9_/.-]\+$' ? a:string : shellescape(a:string)
-endfunction
+endfunction " }}}2
 
 " A less noisy shellescape(expand())
-function! syntastic#util#shexpand(string)
+function! syntastic#util#shexpand(string) " {{{2
     return syntastic#util#shescape(expand(a:string))
-endfunction
+endfunction " }}}2
 
 " decode XML entities
-function! syntastic#util#decodeXMLEntities(string)
+function! syntastic#util#decodeXMLEntities(string) " {{{2
     let str = a:string
     let str = substitute(str, '\m&lt;', '<', 'g')
     let str = substitute(str, '\m&gt;', '>', 'g')
@@ -211,46 +262,88 @@ function! syntastic#util#decodeXMLEntities(string)
     let str = substitute(str, '\m&apos;', "'", 'g')
     let str = substitute(str, '\m&amp;', '\&', 'g')
     return str
-endfunction
+endfunction " }}}2
 
-" On older Vim versions calling redraw while a popup is visible can make
-" Vim segfault, so move redraws to a CursorHold / CursorHoldI handler.
-function! syntastic#util#redraw(full)
-    if !g:syntastic_delayed_redraws || !pumvisible()
-        call s:doRedraw(a:full)
-        let s:redraw_delayed = 0
-        let s:redraw_full = 0
-    else
-        let s:redraw_delayed = 1
-        let s:redraw_full = s:redraw_full || a:full
-    endif
-endfunction
-
-function! syntastic#util#redrawHandler()
-    if s:redraw_delayed && !pumvisible()
-        call s:doRedraw(s:redraw_full)
-        let s:redraw_delayed = 0
-        let s:redraw_full = 0
-    endif
-endfunction
-
-" Private functions {{{1
-
-"Redraw in a way that doesnt make the screen flicker or leave anomalies behind.
-"
-"Some terminal versions of vim require `redraw!` - otherwise there can be
-"random anomalies left behind.
-"
-"However, on some versions of gvim using `redraw!` causes the screen to
-"flicker - so use redraw.
-function! s:doRedraw(full)
+function! syntastic#util#redraw(full) " {{{2
     if a:full
         redraw!
     else
         redraw
     endif
-endfunction
+endfunction " }}}2
+
+function! syntastic#util#dictFilter(errors, filter) " {{{2
+    let rules = s:_translateFilter(a:filter)
+    " call syntastic#log#debug(g:SyntasticDebugFilters, "applying filter:", rules)
+    try
+        call filter(a:errors, rules)
+    catch /\m^Vim\%((\a\+)\)\=:E/
+        let msg = matchstr(v:exception, '\m^Vim\%((\a\+)\)\=:\zs.*')
+        call syntastic#log#error('quiet_messages: ' . msg)
+    endtry
+endfunction " }}}2
+
+" Return a [high, low] list of integers, representing the time
+" (hopefully high resolution) since program start
+" TODO: This assumes reltime() returns a list of integers.
+function! syntastic#util#stamp() " {{{2
+    return reltime(g:syntastic_start)
+endfunction " }}}2
+
+" }}}1
+
+" Private functions {{{1
+
+function! s:_translateFilter(filters) " {{{2
+    let conditions = []
+    for k in keys(a:filters)
+        if type(a:filters[k]) == type([])
+            call extend(conditions, map(copy(a:filters[k]), 's:_translateElement(k, v:val)'))
+        else
+            call add(conditions, s:_translateElement(k, a:filters[k]))
+        endif
+    endfor
+
+    if conditions == []
+        let conditions = ["1"]
+    endif
+    return len(conditions) == 1 ? conditions[0] : join(map(conditions, '"(" . v:val . ")"'), ' && ')
+endfunction " }}}2
+
+function! s:_translateElement(key, term) " {{{2
+    if a:key ==? 'level'
+        let ret = 'v:val["type"] !=? ' . string(a:term[0])
+    elseif a:key ==? 'type'
+        let ret = a:term ==? 'style' ? 'get(v:val, "subtype", "") !=? "style"' : 'has_key(v:val, "subtype")'
+    elseif a:key ==? 'regex'
+        let ret = 'v:val["text"] !~? ' . string(a:term)
+    elseif a:key ==? 'file'
+        let ret = 'bufname(str2nr(v:val["bufnr"])) !~# ' . string(a:term)
+    else
+        call syntastic#log#warn('quiet_messages: ignoring invalid key ' . strtrans(string(a:key)))
+        let ret = "1"
+    endif
+    return ret
+endfunction " }}}2
+
+function! s:_rmrf(what) " {{{2
+    if !exists('s:rmdir')
+        let s:rmdir = syntastic#util#shescape(get(g:, 'netrw_localrmdir', 'rmdir'))
+    endif
+
+    if getftype(a:what) ==# 'dir'
+        for f in split(globpath(a:what, '*'), "\n")
+            call s:_rmrf(f)
+        endfor
+        silent! call system(s:rmdir . ' ' . syntastic#util#shescape(a:what))
+    else
+        silent! call delete(a:what)
+    endif
+endfunction " }}}2
+
+" }}}1
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
-" vim: set et sts=4 sw=4 fdm=marker:
+
+" vim: set sw=4 sts=4 et fdm=marker:

@@ -1,12 +1,11 @@
 *NrrwRgn.txt*   A Narrow Region Plugin (similar to Emacs)
 
 Author:  Christian Brabandt <cb@256bit.org>
-Version: 0.31 Sat, 16 Feb 2013 22:28:31 +0100
-Copyright: (c) 2009-2013 by Christian Brabandt
+Version: 0.32 Thu, 27 Mar 2014 23:16:27 +0100
+Copyright: (c) 2009-2014 by Christian Brabandt
            The VIM LICENSE applies to NrrwRgnPlugin.vim and NrrwRgnPlugin.txt
            (see |copyright|) except use NrrwRgnPlugin instead of "Vim".
            NO WARRANTY, EXPRESS OR IMPLIED.  USE AT-YOUR-OWN-RISK.
-
 
 ==============================================================================
 1. Contents                                    *NarrowRegion*  *NrrwRgnPlugin*
@@ -16,6 +15,7 @@ Copyright: (c) 2009-2013 by Christian Brabandt
         2.1   NrrwRgn Howto..............................: |NR-HowTo|
         2.2   NrrwRgn Multi..............................: |NR-multi-example|
         2.3   NrrwRgn Configuration......................: |NrrwRgn-config|
+        2.4   NrrwRgn public functions...................: |NrrwRgn-func|
         3.  NrrwRgn Feedback.............................: |NrrwRgn-feedback|
         4.  NrrwRgn History..............................: |NrrwRgn-history|
 
@@ -33,7 +33,8 @@ in a new scratch buffer. The rest of the file will be protected, so you won't
 accidentally modify that buffer. In the new buffer, you can do a global
 replace, search or anything else to modify that part. When you are finished,
 simply write that buffer (e.g. by |:w|) and your modifications will be put in
-the original buffer making it accessible again.
+the original buffer making it accessible again. Use |:q!| or |:bw!| to abort
+your changes and return back to the original window.
 
 NrrwRgn allows you to either select a line based selection using an Ex-command
 or you can simply use any visual selected region and press your preferred key
@@ -144,6 +145,9 @@ default is set to '\', unless you have set it to something different (see
 |<Leader>| for information how to change this) and the selected range will
 open in a new scratch buffer. This key combination only works in |Visual-mode|
 
+(Alternatively, you can use the normal mode mapping <Leader>nr and the region
+over which you move will be opened in a new Narrowed window).
+
 When finished, simply write that Narrowed Region window, from which you want
 to take the modifications in your original file.
 
@@ -203,14 +207,40 @@ variable g:nrrw_rgn_vert to 1 in your |.vimrc| >
 
     let g:nrrw_rgn_vert = 1
 <
+(default: 0)
 ------------------------------------------------------------------------------
 
 If you'd like to specify a certain width/height for you scratch buffer, then
 set the variable g:nrrw_rgn_wdth in your |.vimrc| . This variable defines the
-width or the nr of columns, if you have also set g:nrrw_rgn_vert. >
+height or the nr of columns, if you have also set g:nrrw_rgn_vert. >
 
     let g:nrrw_rgn_wdth = 30
 <
+(default: 20)
+------------------------------------------------------------------------------
+
+It is possible to specify an increment value, by which the narrowed window can
+be increased. This is allows to easily toggle between the normal narrowed
+window size and an even increased size (think of zooming). 
+
+By default, the narrowed window will be increased by 10 lines or columns if
+(g:nrrw_rgn_vert is also set [see above]). To change it, set in your
+|.vimrc| >
+
+    let g:nrrw_rgn_incr = 30
+<
+(default: 10)
+------------------------------------------------------------------------------
+
+If you'd like to change the key combination that toggles incrementing the
+Narrowed Window size, you can put this in your |.vimrc| >
+
+   nmap <F3> <Plug>NrrwrgnWinIncr
+<
+(default: <Leader><Space>)
+
+This will let you use the <F3> key to toggle the window size of the Narrowed
+Window. Note: This mapping is only in the narrowed window active.
 ------------------------------------------------------------------------------
 
 By default, NarrowRegion highlights the region that has been selected
@@ -221,11 +251,14 @@ result, you could put that in your |.vimrc| >
 
     let g:nrrw_rgn_hl = 'Search'
 <
+(default: WildMenu)
+
 If you want to turn off the highlighting (because this can be distracting), you
 can set the global variable g:nrrw_rgn_nohl to 1 in your |.vimrc| >
 
     let g:nrrw_rgn_nohl = 1
 <
+(default: 0)
 ------------------------------------------------------------------------------
 
 If you'd like to change the key combination that starts the Narrowed Window
@@ -237,6 +270,7 @@ This will let <F3> open the Narrow-Window, but only if you have pressed it in
 Visual Mode. It doesn't really make sense to map this combination to any other
 mode, unless you want it to Narrow your last visually selected range.
 
+(default: <Leader>nr)
 ------------------------------------------------------------------------------
 
 If you'd like to specify the options that you want to have set for the
@@ -259,6 +293,7 @@ define the g:nrrw_topbot_leftright variable to your taste, e.g. >
 Now, all narrowed windows will appear below the original window. If not
 specified, the narrowed window will appear above/left of the original window.
 
+(default: topleft)
 ------------------------------------------------------------------------------
 
 If you want to use several independent narrowed regions of the same buffer
@@ -279,8 +314,22 @@ tries hard to adjust the highlighting and regions as you write your changes
 back into the original buffer, but it can't guarantee that this will work and
 might fail silently. Therefore, this feature is experimental!
 
+(default: y)
 ------------------------------------------------------------------------------
-                                                     *NrrwRgn-hook*   *NR-hooks*
+
+If you are using the |:NRMulti| command and want to have the original window
+update to the position of where the cursor is in the narrowed window, you can
+set the variable g:nrrw_rgn_update_orig_win, e.g. in your |.vimrc| >
+
+   let g:nrrw_rgn_update_orig_win = 1
+<
+Now the cursor in the original window will always update when the position
+changes in the narrowed window (using a |CursorMoved| autocommand).
+Note: that this might slow down scrolling and cursor movement a bit.
+
+(default: 0)
+----------------------------------------------------------------------------
+                                                 *NrrwRgn-hook*  *NR-hooks*
 
 NarrowRegion can execute certain commands, when creating the narrowed window
 and when closing the narrowed window. For this, you can set 2 buffer-local
@@ -310,8 +359,45 @@ and before writing the changes back, it'll execute: >
 
     :%UnArrangeCol
 
-==============================================================================
-3. NrrwRgn Feedback                                         *NrrwRgn-feedback*
+Note: These hooks are executed in the narrowed window (i.e. after creating the
+narrowed window and its content and before writing the changes back to the
+original buffer).
+
+A third hook 'b:nrrw_aucmd_written' is provided, when the data is written back
+in the original window. This allows to execute scripts, whenever the data is
+written back in the original window. For example, consider you want to write
+the original buffer whenever the narrowed window is written back to the
+original window. You can therefore set: >
+    
+    :let b:nrrw_aucmd_written = ':update'
+<
+This will write the original buffer, whenever it was modified after writing
+the changes from the narrowed window back.
+
+2.4 NrrwRgn functions                                    *NrrwRgn-func*
+---------------------
+The NrrwRgn plugin defines a public function in its namespace that can be used
+to query its status.
+                                                        *nrrwrgn#NrrwRgnStatus()*
+nrrwrgn#NrrwRgnStatus()
+    Returns a dict with the following keys:
+        'shortname':    The displayed buffer name
+        'fullname':     The complete buffer name of the original buffer
+        'multi':        1 if it is a multi narrowed window (|:NRMulti|),
+                        0 otherwise.
+        'startl':       List of start lines for a multi narrowed window
+                        (only present, if 'multi' is 1)
+        'endl':         List of end lines for a multi narrowed window
+                        (only present, if 'multi' is 1)
+        'start':        Start position (only present if 'multi' is 0)
+        'end':          End position (only present if 'multi' is 0)
+        'visual':       Visual Mode, if it the narrowed window was started
+                        from a visual selected region (empty otherwise).
+        'enabled':      Whether syncing the buffer is enabled (|:NRS|)
+                            
+    If not executed in a narrowed window, returns an empty dict.
+=============================================================================
+3. NrrwRgn Feedback                                        *NrrwRgn-feedback*
 
 Feedback is always welcome. If you like the plugin, please rate it at the
 vim-page:
@@ -327,11 +413,36 @@ If you like the plugin, write me an email (look in the third line for my mail
 address). And if you are really happy, vote for the plugin and consider
 looking at my Amazon whishlist: http://www.amazon.de/wishlist/2BKAHE8J7Z6UW
 
-==============================================================================
+=============================================================================
 4. NrrwRgn History                                          *NrrwRgn-history*
 
+0.33 (unreleased) {{{1
+- set local options later, so that FileType autocommands don't trigger to
+  early
+- make sure, shortening the buffer name handles multibyte characters
+  correctly.
+- new public function |nrrwrgn#NrrwRgnStatus()|
+- <Leader>nr also mapped as operator function (so the region over which you
+  move will be opened in the narrowed window
+- highlighting wrong when char-selecting within a line
+- needs Vim 7.4
+- mention how to abort the narrowed window (suggested by David Fishburn,
+  thanks!)
+- Execute hooks after the options for the narrowed window have been set
+  (issue #29, reported by fmorales, thanks!)
+- <Leader><Space> Toggles the Narrowed Window Size (idea by David Fishburn,
+  thanks!)
+- New hook b:nrrw_aucmd_written, to be executed, whenever the narrowed info
+  has been written back into the original buffer.
+- g:nrrw_rgn_write_on_sync is being deprecated in favor of using the newly
+  "written" hook
+- error on writing back multi narrowed window (issue #30, reported by
+  aleprovencio https://github.com/chrisbra/NrrwRgn/issues/30, thanks!)
+- error when calling Incr Function, Make it override over global mapping.
+  (issue #31, reported by zc he https://github.com/chrisbra/NrrwRgn/issues/31, thanks!)
+- |:NRP| didn't work as documented (reported by David Fishburn, thanks!)
 
-0.32 (unreleased)
+0.32 Mar 27, 2014 {{{1
 - hooks could corrupt the narrowed buffer, if it wasn't closed (reported by
   jszakemeister https://github.com/chrisbra/NrrwRgn/issues/19, thanks!)
 - Don't parse $VIMRUNTIME/doc/options.txt for finding out buffer-local options
@@ -340,6 +451,24 @@ looking at my Amazon whishlist: http://www.amazon.de/wishlist/2BKAHE8J7Z6UW
   narrowed buffer.
 - Switching buffers in the original narrowed buffer, may confuse NrrwRgn.
 - Code cleanup (no more separate functions for visual and normal mode)
+- fix issue 22 (characterwise narrowing was brocken in last commit, reported
+  by Matthew Boehm in https://github.com/chrisbra/NrrwRgn/issues/22, thanks!)
+- in characterwise visual selection, trailing \n is not stripped when writing
+  (reported by Matthew Boehm in https://github.com/chrisbra/NrrwRgn/23,
+  thanks!)
+- highlighting was wrong for characterwise visual selections
+- update original window for multi narrowed regions (
+  https://github.com/chrisbra/NrrwRgn/24, reported by Dane Summers, thanks!),
+  use the g:nrrw_rgn_update_orig_win variable to enable
+- error when narrowed window was moved to new tab and trying to quit
+  (https://github.com/chrisbra/NrrwRgn/2, reported by Mario Ricalde, thanks!)
+- better default names for the narrowed window
+  (https://github.com/chrisbra/Nrrwrgn/28, reported by Mario Ricalde, thanks!)
+- when setting g:nrrw_rgn_write_on_sync the original file will be saved,
+  whenever the narrowed window is written back
+  (https://github.com/chrisbra/26, reported by Mario Ricalde, thanks!)
+- Some more error handling when using |:WidenRegion|
+- Make sure highlighting is removed when using |:WidenRegion|
 
 0.31: Feb 16, 2013 {{{1
 - NRM threw some errors (reported by pydave in
@@ -550,7 +679,6 @@ looking at my Amazon whishlist: http://www.amazon.de/wishlist/2BKAHE8J7Z6UW
 - put plugin on a public repository (http://github.com/chrisbra/NrrwRgn)
 
   }}}
-
 ==============================================================================
 Modeline:
 vim:tw=78:ts=8:ft=help:et:fdm=marker:fdl=0:norl

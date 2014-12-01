@@ -9,17 +9,29 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_elixir_elixir_checker")
     finish
 endif
-let g:loaded_syntastic_elixir_elixir_checker=1
+let g:loaded_syntastic_elixir_elixir_checker = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 " TODO: we should probably split this into separate checkers
 function! SyntaxCheckers_elixir_elixir_IsAvailable() dict
+    call self.log(g:SyntasticDebugCheckers,
+        \ 'executable("elixir") = ' . executable('elixir') . ', ' .
+        \ 'executable("mix") = ' . executable('mix'))
     return executable('elixir') && executable('mix')
 endfunction
 
 function! SyntaxCheckers_elixir_elixir_GetLocList() dict
+    if !exists('g:syntastic_enable_elixir_checker') || !g:syntastic_enable_elixir_checker
+        call syntastic#log#error('checker elixir/elixir: checks disabled for security reasons; ' .
+            \ 'set g:syntastic_enable_elixir_checker to 1 to override')
+        return []
+    endif
 
     let make_options = {}
     let compile_command = 'elixir'
@@ -40,3 +52,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'elixir',
     \ 'name': 'elixir'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

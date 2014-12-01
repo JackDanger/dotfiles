@@ -12,10 +12,14 @@
 " Use a BufWritePre autocommand to that end:
 "   autocmd FileType go autocmd BufWritePre <buffer> Fmt
 "============================================================================
+
 if exists("g:loaded_syntastic_go_go_checker")
     finish
 endif
-let g:loaded_syntastic_go_go_checker=1
+let g:loaded_syntastic_go_go_checker = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_go_go_IsAvailable() dict
     return executable('go') && executable('gofmt')
@@ -46,11 +50,15 @@ function! SyntaxCheckers_go_go_GetLocList() dict
     " compiled by `go build`, therefore `go test` must be called for those.
     if match(expand('%'), '\m_test\.go$') == -1
         let makeprg = 'go build ' . syntastic#c#NullOutput()
+        let cleanup = 0
     else
         let makeprg = 'go test -c ' . syntastic#c#NullOutput()
+        let cleanup = 1
     endif
 
+    " The first pattern is for warnings from C compilers.
     let errorformat =
+        \ '%W%f:%l: warning: %m,' .
         \ '%E%f:%l:%c:%m,' .
         \ '%E%f:%l:%m,' .
         \ '%C%\s%\+%m,' .
@@ -66,9 +74,18 @@ function! SyntaxCheckers_go_go_GetLocList() dict
         \ 'cwd': expand('%:p:h'),
         \ 'defaults': {'type': 'e'} })
 
+    if cleanup
+        call delete(expand('%:p:h') . syntastic#util#Slash() . expand('%:p:h:t') . '.test')
+    endif
+
     return errors
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'go',
     \ 'name': 'go'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

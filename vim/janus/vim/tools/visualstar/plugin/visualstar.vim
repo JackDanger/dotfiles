@@ -1,5 +1,5 @@
 " |star| for |Visual-mode|.
-" Version: 0.4.0
+" Version: 0.5.0
 " Author : thinca <thinca+vim@gmail.com>
 " License: zlib License
 
@@ -13,9 +13,10 @@ set cpo&vim
 
 
 function! s:search(type, g)
+  let s:count = v:count1 . a:type
   let reg = '"'
   let [save_reg, save_type] = [getreg(reg), getregtype(reg)]
-  normal! gvy
+  normal! gv""y
   let text = @"
   call setreg(reg, save_reg, save_type)
 
@@ -49,8 +50,6 @@ function! s:search(type, g)
 
   let @/ = '\V' . pre . text . post
   call histadd('/', @/)
-
-  let s:count = v:count1 . a:type
 endfunction
 
 function! s:count()
@@ -80,11 +79,11 @@ if !exists('g:visualstar_no_default_key_mappings') ||
 \   !g:visualstar_no_default_key_mappings
   silent! xmap <unique> * <Plug>(visualstar-*)
   silent! xmap <unique> <kMultiply> <Plug>(visualstar-*)
-  silent! vmap <unique> <S-LeftMouse> <Plug>(visualstar-*)
+  silent! xmap <unique> <S-LeftMouse> <Plug>(visualstar-*)
   silent! xmap <unique> # <Plug>(visualstar-#)
   silent! xmap <unique> g* <Plug>(visualstar-g*)
   silent! xmap <unique> g<kMultiply> <Plug>(visualstar-g*)
-  silent! vmap <unique> g<S-LeftMouse> <Plug>(visualstar-g*)
+  silent! xmap <unique> g<S-LeftMouse> <Plug>(visualstar-g*)
   silent! xmap <unique> g# <Plug>(visualstar-g#)
 endif
 

@@ -67,11 +67,11 @@ submodules:
         - ruby
         - rails
         - syntax
-    handlebars:
     haskell:
     javascript:
     less:
     markdown:
+    mustache_handlebars:
     minitest:
     nodejs:
     puppet:
@@ -83,17 +83,19 @@ submodules:
     slim:
     textile:
     clojure:
-    golang:
+    go:
+    liquid:
+    rdoc:
+    json:
 
 
   # Tools
   #
   tools:
     ack:
-    vim-align:
     buffergator:
     css-color:
-    #ctrlp:
+    ctrlp:
     dispatch:
     easymotion:
     endwise:
@@ -125,7 +127,7 @@ submodules:
     tlib:
     unimpaired:
     vim-addon-mw-utils:
-    vim-multiple-cursors:
+    vim-trailing-whitespace:
     vimwiki:
     zoomwin:
     vroom:

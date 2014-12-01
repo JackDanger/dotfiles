@@ -16,7 +16,10 @@
 if exists("g:loaded_syntastic_php_phpmd_checker")
     finish
 endif
-let g:loaded_syntastic_php_phpmd_checker=1
+let g:loaded_syntastic_php_phpmd_checker = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_php_phpmd_GetHighlightRegex(item)
     let term = matchstr(a:item['text'], '\m\C^The \S\+ \w\+\(()\)\= \(has\|is not\|utilizes\)')
@@ -55,7 +58,9 @@ function! SyntaxCheckers_php_phpmd_GetHighlightRegex(item)
 endfunction
 
 function! SyntaxCheckers_php_phpmd_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'post_args': 'text codesize,design,unusedcode,naming' })
+    let makeprg = self.makeprgBuild({
+        \ 'post_args_before': 'text',
+        \ 'post_args': 'codesize,design,unusedcode,naming' })
 
     let errorformat = '%E%f:%l%\s%#%m'
 
@@ -68,3 +73,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'php',
     \ 'name': 'phpmd'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -2,85 +2,103 @@ require 'spec_helper'
 
 describe "Sigil syntax" do
   describe "upper case" do
-    it "binary" do
-      assert_correct_syntax 'elixirDelimiter', 'B', '%B(binary)'
-      assert_correct_syntax 'elixirSigil', 'foo', '%B(binary)'
+    it "string" do
+      '~S(string)'.should include_elixir_syntax('elixirDelimiter', 'S')
+      '~S(string)'.should include_elixir_syntax('elixirSigil', 'foo')
     end
 
     it "character list" do
-      assert_correct_syntax 'elixirDelimiter', 'C', '%C(charlist)'
-      assert_correct_syntax 'elixirSigil', 'charlist', '%C(charlist)'
+      '~C(charlist)'.should include_elixir_syntax('elixirDelimiter', 'C')
+      '~C(charlist)'.should include_elixir_syntax('elixirSigil', 'charlist')
     end
 
     it "regular expression" do
-      assert_correct_syntax 'elixirDelimiter', 'R', '%R(regex)'
-      assert_correct_syntax 'elixirSigil', 'regex', '%R(regex)'
+      '~R(regex)'.should include_elixir_syntax('elixirDelimiter', 'R')
+      '~R(regex)'.should include_elixir_syntax('elixirSigil', 'regex')
     end
 
     it "list of words" do
-      assert_correct_syntax 'elixirDelimiter', 'W', '%W(list of words)'
-      assert_correct_syntax 'elixirSigil', 'list', '%W(list of words)'
+      '~W(list of words)'.should include_elixir_syntax('elixirDelimiter', 'W')
+      '~W(list of words)'.should include_elixir_syntax('elixirSigil', 'list')
     end
 
     it "delimited with parans" do
-      assert_correct_syntax 'elixirDelimiter', '(', '%B(foo bar)'
-      assert_correct_syntax 'elixirDelimiter', ')', '%B(foo bar)'
+      '~S(foo bar)'.should include_elixir_syntax('elixirDelimiter', '(')
+      '~S(foo bar)'.should include_elixir_syntax('elixirDelimiter', ')')
     end
 
     it "delimited with braces" do
-      assert_correct_syntax 'elixirDelimiter', '{', '%B{foo bar}'
-      assert_correct_syntax 'elixirDelimiter', '}', '%B{foo bar}'
+      '~S{foo bar}'.should include_elixir_syntax('elixirDelimiter', '{')
+      '~S{foo bar}'.should include_elixir_syntax('elixirDelimiter', '}')
     end
 
     it "delimited with brackets" do
-      assert_correct_syntax 'elixirDelimiter', '[', '%B[foo bar]'
-      assert_correct_syntax 'elixirDelimiter', ']', '%B[foo bar]'
+      '~S[foo bar]'.should include_elixir_syntax('elixirDelimiter', '[')
+      '~S[foo bar]'.should include_elixir_syntax('elixirDelimiter', ']')
+    end
+
+    it "escapes double quotes unless only preceded by whitespace" do
+      <<-EOF
+        ~r"""
+        foo """
+        """
+      EOF
+      .should include_elixir_syntax('elixirDelimiter', %q(^\s*\zs"""))
+    end
+
+    it "escapes single quotes unless only preceded by whitespace" do
+      <<-EOF
+        ~r'''
+        foo '''
+        '''
+      EOF
+      .should include_elixir_syntax('elixirDelimiter', %q(^\s*\zs'''))
     end
 
     it "without escapes" do
-      assert_incorrect_syntax 'elixirRegexEscape', '\\', '%B(foo \n bar)'
+      '~S(foo \n bar)'.should_not include_elixir_syntax('elixirRegexEscape', '\\')
     end
 
     it "without interpolation" do
-      assert_incorrect_syntax 'elixirInterpolation', 'bar', '%B(foo #{bar})'
+      '~S(foo #{bar})'.should_not include_elixir_syntax('elixirInterpolation', 'bar')
     end
 
     it "without escaped parans" do
-      assert_incorrect_syntax 'elixirRegexEscapePunctuation', '( ', '%B(\( )'
+      '~S(\( )'.should_not include_elixir_syntax('elixirRegexEscapePunctuation', '( ')
     end
   end
 
   describe "lower case" do
-    it "binary" do
-      assert_correct_syntax 'elixirDelimiter', 'b', '%b(binary)'
-      assert_correct_syntax 'elixirSigil', 'foo', '%b(binary)'
+    it "string" do
+      '~s(string)'.should include_elixir_syntax('elixirDelimiter', 's')
+      '~s(string)'.should include_elixir_syntax('elixirSigil', 'foo')
     end
 
     it "character list" do
-      assert_correct_syntax 'elixirDelimiter', 'c', '%c(charlist)'
-      assert_correct_syntax 'elixirSigil', 'charlist', '%c(charlist)'
+      '~c(charlist)'.should include_elixir_syntax('elixirDelimiter', 'c')
+      '~c(charlist)'.should include_elixir_syntax('elixirSigil', 'charlist')
     end
 
     it "regular expression" do
-      assert_correct_syntax 'elixirDelimiter', 'r', '%r(regex)'
-      assert_correct_syntax 'elixirSigil', 'regex', '%r(regex)'
+      '~r(regex)'.should include_elixir_syntax('elixirDelimiter', 'r')
+      '~r(regex)'.should include_elixir_syntax('elixirSigil', 'regex')
     end
 
     it "list of words" do
-      assert_correct_syntax 'elixirDelimiter', 'w', '%w(list of words)'
-      assert_correct_syntax 'elixirSigil', 'list', '%w(list of words)'
+      '~w(list of words)'.should include_elixir_syntax('elixirDelimiter', 'w')
+      '~w(list of words)'.should include_elixir_syntax('elixirSigil', 'list')
     end
 
     it "with escapes" do
-      assert_correct_syntax 'elixirRegexEscape', '\\', '%b(foo \n bar)'
+      '~s(foo \n bar)'.should include_elixir_syntax('elixirRegexEscape', '\\')
     end
 
     it "with interpolation" do
-      assert_correct_syntax 'elixirInterpolation', 'bar', '%b(foo #{bar})'
+      '~s(foo #{bar})'.should include_elixir_syntax('elixirInterpolation', 'bar')
     end
 
     it "with escaped parans" do
-      assert_correct_syntax 'elixirRegexEscapePunctuation', '( ', '%b(\( )'
+      '~s(\( )'.should include_elixir_syntax('elixirRegexEscapePunctuation', '( ')
     end
   end
 end

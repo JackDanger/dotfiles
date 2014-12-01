@@ -20,7 +20,7 @@ set cpo&vim
 
 function! SyntaxCheckers_yacc_bison_GetLocList() dict
     let makeprg = self.makeprgBuild({
-        \ 'exe': self.getExec() . ' ' . syntastic#c#NullOutput() })
+        \ 'args_after': syntastic#c#NullOutput() })
 
     let errorformat =
         \ '%E%f:%l%.%v-%.%\{-}: %trror: %m,' .
@@ -51,3 +51,5 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

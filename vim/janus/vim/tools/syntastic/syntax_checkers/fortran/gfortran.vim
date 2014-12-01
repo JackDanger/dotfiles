@@ -15,20 +15,20 @@ if exists("g:loaded_syntastic_fortran_gfortran_checker")
 endif
 let g:loaded_syntastic_fortran_gfortran_checker=1
 
-if !exists('g:syntastic_fortran_compiler')
-    let g:syntastic_fortran_compiler = 'gfortran'
+if !exists('g:syntastic_fortran_compiler_options')
+    let g:syntastic_fortran_compiler_options = ''
 endif
-
-function! SyntaxCheckers_fortran_gfortran_IsAvailable() dict
-    return executable(expand(g:syntastic_fortran_compiler))
-endfunction
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists('g:syntastic_fortran_compiler_options')
-    let g:syntastic_fortran_compiler_options = ''
-endif
+function! SyntaxCheckers_fortran_gfortran_IsAvailable() dict
+    if !exists('g:syntastic_fortran_compiler')
+        let g:syntastic_fortran_compiler = self.getExec()
+    endif
+    call self.log('g:syntastic_fortran_compiler = ', g:syntastic_fortran_compiler)
+    return executable(expand(g:syntastic_fortran_compiler))
+endfunction
 
 function! SyntaxCheckers_fortran_gfortran_GetLocList() dict
     return syntastic#c#GetLocList('fortran', 'gfortran', {
@@ -44,7 +44,7 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'fortran',
-    \ 'name': 'gfortran'})
+    \ 'name': 'gfortran' })
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

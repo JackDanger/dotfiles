@@ -4,10 +4,6 @@
   color: #00ff00;
   width: 97%;
 
-  #hello {
-    background-color: blue;
-  }
-
   .redbox {
     background-color: #ff0000;
     color: #000000;
@@ -42,6 +38,11 @@ a {
   }
 }
 
+#main {
+  color: black;
+  &-sidebar { border: 1px solid; }
+}
+
 // Nested Properties
 
 .funky {
@@ -53,9 +54,7 @@ a {
 }
 
 .funky {
-  font: 2px/3px {
-    family: fantasy;
-    size: 30em;
+  font: 20px/24px fantasy {
     weight: bold;
   }
 }
@@ -89,6 +88,15 @@ $width: 5em; // another comment
   width: $width;
 }
 
+#main {
+  $width: 5em !global;
+  width: $width;
+}
+
+#sidebar {
+  width: $width;
+}
+
 // Data Types: Strings
 
 @mixin firefox-message($selector) {
@@ -98,6 +106,10 @@ $width: 5em; // another comment
 }
 
 @include firefox-message(".header");
+
+// Maps
+
+$map: (key1: value1, key2: value2, key3: value3);
 
 // Number Operations
 
@@ -109,6 +121,7 @@ p {
   font: 10px/8px;
   $width: 1000px;
   width: $width/2;
+  width: round(1.5)/2;
   height: (500px/2);
   margin-left: 5px + 8px/2px;
 }
@@ -193,6 +206,24 @@ p {
   $font-size: 12px;
   $line-height: 30px;
   font: #{$font-size}/#{$line-height};
+}
+
+// & in SassScript
+
+.foo.bar .baz.bang, .bip.qux {
+  $selector: &;
+}
+
+@mixin does-parent-exist {
+  @if & {
+    &:hover {
+      color: red;
+    }
+  } @else {
+    a {
+      color: red;
+    }
+  }
 }
 
 // Variable Defaults: !default
@@ -403,6 +434,28 @@ a.important {
   }
 }
 
+// @at-root
+
+.parent {
+  @at-root .child {}
+}
+
+.parent {
+  @at-root {
+    .child1 {}
+    .child2 {}
+  }
+}
+
+@media print {
+  .page {
+    width: 8in;
+    @at-root (without: media) {
+      color: red;
+    }
+  }
+}
+
 // @debug
 
 @debug 10em + 12em;
@@ -419,6 +472,18 @@ a.important {
     $y: 1px * $y;
   }
   position: relative; left: $x; top: $y;
+}
+
+// @error
+
+@mixin adjust-location($x, $y) {
+  @if unitless($x) {
+    @error "$x may not be unitless, was #{$x}.":
+  }
+  @if unitless($y) {
+    @error "$y may not be unitless, was #{$y}.";
+  }
+  position: relative; left: $x, top: $y;
 }
 
 // @if
@@ -457,6 +522,22 @@ p {
 @each $animal in puma, sea-slug, egret, salamander {
   .#{$animal}-icon {
     background-image: url('/images/#{$animal}.png');
+  }
+}
+
+@each $animal, $color, $cursor in (puma, black, default),
+                                  (sea-slug, blue, pointer),
+                                  (egret, white, move) {
+  .#{$animal}-icon {
+    background-image: url('/images/#{$animal}.png');
+    border: 2px solid $color;
+    cursor: $cursor;
+  }
+}
+
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+  #{$header} {
+    font-size: $size;
   }
 }
 
@@ -566,6 +647,11 @@ $values: #ff0000, #00ff00, #0000ff;
   @include colors($values...);
 }
 
+$value-map: (text: #00ff00, background: #0000ff, border: #ff0000);
+.secondary {
+  @include colors($value-map...);
+}
+
 @mixin wrapped-stylish-mixin($args...) {
   font-weight: bold;
   @include stylish-mixin($args...);
@@ -658,6 +744,77 @@ $a: $b + $c; // issue #4: variables should be displayed with the same color
   {
     padding-right: 25px;
   }
+}
+
+.funky { // comments after nested properties should be recognized
+  font: {
+    family: fantasy; // a comment
+    size: 30em;      /* another comment */
+    weight: bold;
+  }
+}
+
+.container { // issue #33, multiline comments are not recognized as comments
+  /*height: auto !important;
+  min-height: 100%;*/
+  background: #fff;
+}
+
+.button { // issue #34, functions as params should be recognized as functions
+  background-image: -webkit-linear-gradient(top, bottom, from(#933), to(#944));
+}
+
+.class { // issue #35 a) media block is not recognized
+  @media screen and (min-width: em(480)) {
+    a {
+      @extend .clearfix;
+    }
+  }
+}
+
+.class { // issue #35 b) @extend & @include are not recognized inside media block
+  @media screen and (min-width: em(480)) {
+    @extend .clearfix;
+    @include header-text;
+  }
+}
+
+@media screen and (min-width: em(480)) {
+  // issue #35 c) comment inside media block is not recognized
+  a {
+    @extend .clearfix;
+  }
+}
+
+.foo { // issue #35 d) the two &:nth-child are not highlighted in the same way
+  &:nth-child(3n) {
+    @include bar(#000);
+  }
+  @media screen and (max-width: em(1024)) {
+    &:nth-child(2n) {
+      @include foobar;
+    }
+  }
+}
+
+.gradient { // issue #36, params are not consistently highlighted
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+  background-image:  -webkit-gradien(linear, left top, right bottom);
+  background-image:              foo(linear, top left, bottom right);
+  fake-attribute:                foo(linear, left top, right bottom);
+  @include                       foo(linear, left top, left bottom, from(#444444), to(#999999));
+  border:           -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+
+  background-image: -webkit-linear-gradient(top, #444444, #999999);
+}
+
+.button { // issue #37, only "border" is highlighted in Vim 7.3
+  border-radius: 5px;
+}
+
+.ding { // issue #40, properties without space after them are not highlighted
+  font-size:12px;
+  color:red;
 }
 
 div {

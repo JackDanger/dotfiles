@@ -13,16 +13,18 @@
 if exists("g:loaded_syntastic_po_msgfmt_checker")
     finish
 endif
-let g:loaded_syntastic_po_msgfmt_checker=1
+let g:loaded_syntastic_po_msgfmt_checker = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_po_msgfmt_GetHighlightRegex(item)
     let term = matchstr(a:item['text'], '\mkeyword "\zs[^"]\+\ze" unknown')
-    return !empty(term) ? '\V' . term : ''
+    return term != '' ? '\V' . escape(term, '\') : ''
 endfunction
 
 function! SyntaxCheckers_po_msgfmt_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'args': '-c ' . syntastic#c#NullOutput() })
+    let makeprg = self.makeprgBuild({ 'args_after': '-c ' . syntastic#c#NullOutput() })
 
     let errorformat =
         \ '%W%f:%l: warning: %m,' .
@@ -41,3 +43,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'po',
     \ 'name': 'msgfmt'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

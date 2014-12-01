@@ -18,75 +18,72 @@ function! s:error(str)
   let v:errmsg = a:str
 endfunction
 
-function! s:autoload(...)
-  if !exists("g:autoloaded_rails") && v:version >= 700
-    runtime! autoload/rails.vim
-  endif
-  if exists("g:autoloaded_rails")
-    if a:0
-      exe a:1
-    endif
-    return 1
-  endif
-  if !exists("g:rails_no_autoload_warning")
-    let g:rails_no_autoload_warning = 1
-    if v:version >= 700
-      call s:error("Disabling rails.vim: autoload/rails.vim is missing")
-    else
-      call s:error("Disabling rails.vim: Vim version 7 or higher required")
-    endif
-  endif
-  return ""
-endfunction
-
 " }}}1
 " Detection {{{1
 
-function! s:Detect(filename)
+function! RailsDetect(...) abort
   if exists('b:rails_root')
-    return s:BufInit(b:rails_root)
+    return 1
   endif
-  let fn = substitute(fnamemodify(a:filename,":p"),'\c^file://','','')
-  let sep = matchstr(fn,'^[^\\/]\{3,\}\zs[\\/]')
-  if sep != ""
-    let fn = getcwd().sep.fn
+  let fn = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
+  if !isdirectory(fn)
+    let fn = fnamemodify(fn, ':h')
   endif
-  if isdirectory(fn)
-    let fn = fnamemodify(fn,':s?[\/]$??')
-  else
-    let fn = fnamemodify(fn,':s?\(.*\)[\/][^\/]*$?\1?')
-  endif
-  let ofn = ""
-  while fn != ofn
-    if filereadable(fn . "/config/environment.rb")
-      return s:BufInit(resolve(fn))
-    endif
-    let ofn = fn
-    let fn = fnamemodify(ofn,':h')
-  endwhile
-  return 0
-endfunction
-
-function! s:BufInit(path)
-  if s:autoload()
-    return RailsBufInit(a:path)
+  let file = findfile('config/environment.rb', escape(fn, ', ').';')
+  if !empty(file)
+    let b:rails_root = fnamemodify(file, ':p:h:h')
+    return 1
   endif
 endfunction
 
 " }}}1
 " Initialization {{{1
 
+if !exists('g:did_load_ftplugin')
+  filetype plugin on
+endif
+if !exists('g:loaded_projectionist')
+  runtime! plugin/projectionist.vim
+endif
+
 augroup railsPluginDetect
   autocmd!
-  autocmd BufNewFile,BufRead * call s:Detect(expand("<afile>:p"))
-  autocmd VimEnter * if expand("<amatch>") == "" && !exists("b:rails_root") | call s:Detect(getcwd()) | endif | if exists("b:rails_root") | silent doau User BufEnterRails | endif
-  autocmd FileType netrw if !exists("b:rails_root") | call s:Detect(expand("%:p")) | endif | if exists("b:rails_root") | silent doau User BufEnterRails | endif
   autocmd BufEnter * if exists("b:rails_root")|silent doau User BufEnterRails|endif
   autocmd BufLeave * if exists("b:rails_root")|silent doau User BufLeaveRails|endif
-  autocmd Syntax railslog if s:autoload()|call rails#log_syntax()|endif
+
+  autocmd BufNewFile,BufReadPost *
+        \ if RailsDetect(expand("<afile>:p")) && empty(&filetype) |
+        \   call rails#buffer_setup() |
+        \ endif
+  autocmd VimEnter *
+        \ if empty(expand("<amatch>")) && RailsDetect(getcwd()) |
+        \   call rails#buffer_setup() |
+        \   silent doau User BufEnterRails |
+        \ endif
+  autocmd FileType netrw
+        \ if RailsDetect() |
+        \   silent doau User BufEnterRails |
+        \ endif
+  autocmd FileType * if RailsDetect() | call rails#buffer_setup() | endif
+
+  autocmd BufNewFile,BufReadPost *.yml.example set filetype=yaml
+  autocmd BufNewFile,BufReadPost *.rjs,*.rxml,*.builder,*.jbuilder,*.ruby
+        \ if &filetype !=# 'ruby' | set filetype=ruby | endif
+  autocmd BufReadPost *.log if RailsDetect() | set filetype=railslog | endif
+
+  autocmd FileType railslog call rails#log_setup()
+  autocmd Syntax railslog call rails#log_syntax()
+  autocmd Syntax ruby,eruby,yaml,haml,javascript,coffee,sass,scss
+        \ if RailsDetect() | call rails#buffer_syntax() | endif
+
+  autocmd User ProjectionistDetect
+        \ if RailsDetect(get(g:, 'projectionist_file', '')) |
+        \   call projectionist#append(b:rails_root,
+        \     {'*': {'make': split(rails#app().rake_command('static'))}}) |
+        \ endif
 augroup END
 
-command! -bar -bang -nargs=* -complete=dir Rails :if s:autoload()|execute rails#new_app_command(<bang>0,<f-args>)|endif
+command! -bar -bang -nargs=* -complete=dir Rails execute rails#new_app_command(<bang>0,<f-args>)
 
 " }}}1
 " abolish.vim support {{{1

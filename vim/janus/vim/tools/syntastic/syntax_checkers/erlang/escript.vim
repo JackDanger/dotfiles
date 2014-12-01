@@ -19,7 +19,10 @@ if !exists('g:syntastic_erlc_include_path')
     let g:syntastic_erlc_include_path = ''
 endif
 
-let s:check_file = expand('<sfile>:p:h') . '/erlang_check_file.erl'
+let s:check_file = syntastic#util#shescape(expand('<sfile>:p:h') . syntastic#util#Slash() . 'erlang_check_file.erl')
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_erlang_escript_GetLocList() dict
     if expand('%:e') ==# 'hrl'
@@ -35,9 +38,9 @@ function! SyntaxCheckers_erlang_escript_GetLocList() dict
         let post_args = g:syntastic_erlc_include_path
     endif
     let makeprg = self.makeprgBuild({
-        \ 'args': args,
+        \ 'args_after': args,
         \ 'fname': syntastic#util#shexpand('%:p'),
-        \ 'post_args': post_args })
+        \ 'post_args_after': post_args })
 
     let errorformat =
         \ '%W%f:%l: warning: %m,'.
@@ -51,3 +54,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'erlang',
     \ 'name': 'escript'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

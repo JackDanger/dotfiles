@@ -5,14 +5,14 @@ if exists('g:autoloaded_dispatch_windows')
 endif
 let g:autoloaded_dispatch_windows = 1
 
-function! s:escape(str)
+function! s:escape(str) abort
   if &shellxquote ==# '"'
     return '"' . substitute(a:str, '"', '""', 'g') . '"'
   else
     let esc = exists('+shellxescape') ? &shellxescape : '"&|<>()@^'
-    return &shellquote .
+    return &shellxquote .
           \ substitute(a:str, '['.esc.']', '^&', 'g') .
-          \ get({'(': ')', '"(': ')"'}, &shellquote, &shellquote)
+          \ get({'(': ')', '"(': ')"'}, &shellxquote, &shellxquote)
   endif
 endfunction
 
@@ -23,8 +23,7 @@ function! dispatch#windows#handle(request) abort
   if a:request.action ==# 'make'
     return dispatch#windows#make(a:request)
   elseif a:request.action ==# 'start'
-    let title = get(a:request, 'title', matchstr(a:request.command, '\S\+'))
-    return dispatch#windows#spawn(title, a:request.command, a:request.background)
+    return dispatch#windows#start(a:request)
   endif
 endfunction
 
@@ -36,15 +35,49 @@ function! dispatch#windows#spawn(title, exec, background) abort
   return 1
 endfunction
 
+let s:pid = "wmic process where ^(Name='WMIC.exe' AND CommandLine LIKE '\\%\\%\\%TIME\\%\\%\\%'^) get ParentProcessId | more +1 > "
+
 function! dispatch#windows#make(request) abort
   if &shellxquote ==# '"'
     let exec = dispatch#prepare_make(a:request)
   else
-    let exec = escape(a:request.expanded, '%#!') .
+    let pidfile = a:request.file.'.pid'
+    let exec =
+          \ s:pid . pidfile .
+          \ ' & ' . escape(a:request.expanded, '%#!') .
           \ ' ' . dispatch#shellpipe(a:request.file) .
           \ ' & cd . > ' . a:request.file . '.complete' .
+          \ ' & del ' . pidfile .
           \ ' & ' . dispatch#callback(a:request)
   endif
 
   return dispatch#windows#spawn(a:request.title, exec, 1)
+endfunction
+
+function! dispatch#windows#start(request) abort
+  if &shellxquote ==# '"'
+    let exec = dispatch#prepare_start(a:request)
+  else
+    let pidfile = a:request.file.'.pid'
+    let exec =
+          \ s:pid . pidfile .
+          \ ' & ' . a:request.command .
+          \ ' & cd . > ' . a:request.file . '.complete' .
+          \ ' & del ' . pidfile
+  endif
+
+  let title = get(a:request, 'title', matchstr(a:request.command, '\S\+'))
+  return dispatch#windows#spawn(title, exec, a:request.background)
+endfunction
+
+function! dispatch#windows#activate(pid) abort
+  if system('tasklist /fi "pid eq '.a:pid.'"') !~# '==='
+    return 0
+  endif
+  if !exists('s:activator')
+    let s:activator = tempname().'.vbs'
+    call writefile(['WScript.CreateObject("WScript.Shell").AppActivate(WScript.Arguments(0))'], s:activator)
+  endif
+  call system('cscript //nologo '.s:activator.' '.a:pid)
+  return !v:shell_error
 endfunction

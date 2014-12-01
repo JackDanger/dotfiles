@@ -17,9 +17,7 @@ features:
   `:help rails-navigation`
 
 * Enhanced syntax highlighting.  From `has_and_belongs_to_many` to
-  `distance_of_time_in_words`, it's here.  For easy completion of these
-  long method names, `'completefunc'` is set to enable syntax based
-  completion on CTRL-X CTRL-U.
+  `distance_of_time_in_words`, it's here.
 
 * Interface to rake.  Use `:Rake` to run the current test, spec, or
   feature.  Use `:.Rake` to do a focused run of just the method,
@@ -101,24 +99,10 @@ Rails application.
 All of them.  A few features like syntax highlighting tend to reflect the
 latest version only.
 
-> Rake is slow.  How about making `:Rake` run
-> `testrb`/`rspec`/`cucumber` directly instead of `rake`?
+> Didn't rails.vim used to handle indent settings?
 
-Well then it wouldn't make sense to call it `:Rake`, now, would it?
-Maybe one day I'll add a separate `:Run` command or something.  In the
-meantime, here's how you can set up `:make` to run the current test:
-
-    autocmd FileType cucumber compiler cucumber | setl makeprg=cucumber\ \"%:p\"
-    autocmd FileType ruby
-          \ if expand('%') =~# '_test\.rb$' |
-          \   compiler rubyunit | setl makeprg=testrb\ \"%:p\" |
-          \ elseif expand('%') =~# '_spec\.rb$' |
-          \   compiler rspec | setl makeprg=rspec\ \"%:p\" |
-          \ else |
-          \   compiler ruby | setl makeprg=ruby\ -wc\ \"%:p\" |
-          \ endif
-    autocmd User Bundler
-          \ if &makeprg !~# 'bundle' | setl makeprg^=bundle\ exec\  | endif
+It got yanked after increasing contention over JavaScript.  Check out
+[sleuth.vim](https://github.com/tpope/vim-sleuth).
 
 ## Self-Promotion
 
