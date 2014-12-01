@@ -27,8 +27,14 @@ builtinhelp() {
   man bash | less -p "^       $1 "
 }
 
+# Recently modified files
 recent () {
   find * -type f -name '*[^.log]' -exec ls -1t "{}" + | head -n 10
+}
+
+# A shortcut for using awk like cut
+awkc () {
+  awk "{print \$$1}"
 }
 
 # Split stdin into separate words
