@@ -42,9 +42,9 @@ function rspec_last {
   fi
   echo "Testing $last_changed$line"
   if [[ -f bin/rspec ]] && [[ -z $SKIP_SPRING ]]; then
-    bin/rspec "$last_changed$line"
+    bin/rspec -c "$last_changed$line"
   else
-    rspec "$last_changed$line"
+    rspec -c "$last_changed$line"
   fi
 }
 function rspec_time {

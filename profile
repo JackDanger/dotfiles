@@ -3,6 +3,9 @@ PROFILE_LOADED=PROFILE_LOADED
 
 [[ -f ~/.profile.before ]] && . ~/.profile.before
 
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
 source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/docker
