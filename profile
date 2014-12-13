@@ -36,10 +36,6 @@ add_to_path ~/.rvm/bin
 # Vi!?
 #set -o vi
 
-if [[ -n `which direnv` ]]; then
-  eval "$(direnv hook $0)"
-fi
-
 function profile {
   $EDITOR ~/.profile.local && source ~/.profile.local
 }

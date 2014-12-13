@@ -57,5 +57,9 @@ if [ -f ~/.zsh_nocorrect ]; then
   done < ~/.zsh_nocorrect
 fi
 
+if [[ -n `which direnv` ]]; then
+  eval "$(direnv hook zsh)"
+fi
+
 source ~/.dotfiles/profile
 source ~/.fzf.zsh

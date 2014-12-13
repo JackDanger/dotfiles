@@ -27,5 +27,10 @@ alias profile="vim ~/.bashrc && . ~/.bashrc"
 # Here we go!
 #set -o vi
 
+if [[ -n `which direnv` ]]; then
+  eval "$(direnv hook bash)"
+fi
+
 source ~/.dotfiles/profile
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
