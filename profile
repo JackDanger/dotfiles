@@ -33,8 +33,12 @@ fi
 grep .rvm >/dev/null<<<$PATH || [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 add_to_path ~/.rvm/bin
 
-# Vi!
+# Vi!?
 #set -o vi
+
+if [[ -n `which direnv` ]]; then
+  eval "$(direnv hook $0)"
+fi
 
 function profile {
   $EDITOR ~/.profile.local && source ~/.profile.local
