@@ -1,7 +1,6 @@
-echo in profile
 
 if ! $(which profile_loaded 2>/dev/null); then
-profile_loaded() {}
+function profile_loaded {}
 
 [[ -f ~/.profile.before ]] && . ~/.profile.before
 

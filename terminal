@@ -5,7 +5,7 @@ if [[ -f /.crouton-targets ]]; then
 fi
 
 if ! $(which terminal_loaded > /dev/null); then
-terminal_loaded() {}
+function terminal_loaded {}
 
 export PAGER="less -FRSX"
 
@@ -26,7 +26,6 @@ recent () {
 awkc () {
   awk "{print \$$1}"
 }
-echo build awkc
 
 # Split stdin into separate words
 words () {
