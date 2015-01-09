@@ -4,20 +4,10 @@ if [[ -f /.crouton-targets ]]; then
   #setfont Uni3-TerminusBoldVGA16 2>/dev/null
 fi
 
-if [[ -z $TERMINAL_LOADED ]]; then
-export TERMINAL_LOADED=TERMINAL_LOADED
+if ! $(which terminal_loaded > /dev/null); then
+terminal_loaded() {}
 
 export PAGER="less -FRSX"
-
-function add_to_path {
-  local DIR=$1
-  if [ "$(grep $DIR -c <<< $PATH)" -eq "1" ]; then
-    PATH=$DIR:$(sed s,$DIR,, <<< $PATH)
-    PATH=$(sed -E s,:+,:,g <<< $PATH)
-  else
-    PATH=$DIR:$PATH
-  fi
-}
 
 if [[ -z `which seq` ]]; then
   seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
@@ -36,6 +26,7 @@ recent () {
 awkc () {
   awk "{print \$$1}"
 }
+echo build awkc
 
 # Split stdin into separate words
 words () {
@@ -55,4 +46,4 @@ add_to_path ~/bin
 add_to_path /usr/local/sbin
 add_to_path /usr/local/bin
 
-fi # end $TERMINAL_LOADED
+fi # end terminal_loaded()

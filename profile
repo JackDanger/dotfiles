@@ -1,10 +1,22 @@
-if [[ -z $PROFILE_LOADED ]]; then
-PROFILE_LOADED=PROFILE_LOADED
+echo in profile
+
+if ! $(which profile_loaded 2>/dev/null); then
+profile_loaded() {}
 
 [[ -f ~/.profile.before ]] && . ~/.profile.before
 
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
+
+function add_to_path {
+  local DIR=$1
+  if [ "$(grep $DIR -c <<< $PATH)" -eq "1" ]; then
+    PATH=$DIR:$(sed s,$DIR,, <<< $PATH)
+    PATH=$(sed -E s,:+,:,g <<< $PATH)
+  else
+    PATH=$DIR:$PATH
+  fi
+}
 
 source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
@@ -42,4 +54,4 @@ function profile {
 
 [[ -f ~/.profile.local ]] && . ~/.profile.local
 
-fi # end $PROFILE_LOADED
+fi # end profile_loaded()
