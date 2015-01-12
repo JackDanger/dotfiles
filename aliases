@@ -81,3 +81,18 @@ function tac {
     printf '%s\n' "$line"
   fi
 }
+
+function reset-ssh() {
+  local operator='d'
+  cmd=$(history | egrep '^\s*\d+\s+ssh' | tail -n 1 | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}')
+
+  echo "Last command: \"$cmd\""
+  out=$(eval ${cmd} 2>&1)
+  line=$(egrep -o 'known_hosts:\d+' <<<$out | cut -c 13-)
+
+  echo "removing ~/.ssh/known_hosts:$line"
+  sed -i.bak -e "$line$operator" ~/.ssh/known_hosts
+
+  echo "Repeating: $cmd"
+  eval $cmd
+}
