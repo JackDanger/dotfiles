@@ -1,1 +1,2 @@
-alias clean_xcode_builds="rm -rf ~/Library/Application\ Support/iPhone\ Simulator/*/Applications/*"
+alias nuke_simulator="rm -rf ~/Library/Application\ Support/iPhone\ Simulator/*/Applications/*"
+alias nuke_derived_data="rm -rf ~/Library/Developer/Xcode/DerivedData/*"

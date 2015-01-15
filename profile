@@ -21,6 +21,7 @@ source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/docker
 source ~/.dotfiles/git
+source ~/.dotfiles/xcode
 source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
 

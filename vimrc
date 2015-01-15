@@ -124,7 +124,7 @@ filetype plugin indent on
 syntax on
 
 " `go fmt` before save
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
+autocmd FileType go autocmd BufWritePre <buffer> GoFmt
 
 set tabstop=2
 set shiftwidth=2
