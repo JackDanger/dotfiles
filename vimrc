@@ -1,4 +1,3 @@
-
 " Default
 let mapleader = '\'
 
@@ -22,10 +21,14 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
 map <leader>l :Align
-nmap <leader>a :Ack 
+nmap <leader>a :Ack
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>h :nohl<CR>
+
+" Insert err != nil checks automatically
+imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
+nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
 
 set showmode
 set autowrite
@@ -76,6 +79,9 @@ map <C-p> :FZF<CR>
 " Autosave
 :au FocusLost * silent! wa
 
+" Don't do funny stuff with JSON double quotes
+let g:vim_json_syntax_conceal = 0
+
 " Go tags
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
@@ -123,9 +129,12 @@ set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on
 syntax on
 
+" Disable syntastic for go?
+"let g:syntastic_go_checkers=[]
 " `go fmt` before save
 autocmd FileType go autocmd BufWritePre <buffer> GoFmt
 
 set tabstop=2
 set shiftwidth=2
 set expandtab " Overwritten for go, useful everywhere else
+
