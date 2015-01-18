@@ -1,6 +1,9 @@
 " Default
 let mapleader = '\'
 
+" Rocking hard. No leader timeout
+set notimeout
+
 " Alias these common mistypes, Shitf+w -> w
 "command W w
 command Wq wq

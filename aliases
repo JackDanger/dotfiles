@@ -15,17 +15,25 @@ function j()   { :}
 function jj()  { :}
 function jjj() { :}
 
+
+# Use Neovim by default
+if [[ -z "$(which nvim)" ]]; then
+  export EDITOR=/usr/local/bin/vim
+else
+  export EDITOR=$(which nvim)
+fi
+
 if [[ -z "$(which fzf)" ]]; then
-  alias v='/usr/local/bin/vim'
+  alias v=$EDITOR
 else
   function smartvim() {
     if [[ -z "$1" ]]; then
-      vim $(fzf)
+      e $(fzf)
     else
-      vim $*
+      e $*
     fi
   }
-  alias v='smartvim'
+  alias v=smartvim
 fi
 
 alias grab='cat | pbcopy'
