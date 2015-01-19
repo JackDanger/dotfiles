@@ -87,6 +87,9 @@ set rtp+=~/.fzf/
 
 map <C-p> :FZF<CR>
 
+" Always start on the first line of a git commit message
+autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
+
 " Autosave
 :au FocusLost * silent! wa
 
