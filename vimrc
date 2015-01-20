@@ -24,7 +24,7 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
 map <leader>l :Align
-nmap <leader>a :Ack
+nmap <leader>a :Ag
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>h :nohl<CR>
