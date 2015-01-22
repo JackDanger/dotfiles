@@ -1,7 +1,0 @@
-h1. Usage:
-
-  git clone git://github.com/JackDanger/jackbash ~/.bash
-  echo "source ~/.bash/rc" >> ~/.bashrc
-
-
-
