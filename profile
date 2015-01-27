@@ -28,7 +28,13 @@ source ~/.dotfiles/ruby
 add_to_path ~/bin
 add_to_path ~/.dotfiles/bin
 
-export EDITOR=vim
+# Use Neovim by default
+if [[ -z "$(which nvim)" ]]; then
+  export EDITOR=/usr/local/bin/vim
+else
+  export EDITOR=$(which nvim)
+fi
+
 
 if [[ -n `which unsetopt` ]]; then
   # Fix multi-terminal history

@@ -17,13 +17,6 @@ function jj()  { :}
 function jjj() { :}
 
 
-# Use Neovim by default
-if [[ -z "$(which nvim)" ]]; then
-  export EDITOR=/usr/local/bin/vim
-else
-  export EDITOR=$(which nvim)
-fi
-
 if [[ -z "$(which fzf)" ]]; then
   alias v=$EDITOR
 else
@@ -43,7 +36,7 @@ alias ack='ack --smart-case'
 
 alias ip='ipconfig getifaddr en0'
 alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-alias warmup='seq 1 8 | xargs -n 1 -P 8 yes > /dev/null'
+alias warmup='seq 1 $(sysctl -n hw.ncpu) | xargs -n 1 -P $(sysctl -n hw.ncpu) yes > /dev/null'
 alias top='top -o cpu'
 
 alias timestamp="date +%Y-%m-%d-%H-%M-%S"
