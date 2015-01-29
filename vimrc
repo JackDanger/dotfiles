@@ -20,8 +20,8 @@ nmap QQ :q!<CR>
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 " Leader-A sets up Ag to search for your selection (or the current word)
-nnoremap <leader>A viw"hy:Ag '<C-r>h'"
-vnoremap <leader>A "hy:Ag '<C-r>h'"
+nnoremap <leader>A viw"hy:Ag '<C-r>h'
+vnoremap <leader>A "hy:Ag '<C-r>h'
 
 " Press F2 to paste without weird autointents
 nnoremap <F2> :set invpaste paste?<CR>
