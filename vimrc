@@ -14,10 +14,14 @@ nmap QQ :q!<CR>
 
 "color vividchalk
 
-vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " From http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
 " By pressing ctrl + r in the visual mode you will be prompted to enter text to replace with. Press enter and then confirm each change you agree with 'y' or decline with 'n'.
 " This command will override your register 'h' so you can choose other one ( by changing 'h' in the command above to other lower case letter ) that you don't use.
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+" Leader-A sets up Ag to search for your selection (or the current word)
+nnoremap <leader>A viw"hy:Ag '<C-r>h'"
+vnoremap <leader>A "hy:Ag '<C-r>h'"
 
 " Press F2 to paste without weird autointents
 nnoremap <F2> :set invpaste paste?<CR>
