@@ -1,4 +1,3 @@
-
 if ! $(which profile_loaded >/dev/null); then
 function profile_loaded {}
 
