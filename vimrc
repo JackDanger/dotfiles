@@ -150,7 +150,9 @@ syntax on
 " Disable syntastic for go?
 "let g:syntastic_go_checkers=[]
 " `go fmt` before save
-autocmd FileType go autocmd BufWritePre <buffer> GoFmt
+"autocmd FileType go autocmd BufWritePre <buffer> GoFmt
+unmap <leader>f
+autocmd FileType go map <leader>f :GoFmt<CR>
 
 set tabstop=2
 set shiftwidth=2

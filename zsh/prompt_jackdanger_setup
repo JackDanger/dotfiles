@@ -1,16 +1,16 @@
 # Load dependencies.
 pmodload 'helper'
 
+ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+
 function prompt_jackdanger_precmd {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
 
   autoload -U colors && colors
 
-  # Get Git repository information.
-  if (( $+functions[git-info] )); then
-      git-info
-  fi
+  # Provides git_prompt_info
+  source ~/.dotfiles/zsh/git.zsh
 }
 
 function prompt_jackdanger_setup {
@@ -24,21 +24,10 @@ function prompt_jackdanger_setup {
   # Add hook for calling git-info before each command.
   add-zsh-hook precmd prompt_jackdanger_precmd
 
-  primary_color="yellow"
-  secondary_color="red"
-
-  # Set git-info parameters.
-  zstyle ':prezto:module:git:info' verbose 'yes'
-  zstyle ':prezto:module:git:info:dirty' format "%%B%F{$primary_color}]臟"
-  zstyle ':prezto:module:git:info:clean' format "] %{$fg[red]%}$%f%b%{$reset_color%}"
-  zstyle ':prezto:module:git:info:branch' format "%%B%F{$primary_color}[%b%f%%b"
-  zstyle ':prezto:module:git:info:keys' format \
-    'prompt' '%b%C%D' \
-    'rprompt' 'd'
-
   # Define prompts.
-  PROMPT='%{$fg[red]%}%c%f%b%{$reset_color%} ${git_info:+${(e)git_info[prompt]}}%{$fg[red]%}$%{$reset_color%} '
-  RPROMPT='%(?..%{$fg[green]%}%?)'
+  # Note: "%f%b" just clears colors
+  PROMPT='%{$fg[red]%}%c%f%b %{$fg_bold[green]%}$(git_prompt_info)%f%b%{$fg[red]%}$%f%b '
+  RPROMPT='%(?..%{$fg[green]%}%?)%b%f'
 }
 
 prompt_jackdanger_setup "$@"

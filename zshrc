@@ -1,5 +1,5 @@
 ## Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+ZSH=$HOME/.zprezto
 ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
 # COWBOY TIME
@@ -13,8 +13,7 @@ DISABLE_CORRECTION=true
 ZSH_THEME="jackdanger"
 
 # Example aliases
-alias zshrc="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
+alias profile="vim ~/.zshrc && . ~/.zshrc"
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
@@ -42,8 +41,13 @@ bindkey "^o" clear-screen
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins= #(python bundler)
 
-source $ZSH/oh-my-zsh.sh
-alias profile="vim ~/.zshrc && . ~/.zshrc"
+# Oh-My-Zsh
+# source $ZSH/oh-my-zsh.sh
+# Prezto
+fpath=(~/.dotfiles/zsh $fpath)
+source $ZSH/runcoms/zshrc
+#zstyle ":prezto:module:prompt" theme "jackdanger"
+prompt jackdanger
 
 # Direnv
 #if [[ -n "$(which direnv)" ]]; then
