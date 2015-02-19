@@ -49,6 +49,8 @@ source $ZSH/runcoms/zshrc
 #zstyle ":prezto:module:prompt" theme "jackdanger"
 prompt jackdanger
 
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
+
 # Direnv
 #if [[ -n "$(which direnv)" ]]; then
 #  eval "$(direnv hook $0)"
