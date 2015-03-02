@@ -30,8 +30,10 @@ add_to_path ~/.dotfiles/bin
 # Use Neovim by default
 if [[ -z "$(which nvim)" ]]; then
   export EDITOR=/usr/local/bin/vim
+  export VISUAL=$EDITOR
 else
   export EDITOR=$(which nvim)
+  export VISUAL=$EDITOR
 fi
 
 

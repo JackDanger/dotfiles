@@ -94,6 +94,10 @@ map <C-p> :FZF<CR>
 " Always start on the first line of a git commit message
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
+" camelCasing for free
+nnoremap + /\$\w\+_<CR>
+nnoremap _ f_x~
+
 " Autosave
 :au FocusLost * silent! wa
 
