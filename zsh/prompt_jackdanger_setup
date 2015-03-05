@@ -1,7 +1,8 @@
 # Load dependencies.
 pmodload 'helper'
 
-ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+export ZSH_THEME_GIT_PROMPT_DIRTY=" 臟"
 
 function prompt_jackdanger_precmd {
   setopt LOCAL_OPTIONS
