@@ -2,6 +2,8 @@ if [[ -f /.crouton-targets ]]; then
   echo setting font
   setfont Uni3-TerminusBoldVGA16
   #setfont Uni3-TerminusBoldVGA16 2>/dev/null
+  sudo loadkeys /home/jackdanger/.dotfiles/asus.keymap.map
+  cd /code/meet
 fi
 
 if ! $(which terminal_loaded > /dev/null); then

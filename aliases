@@ -60,7 +60,11 @@ function dotfiles {
   git push
   cd -
 }
-
+if [[ -n "$(which gsed)" ]]; then
+  gsed() {
+    sed $*
+  }
+fi
 function camelcase {
   if [[ -z $1 ]]; then
     gsed 's/\(^[a-z]\)\|_\([a-z]\)/\U\1\U\2/g'
