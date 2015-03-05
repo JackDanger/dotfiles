@@ -12,6 +12,7 @@ task :install do
     ["~/.tmux.conf"     ,  "tmux.conf"],
     ["~/.vimrc"         ,  "vim/janus/vim/vimrc"],
     ["~/.vimrc.after"   ,  "vimrc"],
+    ["~/.zprezto"       ,  "prezto"],
     ["~/.zshrc"         ,  "zshrc"],
 
   ].each do |destination, source|

@@ -47,6 +47,7 @@ plugins= #(python bundler)
 fpath=(~/.dotfiles/zsh $fpath)
 source $ZSH/runcoms/zshrc
 #zstyle ":prezto:module:prompt" theme "jackdanger"
+autoload -Uz promptinit && promptinit
 prompt jackdanger
 
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
