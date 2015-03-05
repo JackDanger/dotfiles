@@ -40,6 +40,21 @@ alias just_me="command pair just_me"
 alias as_github="command pair as github@jackcanty.com"
 alias as_square="command pair as jackdanger@squareup.com"
 
+# Get the sha from which you divert from a specific other sha:
+#
+#   merge-base origin/green
+#
+# Or just compare to master:
+#
+#   merge-base
+#
+merge-base() {
+  if [[ -n "$1" ]]; then
+    command git merge-base $1 HEAD
+  else
+    command git merge-base master HEAD
+  fi
+}
 # stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
 if [[ -z $ZSH ]]; then
   function make-completion-wrapper () {

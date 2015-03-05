@@ -26,7 +26,8 @@ function prompt_jackdanger_setup {
 
   # Define prompts.
   # Note: "%f%b" just clears colors
-  PROMPT='%{$fg[red]%}%c%f%b %{$fg_bold[green]%}$(git_prompt_info)%f%b%{$fg[red]%}$%f%b '
+  dir=$(pwd | xargs basename)
+  PROMPT='%{$fg[red]%}$dir%f%b %{$fg_bold[green]%}$(git_prompt_info)%f%b%{$fg[red]%}$%f%b '
   RPROMPT='%(?..%{$fg[green]%}%?)%b%f'
 }
 
