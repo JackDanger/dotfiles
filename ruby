@@ -40,10 +40,11 @@ function rspec_last {
   if [ -n "$line" ]; then
     line=":$line"
   fi
-  echo "Testing $last_changed$line"
   if [[ -f bin/rspec ]] && [[ -z $SKIP_SPRING ]]; then
+    echo "bin/rspec -c $last_changed$line"
     bin/rspec -c "$last_changed$line"
   else
+    echo "rspec -c $last_changed$line"
     rspec -c "$last_changed$line"
   fi
 }
