@@ -33,9 +33,17 @@ nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>h :nohl<CR>
 
-" Insert err != nil checks automatically
+" Insert Go's err != nil checks automatically
 imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
 nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
+
+" \> goes to the next quickfix entry
+nmap <leader>> :cnext<CR>
+" \> autosaves and goes to the next quickfix entry in insert mode
+imap <leader>> <ESC>:w<CR>:cnext<CR>
+" \< goes backward
+nmap <leader>< :cprevious<CR>
+imap <leader>< <ESC>:w<CR>:cprevious<CR>
 
 set showmode
 set autowrite
