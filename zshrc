@@ -53,6 +53,9 @@ source $ZSH/runcoms/zshrc
 autoload -Uz promptinit && promptinit
 prompt jackdanger
 
+# I know what I'm doing
+setopt CLOBBER
+
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
 # Direnv
