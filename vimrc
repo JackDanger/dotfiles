@@ -79,6 +79,9 @@ autocmd VimResized * :wincmd =
 nmap <leader>s ysiw
 nmap <leader>S ysiW
 
+" Ruby:
+" Turn instance variables into `let`s
+nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
 
 " CTRL+direction to move panes
 map <C-h> <C-w>h
