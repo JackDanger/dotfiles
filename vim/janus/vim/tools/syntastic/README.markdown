@@ -18,34 +18,50 @@
 
 
 - - -
-1\. [Introduction](#introduction)  
-2\. [Installation](#installation)  
-3\. [FAQ](#faq)  
-4\. [Other resources](#otherresources)  
+1. [Introduction](#introduction)  
+2. [Installation](#installation)  
+2.1. [Requirements](#requirements)  
+2.2. [Installing syntastic with Pathogen](#installpathogen)  
+3. [FAQ](#faq)  
+3.1. [I installed syntastic but it isn't reporting any errors...](#faqinfo)  
+3.2. [The `python` checker complains about syntactically valid Python 3 constructs...](#faqpython3)  
+3.3. [Are there any local checkers for HTML5 that I can use with syntastic?](#faqhtml5)  
+3.4. [The `perl` checker has stopped working...](#faqperl)  
+3.5. [What happened to the `rustc` checker?](#faqrust)  
+3.6. [I run a checker and the location list is not updated...](#faqloclist)  
+3.6. [I run`:lopen` or `:lwindow` and the error window is empty...](#faqloclist)  
+3.7. [How can I pass additional arguments to a checker?](#faqargs)  
+3.8. [Syntastic supports several checkers for my filetype - how do I tell which one(s) to use?](#faqcheckers)  
+3.9. [What is the difference between syntax checkers and style checkers?](#faqstyle)  
+3.10. [I have enabled multiple checkers for the current filetype.  How can I display all of the errors from all of the checkers together?](#faqaggregate)  
+3.11. [How can I jump between the different errors without using the location list at the bottom of the window?](#faqlnext)  
+3.12. [The error window is closed automatically when I :quit the current buffer but not when I :bdelete it?](#faqbdelete)  
+4. [Resources](#otherresources)  
+
 - - -
 
 <a name="introduction"></a>
 
 ## 1\. Introduction
 
-Syntastic is a syntax checking plugin for Vim that runs files through external
-syntax checkers and displays any resulting errors to the user. This can be done
-on demand, or automatically as files are saved. If syntax errors are detected,
-the user is notified and is happy because they didn't have to compile their
-code or execute their script to find them.
+Syntastic is a syntax checking plugin for [Vim][13] that runs files through
+external syntax checkers and displays any resulting errors to the user. This
+can be done on demand, or automatically as files are saved. If syntax errors
+are detected, the user is notified and is happy because they didn't have to
+compile their code or execute their script to find them.
 
 At the time of this writing, syntax checking plugins exist for ActionScript,
-Ada, AppleScript, Arduino, AsciiDoc, ASM, BEMHTML, Bro, Bourne shell, C,
-C++, C#, Cabal, Chef, CoffeeScript, Coco, Coq, CSS, Cucumber, CUDA, D, Dart,
-DocBook, Dust, Elixir, Erlang, eRuby, Fortran, Gentoo metadata, GLSL, Go,
-Haml, Haskell, Haxe, Handlebars, HSS, HTML, Java, JavaScript, JSON, JSX, LESS,
-Lex, Limbo, LISP, LLVM intermediate language, Lua, Markdown, MATLAB, NASM,
-Objective-C, Objective-C++, OCaml, Perl, Perl POD, PHP, gettext Portable
-Object, OS X and iOS property lists, Puppet, Python, R, Racket, Relax NG,
-reStructuredText, RPM spec, Ruby, SASS/SCSS, Scala, Slim, Tcl, TeX, Texinfo,
-Twig, TypeScript, Vala, Verilog, VHDL, VimL, xHtml, XML, XSLT, YACC, YAML,
-z80, Zope page templates, and zsh.  See the [wiki][3] for details about the
-corresponding supported checkers.
+Ada, AppleScript, AsciiDoc, ASM, BEMHTML, Bro, Bourne shell, C, C++, C#, Cabal,
+Chef, CoffeeScript, Coco, Coq, CSS, Cucumber, CUDA, D, Dart, DocBook, Dust,
+Elixir, Erlang, eRuby, Fortran, Gentoo metadata, GLSL, Go, Haml, Haskell,
+Haxe, Handlebars, HSS, HTML, Java, JavaScript, JSON, JSX, LESS, Lex, Limbo,
+LISP, LLVM intermediate language, Lua, Markdown, MATLAB, NASM, Objective-C,
+Objective-C++, OCaml, Perl, Perl POD, PHP, gettext Portable Object, OS X and
+iOS property lists, Puppet, Python, R, Racket, Relax NG, reStructuredText, RPM
+spec, Ruby, SASS/SCSS, Scala, Slim, Tcl, TeX, Texinfo, Twig, TypeScript, Vala,
+Verilog, VHDL, VimL, xHtml, XML, XSLT, YACC, YAML, z80, Zope page templates,
+and zsh.  See the [wiki][3] for details about the corresponding supported
+checkers.
 
 Below is a screenshot showing the methods that Syntastic uses to display syntax
 errors.  Note that, in practise, you will only have a subset of these methods
@@ -64,16 +80,40 @@ enabled.
 
 ## 2\. Installation
 
-Installing syntastic is easy but first you need to have the [pathogen][1]
-plugin installed.  If you already have [pathogen][1] working then skip
-[Step 1](#step1) and go to [Step 2](#step2).
+<a name="requirements"></a>
 
+### 2.1\. Requirements
+
+Syntastic itself has rather relaxed requirements: it doesn't have any external
+dependencies, and it needs a version of [Vim][13] compiled with a few common
+features: `autocmd`, `eval`, `file_in_path`, `modify_fname`, `quickfix`,
+`reltime`, and `user_commands`. Not all possible combinations of features that
+include the ones above make equal sense on all operating systems, but Vim
+version 7 or later with the "normal", "big", or "huge" feature sets should be
+fine.
+
+Syntastic should work with any modern plugin managers for Vim, such as
+[NeoBundle][14], [Pathogen][1], [Vim-Addon-Manager][15], [Vim-Plug][16], or
+[Vundle][17]. Instructions for installing syntastic with [Pathogen][1] are
+included below for completeness.
+
+Last but not least: syntastic doesn't know how to do any syntax checks by
+itself. In order to get meaningful results you need to install external
+checkers corresponding to the types of files you use. Please consult the
+[wiki][3] for a list of supported checkers.
+
+<a name="installpathogen"></a>
+
+### 2.2\. Installing syntastic with Pathogen
+
+If you already have [Pathogen][1] working then skip [Step 1](#step1) and go to
+[Step 2](#step2).
 
 <a name="step1"></a>
 
-### 2.1\. Step 1: Install pathogen.vim
+#### 2.2.1\. Step 1: Install pathogen.vim
 
-First I'll show you how to install Tim Pope's [pathogen][1] so that it's easy to
+First I'll show you how to install Tim Pope's [Pathogen][1] so that it's easy to
 install syntastic.  Do this in your terminal so that you get the `pathogen.vim`
 file and the directories it needs:
 ```sh
@@ -87,7 +127,7 @@ execute pathogen#infect()
 
 <a name="step2"></a>
 
-### 2.2\. Step 2: Install syntastic as a pathogen bundle
+#### 2.2.2\. Step 2: Install syntastic as a Pathogen bundle
 
 You now have pathogen installed and can put syntastic into `~/.vim/bundle` like
 this:
@@ -100,7 +140,8 @@ Quit vim and start it back up to reload it, then type:
 :Helptags
 ```
 If you get an error when you do this, then you probably didn't install
-[pathogen][1] right.  Go back to [Step 1](#step1) and make sure you did the following:
+[Pathogen][1] right.  Go back to [Step 1](#step1) and make sure you did the
+following:
 
 1. Created both the `~/.vim/autoload` and `~/.vim/bundle` directories.
 2. Added the `call pathogen#infect()` line to your `~/.vimrc` file
@@ -114,7 +155,7 @@ If you get an error when you do this, then you probably didn't install
 
 <a name="faqinfo"></a>
 
-__Q. I installed syntastic but it isn't reporting any errors...__
+__3.1. Q. I installed syntastic but it isn't reporting any errors...__
 
 A. The most likely reason is that none of the syntax checkers that it requires
 is installed. For example: by default, python requires either `flake8` or
@@ -130,7 +171,7 @@ create an issue - or better yet, create a pull request.
 
 <a name="faqpython3"></a>
 
-__Q. The `python` checker complains about syntactically valid Python 3 constructs...__
+__3.2. Q. The `python` checker complains about syntactically valid Python 3 constructs...__
 
 A. Configure the `python` checker to call a Python 3 interpreter rather than
 Python 2, e.g:
@@ -138,9 +179,27 @@ Python 2, e.g:
 let g:syntastic_python_python_exec = '/path/to/python3'
 ```
 
+<a name="faqhtml5"></a>
+
+__3.3. Q. Are there any local checkers for HTML5 that I can use with syntastic?__
+
+[HTML Tidy][18] has a fork named [HTML Tidy for HTML5][19].  It's a drop
+in replacement, and syntastic can use it without changes.  Just install it
+somewhere and point `g:syntastic_html_tidy_exec` to its executable.
+
+Alternatively, you can install [vnu.jar][21] from the [validator.nu][20]
+project and run it as a [HTTP server][23]:
+```sh
+$ java -Xss512k -cp /path/to/vnu.jar nu.validator.servlet.Main 8888
+```
+Then you can [configure][22] syntastic to use it:
+```vim
+let g:syntastic_html_validator_api = 'http://localhost:8888/'
+```
+
 <a name="faqperl"></a>
 
-__Q. The `perl` checker has stopped working...__
+__3.4. Q. The `perl` checker has stopped working...__
 
 A. The `perl` checker runs `perl -c` against your file, which in turn
 __executes__ any `BEGIN`, `UNITCHECK`, and `CHECK` blocks, and any `use`
@@ -156,7 +215,7 @@ let g:syntastic_enable_perl_checker = 1
 
 <a name="faqrust"></a>
 
-__Q. What happened to the `rustc` checker?__
+__3.5. Q. What happened to the `rustc` checker?__
 
 A. It has been included in the [Rust compiler package][12].  If you have
 a recent version of the Rust compiler, the checker should be picked up
@@ -164,8 +223,8 @@ automatically by syntastic.
 
 <a name="faqloclist"></a>
 
-__Q. I run a checker and the location list is not updated...__  
-__Q. I run`:lopen` or `:lwindow` and the error window is empty...__
+__3.6. Q. I run a checker and the location list is not updated...__  
+__3.6. Q. I run`:lopen` or `:lwindow` and the error window is empty...__
 
 A. By default the location list is changed only when you run the `:Errors`
 command, in order to minimise conflicts with other plugins.  If you want the
@@ -177,7 +236,7 @@ let g:syntastic_always_populate_loc_list = 1
 
 <a name="faqargs"></a>
 
-__Q. How can I pass additional arguments to a checker?__
+__3.7. Q. How can I pass additional arguments to a checker?__
 
 A. Almost all syntax checkers use the `makeprgBuild()` function. Those checkers
 that do can be configured using global variables. The general form of the
@@ -193,7 +252,7 @@ See `:help syntastic-checker-options` for more information.
 
 <a name="faqcheckers"></a>
 
-__Q. Syntastic supports several checkers for my filetype - how do I tell it
+__3.8. Q. Syntastic supports several checkers for my filetype - how do I tell it
 which one(s) to use?__
 
 A. Stick a line like this in your vimrc:
@@ -234,7 +293,7 @@ filetype of the current file is `php`).
 
 <a name="faqstyle"></a>
 
-__Q. What is the difference between syntax checkers and style checkers?__
+__3.9. Q. What is the difference between syntax checkers and style checkers?__
 
 A. The errors and warnings they produce are highlighted differently and can
 be filtered by different rules, but otherwise the distinction is pretty much
@@ -264,7 +323,7 @@ See `:help syntastic_quiet_messages` for details.
 
 <a name="faqaggregate"></a>
 
-__Q. I have enabled multiple checkers for the current filetype.  How can I
+__3.10. Q. I have enabled multiple checkers for the current filetype.  How can I
 display all of the errors from all of the checkers together?__
 
 A. Set `g:syntastic_aggregate_errors` to 1 in your vimrc:
@@ -276,7 +335,7 @@ See `:help syntastic-aggregating-errors` for more details.
 
 <a name="faqlnext"></a>
 
-__Q. How can I jump between the different errors without using the location
+__3.11. Q. How can I jump between the different errors without using the location
 list at the bottom of the window?__
 
 A. Vim provides several built-in commands for this. See `:help :lnext` and
@@ -288,7 +347,7 @@ mappings (among other things).
 
 <a name="faqbdelete"></a>
 
-__Q. The error window is closed automatically when I :quit the current buffer
+__3.12. Q. The error window is closed automatically when I :quit the current buffer
 but not when I :bdelete it?__
 
 A. There is no safe way to handle that situation automatically, but you can
@@ -299,10 +358,9 @@ nnoremap <silent> <C-d> :lclose<CR>:bdelete<CR>
 cabbrev <silent> bd lclose\|bdelete
 ```
 
-
 <a name="otherresources"></a>
 
-## 4\. Other resources
+## 4\. Resources
 
 The preferred place for posting suggestions, reporting bugs, and general
 discussions related to syntastic is the [issue tracker at GitHub][4].
@@ -328,6 +386,17 @@ a look at [jedi-vim][7], [python-mode][8], or [YouCompleteMe][9].
 [10]: http://perldoc.perl.org/perlrun.html#*-c*
 [11]: https://github.com/scrooloose/syntastic/wiki/Syntax-Checker-Guide
 [12]: https://github.com/rust-lang/rust/
+[13]: http://www.vim.org/
+[14]: https://github.com/Shougo/neobundle.vim
+[15]: https://github.com/MarcWeber/vim-addon-manager
+[16]: https://github.com/junegunn/vim-plug/
+[17]: https://github.com/gmarik/Vundle.vim
+[18]: http://tidy.sourceforge.net/
+[19]: http://w3c.github.io/tidy-html5/
+[20]: http://about.validator.nu/
+[21]: https://github.com/validator/validator/releases/latest
+[22]: https://github.com/scrooloose/syntastic/wiki/HTML%3A---validator
+[23]: http://validator.github.io/validator/#standalone
 
 <!--
 vim:tw=79:sw=4:

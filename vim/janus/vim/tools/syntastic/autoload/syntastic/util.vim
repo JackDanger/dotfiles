@@ -47,6 +47,13 @@ function! syntastic#util#tmpdir() " {{{2
         else
             let tempdir = '/tmp/vim-syntastic-' . getpid()
         endif
+
+        try
+            call mkdir(tempdir, 'p', 0700)
+        catch /\m^Vim\%((\a\+)\)\=:E739/
+            call syntastic#log#error(v:exception)
+            let tempdir = '.'
+        endtry
     endif
 
     return tempdir
@@ -54,6 +61,10 @@ endfunction " }}}2
 
 " Recursively remove a directory
 function! syntastic#util#rmrf(what) " {{{2
+    if a:what == '.'
+        return
+    endif
+
     if  getftype(a:what) ==# 'dir'
         if !exists('s:rmrf')
             let s:rmrf =
@@ -141,14 +152,14 @@ endfunction " }}}2
 
 " strwidth() was added in Vim 7.3; if it doesn't exist, we use strlen()
 " and hope for the best :)
-let s:width = function(exists('*strwidth') ? 'strwidth' : 'strlen')
-lockvar s:width
+let s:_width = function(exists('*strwidth') ? 'strwidth' : 'strlen')
+lockvar s:_width
 
 function! syntastic#util#screenWidth(str, tabstop) " {{{2
     let chunks = split(a:str, "\t", 1)
-    let width = s:width(chunks[-1])
+    let width = s:_width(chunks[-1])
     for c in chunks[:-2]
-        let cwidth = s:width(c)
+        let cwidth = s:_width(c)
         let width += cwidth + a:tabstop - cwidth % a:tabstop
     endfor
     return width
@@ -166,7 +177,7 @@ function! syntastic#util#wideMsg(msg) " {{{2
     "convert tabs to spaces so that the tabs count towards the window
     "width as the proper amount of characters
     let chunks = split(msg, "\t", 1)
-    let msg = join(map(chunks[:-2], 'v:val . repeat(" ", &tabstop - s:width(v:val) % &tabstop)'), '') . chunks[-1]
+    let msg = join(map(chunks[:-2], 'v:val . repeat(" ", &tabstop - s:_width(v:val) % &tabstop)'), '') . chunks[-1]
     let msg = strpart(msg, 0, &columns - 1)
 
     set noruler noshowcmd
@@ -274,7 +285,7 @@ endfunction " }}}2
 
 function! syntastic#util#dictFilter(errors, filter) " {{{2
     let rules = s:_translateFilter(a:filter)
-    " call syntastic#log#debug(g:SyntasticDebugFilters, "applying filter:", rules)
+    " call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, "applying filter:", rules)
     try
         call filter(a:errors, rules)
     catch /\m^Vim\%((\a\+)\)\=:E/
@@ -287,7 +298,7 @@ endfunction " }}}2
 " (hopefully high resolution) since program start
 " TODO: This assumes reltime() returns a list of integers.
 function! syntastic#util#stamp() " {{{2
-    return reltime(g:syntastic_start)
+    return reltime(g:_SYNTASTIC_START)
 endfunction " }}}2
 
 " }}}1

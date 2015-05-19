@@ -82,17 +82,17 @@ let s:shade_hl_line_defaults = {
 
 let s:target_hl_inc = {
     \   'gui'     : ['NONE', '#7fbf00' , 'bold']
-    \ , 'cterm256': ['NONE', 'green'   , 'bold']
+    \ , 'cterm256': ['NONE', '40'   , 'bold']
     \ , 'cterm'   : ['NONE', 'green'   , 'bold']
     \ }
 let s:target_hl_inc_cursor = {
     \   'gui'     : ['#ACDBDA', '#121813' , 'bold']
-    \ , 'cterm256': ['cyan'   , 'black'   , 'bold']
+    \ , 'cterm256': ['cyan'   , '232'   , 'bold']
     \ , 'cterm'   : ['cyan'   , 'black'   , 'bold']
     \ }
 let s:target_hl_move = {
     \   'gui'     : ['#7fbf00', '#121813' , 'bold']
-    \ , 'cterm256': ['green'  , 'white'   , 'bold']
+    \ , 'cterm256': ['green'  , '15'   , 'bold']
     \ , 'cterm'   : ['green'  , 'white'   , 'bold']
     \ }
 " }}}
@@ -155,9 +155,10 @@ let s:priorities = {
     \  g:EasyMotion_hl_inc_cursor : 2,
     \  g:EasyMotion_hl_move : 0,
     \ }
-for group in keys(s:priorities)
-    let s:h.ids[group] = []
+for s:group in keys(s:priorities)
+    let s:h.ids[s:group] = []
 endfor
+unlet s:group
 "}}}
 
 function! EasyMotion#highlight#delete_highlight(...) "{{{

@@ -18,11 +18,6 @@
 "
 "       Flag to indicate whether to enable the commands listed above.
 
-if exists("g:loaded_godoc")
-    finish
-endif
-let g:loaded_godoc = 1
-
 let s:buf_nr = -1
 
 if !exists("g:go_doc_command")
@@ -40,7 +35,7 @@ function! s:godocWord(args)
     if !executable('godoc')
         echohl WarningMsg
         echo "godoc command not found."
-        echo "  install with: go get code.google.com/p/go.tools/cmd/godoc"
+        echo "  install with: go get golang.org/x/tools/cmd/godoc"
         echohl None
         return []
     endif
@@ -56,7 +51,7 @@ function! s:godocWord(args)
         let words = a:args
     endif
 
-    if !len(words) 
+    if !len(words)
         return []
     endif
 
@@ -109,13 +104,23 @@ function! go#doc#Open(mode, ...)
 
     call s:GodocView(a:mode, content)
 
+    if exported_name == ''
+        silent! normal gg
+        return -1
+    endif
+
     " jump to the specified name
-    if search('^\%(const\|var\|type\|\s\+\) ' . pkg . '\s\+=\s')
+    if search('^func ' . exported_name . '(')
         silent! normal zt
         return -1
     endif
 
-    if search('^func ' . exported_name . '(')
+    if search('^type ' . exported_name)
+        silent! normal zt
+        return -1
+    endif
+
+    if search('^\%(const\|var\|type\|\s\+\) ' . pkg . '\s\+=\s')
         silent! normal zt
         return -1
     endif
@@ -128,7 +133,7 @@ function! s:GodocView(position, content)
     " reuse existing buffer window if it exists otherwise create a new one
     if !bufexists(s:buf_nr)
         execute a:position
-        file `="[Godoc]"`
+        sil file `="[Godoc]"`
         let s:buf_nr = bufnr('%')
     elseif bufwinnr(s:buf_nr) == -1
         execute a:position
@@ -148,9 +153,9 @@ function! s:GodocView(position, content)
     setlocal iskeyword-=-
 
     setlocal modifiable
-    %delete _ 
+    %delete _
     call append(0, split(a:content, "\n"))
-    $delete _ 
+    sil $delete _
     setlocal nomodifiable
 endfunction
 

@@ -108,14 +108,13 @@ The following features are supported by Tagbar:
 ------------------------------------------------------------------------------
 OTHER CTAGS-COMPATIBLE PROGRAMS                                 *tagbar-other*
 
-Tagbar theoretically also supports filetype-specific programs that can output
-tag information that is compatible with ctags. However due to potential
-incompatibilities this may not always completely work. Tagbar has been tested
-with doctorjs/jsctags and will use that if present, other programs require
-some configuration (see |tagbar-extend|). If a program does not work even with
-correct configuration please contact me.
+Tagbar also supports filetype-specific programs that can produce
+ctags-compatible output, as long as these programs can write to the standard
+output. Tagbar has been tested with doctorjs/jsctags and will use that if
+present, other programs require some configuration (see |tagbar-extend|). If a
+program does not work even with correct configuration please contact me.
 
-Note: Please check |tagbar-issues| for some possible issues with jsctags.
+Note: Please check |tagbar-issues| for some potential issues with jsctags.
 
 ==============================================================================
 2. Requirements                                          *tagbar-requirements*
@@ -347,6 +346,10 @@ o/za          Toggle the fold under the cursor or the current one if there is
                 Map option: tagbar_map_openallfolds
 =/zM          Close all folds by setting foldlevel to 0.
                 Map option: tagbar_map_closeallfolds
+zj            Go to the start of the next fold, like the standard Vim |zj|.
+                Map option: tagbar_map_nextfold
+zk            Go to the end of the previous fold, like the standard Vim |zk|.
+                Map option: tagbar_map_prevfold
 s             Toggle sort order between name and file order.
                 Map option: tagbar_map_togglesort
 c             Toggle the |g:tagbar_autoclose| option.
@@ -388,9 +391,27 @@ Default: 0
 By default the Tagbar window will be opened on the right-hand side of vim. Set
 this option to open it on the left instead.
 
+If |g:tagbar_vertical| is used then setting this variable will open the Tagbar
+window at the top, otherwise it will open at the bottom.
+
 Example:
 >
         let g:tagbar_left = 1
+<
+
+                                                           *g:tagbar_vertical*
+g:tagbar_vertical~
+Default: 0
+
+If this is set to a positive value then the Tagbar window will be opened at
+the top or bottom of the Vim window instead of at the side. This can be useful
+for monitors that have been rotated into a vertical position. The value of
+this variable will determine the number of lines to use for the Tagbar window.
+See |g:tagbar_left| for configuring the position of the window.
+
+Example:
+>
+        let g:tagbar_vertical = 30
 <
 
                                                               *g:tagbar_width*
@@ -604,7 +625,7 @@ Example:
 
                                                      *g:tagbar_previewwin_pos*
 g:tagbar_previewwin_pos~
-Default: topleft
+Default: "topleft", or "rightbelow vertical" if |g:tagbar_vertical| is set
 
 The position of the preview window. Valid values are the window splitting
 commands that are described starting from |:vertical|. Set it to an empty
@@ -647,8 +668,8 @@ system is different from the one set in Vim, i.e. the 'encoding' option. For
 example, if you use a Simplified Chinese Windows version that has a system
 encoding of "cp936", and you have set 'encoding' to "utf-8", then you would
 have to set this variable to "cp936".
-Note that this requires Vim to be compiled with the |+multi_byte| and (unless
-your encoding is latin1) |+iconv| features to work.
+Note that this requires Vim to be compiled with the |+multi_byte| and |+iconv|
+features to work.
 
 Example:
 >

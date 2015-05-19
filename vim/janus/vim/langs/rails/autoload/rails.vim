@@ -564,7 +564,7 @@ function! rails#pluralize(word)
   endif
   let word = s:sub(word,'[aeio]@<!y$','ie')
   let word = s:sub(word,'%(nd|rt)@<=ex$','ice')
-  let word = s:sub(word,'%([osxz]|[cs]h)$','&e')
+  let word = s:sub(word,'%([sxz]|[cs]h)$','&e')
   let word = s:sub(word,'f@<!f$','ve')
   let word .= 's'
   let word = s:sub(word,'ersons$','eople')
@@ -586,7 +586,6 @@ endfunction
 
 function! rails#buffer(...)
   return extend(extend({'#': bufnr(a:0 ? a:1 : '%')},s:buffer_prototype,'keep'),s:readable_prototype,'keep')
-  endif
 endfunction
 
 function! s:buffer_app() dict abort
@@ -899,12 +898,12 @@ endfunction
 function! s:app_prepare_rails_command(cmd) dict abort
   if self.has_path('.zeus.sock') && a:cmd =~# '^\%(console\|dbconsole\|destroy\|generate\|server\|runner\)\>'
     return 'zeus '.a:cmd
+  elseif self.has_path('bin/rails')
+    let cmd = 'bin/rails '.a:cmd
   elseif self.has_path('script/rails')
     let cmd = 'script/rails '.a:cmd
   elseif self.has_path('script/' . matchstr(a:cmd, '\w\+'))
     let cmd = 'script/'.a:cmd
-  elseif self.has_path('bin/rails')
-    let cmd = 'bin/rails '.a:cmd
   elseif self.has('bundler')
     return 'bundle exec rails ' . a:cmd
   else
@@ -1173,13 +1172,16 @@ call s:add_methods('app', ['rake_tasks'])
 let g:rails#rake_errorformat = '%D(in\ %f),'
       \.'%\\s%#from\ %f:%l:%m,'
       \.'%\\s%#from\ %f:%l:,'
-      \.'%\\s#{RAILS_ROOT}/%f:%l:\ %#%m,'
       \.'%\\s%##\ %f:%l:%m,'
       \.'%\\s%##\ %f:%l,'
       \.'%\\s%#[%f:%l:\ %#%m,'
       \.'%\\s%#%f:%l:\ %#%m,'
       \.'%\\s%#%f:%l:,'
-      \.'%m\ [%f:%l]:'
+      \.'%m\ [%f:%l]:,'
+      \.'%+Erake\ aborted!,'
+      \.'%+EDon''t\ know\ how\ to\ build\ task\ %.%#,'
+      \.'%+Einvalid\ option:%.%#,'
+      \.'%+Irake\ %\\S%\\+%\\s%\\+#\ %.%#'
 
 function! s:make(bang, args, ...)
   if exists(':Make') == 2
@@ -1201,8 +1203,13 @@ function! s:Rake(bang,lnum,arg)
   try
     call s:push_chdir(1)
     let b:current_compiler = 'rake'
+    if !empty(findfile('compiler/rake.vim', escape(&rtp, ' ')))
+      compiler rake
+    else
+      let &l:errorformat = g:rails#rake_errorformat
+      let b:current_compiler = 'rake'
+    endif
     let &l:makeprg = rails#app().rake_command()
-    let &l:errorformat = g:rails#rake_errorformat
     let arg = a:arg
     if &filetype =~# '^ruby\>' && arg == ''
       let mnum = s:lastmethodline(lnum)
@@ -3795,7 +3802,7 @@ function! rails#buffer_syntax()
           syn keyword rubyRailsTestControllerMethod assert_response assert_redirected_to assert_template assert_recognizes assert_generates assert_routing assert_dom_equal assert_dom_not_equal assert_select assert_select_rjs assert_select_encoded assert_select_email assert_tag assert_no_tag
         endif
       elseif buffer.type_name('spec')
-        syn keyword rubyRailsTestMethod describe context it its specify shared_context shared_examples_for it_should_behave_like it_behaves_like before after around subject fixtures controller_name helper_name scenario feature background
+        syn keyword rubyRailsTestMethod describe context it its specify shared_context shared_examples shared_examples_for shared_context include_examples include_context it_should_behave_like it_behaves_like before after around subject fixtures controller_name helper_name scenario feature background
         syn match rubyRailsTestMethod '\<let\>!\='
         syn keyword rubyRailsTestMethod violated pending expect allow double instance_double mock mock_model stub_model
         syn match rubyRailsTestMethod '\.\@<!\<stub\>!\@!'
@@ -3804,6 +3811,9 @@ function! rails#buffer_syntax()
           syn keyword rubyRailsTestControllerMethod  integrate_views render_views
           syn keyword rubyRailsMethod params request response session flash
           syn keyword rubyRailsMethod polymorphic_path polymorphic_url
+          if buffer.type_name('spec-view')
+            syn keyword rubyRailsTestViewMethod render rendered assign
+          endif
         endif
       endif
       if buffer.type_name('task')
@@ -3886,6 +3896,7 @@ function! s:HiDefaults()
   hi def link rubyRailsControllerMethod       rubyRailsMethod
   hi def link rubyRailsFilterMethod           rubyRailsMethod
   hi def link rubyRailsTestControllerMethod   rubyRailsTestMethod
+  hi def link rubyRailsTestViewMethod         rubyRailsTestMethod
   hi def link rubyRailsTestMethod             rubyRailsMethod
   hi def link rubyRailsRakeMethod             rubyRailsMethod
   hi def link rubyRailsMethod                 railsMethod

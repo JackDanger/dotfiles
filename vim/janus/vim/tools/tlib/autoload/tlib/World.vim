@@ -1,7 +1,7 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
-" @Revision:    1396
+" @Revision:    1405
 
 " :filedoc:
 " A prototype used by |tlib#input#List|.
@@ -1124,10 +1124,10 @@ function! s:prototype.DisplayList(...) dict "{{{3
             call self.Resize(self.GetResize(ll), eval(get(self, 'resize_vertical', 0)))
             call tlib#normal#WithRegister('gg"tdG', 't')
             let lines = copy(list)
-            " let lines = map(lines, 'substitute(v:val, ''[[:cntrl:][:space:]]'', " ", "g")')
+            let lines = map(lines, 'substitute(v:val, ''[[:cntrl:][:space:]]'', " ", "g")')
             let w = winwidth(0) - &fdc
             " let w = winwidth(0) - &fdc - 1
-            let lines = map(lines, 'printf("%-'. w .'.'. w .'s", substitute(v:val, ''[[:cntrl:][:space:]]'', " ", "g"))')
+            let lines = map(lines, 'printf("%-'. w .'.'. w .'s", v:val)')
             " TLogVAR lines
             call append(0, lines)
             call tlib#normal#WithRegister('G"tddgg', 't')
@@ -1214,10 +1214,11 @@ endf
 
 " :nodoc:
 function! s:prototype.Query() dict "{{{3
+    let flt = self.DisplayFilter()
     if g:tlib_inputlist_shortmessage
-        let query = 'Filter: '. self.DisplayFilter()
+        let query = 'Filter: '. flt
     else
-        let query = self.query .' (filter: '. self.DisplayFilter() .'; press <F1> for help)'
+        let query = self.query .' (filter: '. flt .'; press <F1> for help)'
     endif
     return query
 endf

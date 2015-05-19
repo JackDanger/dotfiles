@@ -128,7 +128,7 @@ set cpo&vim
   endif
 
   if !exists("g:SuperTabCrMapping")
-    let g:SuperTabCrMapping = 1
+    let g:SuperTabCrMapping = 0
   endif
 
   if !exists("g:SuperTabClosePreviewOnPopupClose")
@@ -137,6 +137,10 @@ set cpo&vim
 
   if !exists("g:SuperTabUndoBreak")
     let g:SuperTabUndoBreak = 0
+  endif
+
+  if !exists("g:SuperTabCompleteCase")
+    let g:SuperTabCompleteCase = 'inherit'
   endif
 
 " }}}
@@ -467,6 +471,23 @@ function! SuperTab(command) " {{{
 
     if g:SuperTabUndoBreak && !pumvisible()
         return "\<c-g>u" . complType
+    endif
+
+    if g:SuperTabCompleteCase == 'ignore' ||
+     \ g:SuperTabCompleteCase == 'match'
+      if exists('##CompleteDone')
+        let ignorecase = g:SuperTabCompleteCase == 'ignore' ? 1 : 0
+        if &ignorecase != ignorecase
+          let b:supertab_ignorecase_save = &ignorecase
+          let &ignorecase = ignorecase
+          augroup supertab_ignorecase
+            autocmd CompleteDone <buffer>
+              \ let &ignorecase = b:supertab_ignorecase_save |
+              \ unlet b:supertab_ignorecase_save |
+              \ autocmd! supertab_ignorecase
+          augroup END
+        endif
+      endif
     endif
 
     return complType
@@ -962,15 +983,18 @@ endfunction " }}}
     if expr_map
       " Not compatible w/ expr mappings. This is most likely a user mapping,
       " typically with the same functionality anyways.
+      let g:SuperTabCrMapping = 0
     elseif iabbrev_map
       " Not compatible w/ insert abbreviations containing <cr>
+      let g:SuperTabCrMapping = 0
     elseif maparg('<CR>', 'i') =~ '<Plug>delimitMateCR'
       " Not compatible w/ delimitMate since it doesn't play well with others
       " and will always return a <cr> which we don't want when selecting a
       " completion.
-    elseif maparg('<CR>','i') =~ '<CR>'
+      let g:SuperTabCrMapping = 0
+    elseif maparg('<CR>', 'i') =~ '<CR>'
       let map = maparg('<cr>', 'i')
-      let cr = (map =~? '\(^\|[^)]\)<cr>')
+      let cr = !(map =~? '\(^\|[^)]\)<cr>' || map =~ 'ExpandCr')
       let map = s:ExpandMap(map)
       exec "inoremap <script> <cr> <c-r>=<SID>SelectCompletion(" . cr . ")<cr>" . map
     else

@@ -76,3 +76,4 @@ fi
 
 source ~/.dotfiles/profile
 source ~/.fzf.zsh
+source $HOME/.dotfiles/zsh/git-completion.zsh
