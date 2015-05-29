@@ -82,6 +82,12 @@ nmap <leader>S ysiW
 " Ruby:
 " Turn instance variables into `let`s
 nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
+" Turn { |a| b }
+" into
+" do |a|
+"   b
+" end
+nmap <leader>D 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
 
 " CTRL+direction to move panes
 map <C-h> <C-w>h
