@@ -3,7 +3,6 @@ if [[ -f /.crouton-targets ]]; then
   chromebook() {
     key_diff=$(sudo dumpkeys | diff - ~/.dotfiles/asus.keymap.map)
     if [[ -n "$key_diff" ]]; then
-      echo $key_diff
       # then ask for pw and load the keymap
       sudo loadkeys /home/jackdanger/.dotfiles/asus.keymap.map
       echo setting font
