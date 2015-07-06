@@ -112,6 +112,8 @@ map <C-l> <C-w>l
 inoremap jj <ESC>
 " type ';;' in insert mode to escape and save and re-enter insert mode.
 inoremap ;; <ESC>:w<CR>a
+" type ';;' in normal mode to save
+nnoremap ;; <ESC>:w<CR>
 
 " Connect to system clipboard
 set clipboard=unnamed
