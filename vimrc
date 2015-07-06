@@ -87,7 +87,20 @@ nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
 " do |a|
 "   b
 " end
-nmap <leader>D 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
+nmap <leader>d 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
+" Turn {
+"   { a: :b }
+" }
+" into
+" do
+"   { a: :b }
+" end
+nmap <leader>D 0f{%i<CR><ESC><right>mDkdd%so<CR><ESC>k$id<ESC>`Dsend<ESC>
+
+" Add a binding.pry right above current line
+nmap <leader>B <ESC>O<ESC>ccbinding.pry<ESC>:w<CR>
+" Add a binding.pry right below current line
+nmap <leader>b <ESC>o<ESC>ccbinding.pry<ESC>:w<CR>
 
 " CTRL+direction to move panes
 map <C-h> <C-w>h
