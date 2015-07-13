@@ -27,7 +27,7 @@ vnoremap <leader>A "hy:Ag '<C-r>h'
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
-map <leader>l :Align 
+map <leader>l :Align
 nmap <leader>a :Ag
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
@@ -101,6 +101,9 @@ nmap <leader>D 0f{%i<CR><ESC><right>mDkdd%so<CR><ESC>k$id<ESC>`Dsend<ESC>
 nmap <leader>B <ESC>O<ESC>ccbinding.pry<ESC>:w<CR>
 " Add a binding.pry right below current line
 nmap <leader>b <ESC>o<ESC>ccbinding.pry<ESC>:w<CR>
+
+" Insert pry without needing it in the Gemfile
+nmap <leader>P <ESC>:r!naked-pry<CR>
 
 " CTRL+direction to move panes
 map <C-h> <C-w>h
