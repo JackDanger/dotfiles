@@ -55,7 +55,8 @@ function name {
 
 function dotfiles {
   cd ~/.dotfiles
-  git commit -a -m "$*"
+  git add .
+  git commit -m "$*"
   git pull --rebase
   git push
   cd -

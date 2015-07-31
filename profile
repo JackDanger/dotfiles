@@ -23,6 +23,7 @@ source ~/.dotfiles/git
 source ~/.dotfiles/xcode
 source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
+source ~/.dotfiles/python
 
 add_to_path ~/bin
 add_to_path ~/.dotfiles/bin
