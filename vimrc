@@ -113,8 +113,8 @@ map <C-l> <C-w>l
 
 " type 'jj' in insert mode to escape.
 inoremap jj <ESC>
-" type ';;' in insert mode to escape and save and re-enter insert mode.
-inoremap ;; <ESC>:w<CR>a
+" type ';;' in insert mode to escape and save
+inoremap ;; <ESC>:w<CR>
 " type ';;' in normal mode to save
 nnoremap ;; <ESC>:w<CR>
 
