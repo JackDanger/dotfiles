@@ -1,6 +1,5 @@
 alias bedit='EDITOR=subl bundle open'
 alias routes='rake routes | less'
-alias clone='rake db:test:clone_structure'
 alias restart='touch tmp/restart.txt'
 alias migrate='rake db:migrate db:test:prepare db:schema:dump'
 alias last_migration="vim \`find db/migrate/ | tail -n 1\`"

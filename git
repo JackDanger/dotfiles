@@ -37,6 +37,16 @@ alias gpick="git cherry-pick"
 alias hard="git reset --hard"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
+# Clones the repo from the provided URI and then cds into it
+clone() {
+  git clone --recursive $1 $2
+  if [[ -n $2 ]]; then
+    cd $2
+  else
+    cd $(basename $1 | sed s/\.git$//)
+  fi
+}
+
 # Get the sha from which you divert from a specific other sha:
 #
 #   merge-base origin/green
