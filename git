@@ -13,7 +13,7 @@ alias gap='git add --patch'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
-alias fixup='git commit --amend . -C HEAD'
+alias fixup='git commit --amend -C HEAD'
 alias gba='git branch -a'
 alias merged="git branch --contains HEAD | grep master"
 alias unmerged="git branch --no-merged master"
@@ -27,7 +27,7 @@ alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'
 alias rebase='git rebase'
 alias grc='git rebase --continue'
-alias last_commit="git log -n 1 --pretty=format:%H"
+alias last_commit="git rev-parse HEAD"
 alias publish="git push -u origin HEAD"
 alias pr="git push -u origin HEAD && git cmp"
 alias gsp="git commit -m 'updating subproject'"
@@ -36,10 +36,6 @@ alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias hard="git reset --hard"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
-alias me_and="command pair me_and"
-alias just_me="command pair just_me"
-alias as_github="command pair as github@jackcanty.com"
-alias as_square="command pair as jackdanger@squareup.com"
 
 # Get the sha from which you divert from a specific other sha:
 #
