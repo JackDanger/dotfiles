@@ -28,7 +28,6 @@ alias fetch='git fetch --no-tags'
 alias rebase='git rebase'
 alias grc='git rebase --continue'
 alias last_commit="git rev-parse HEAD"
-alias publish="git push -u origin HEAD"
 alias pr="git push -u origin HEAD && git cmp"
 alias gsp="git commit -m 'updating subproject'"
 alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
@@ -44,6 +43,15 @@ clone() {
     cd $2
   else
     cd $(basename $1 | sed s/\.git$//)
+  fi
+}
+
+# Start a new remote branch and track it
+publish() {
+  if $(git remote | grep JackDanger); then
+    git push -u JackDanger HEAD
+  else
+    git push -u origin HEAD
   fi
 }
 
