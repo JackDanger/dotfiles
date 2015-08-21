@@ -21,6 +21,7 @@ alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --forma
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
+alias clean='git clean -df'
 alias copyhead='git rev-parse HEAD | pbcopy'
 alias stash='git stash'
 alias unstash='git stash pop'
@@ -48,10 +49,10 @@ clone() {
 
 # Start a new remote branch and track it
 publish() {
-  if $(git remote | grep JackDanger); then
-    git push -u JackDanger HEAD
+  if git remote | grep JackDanger; then
+    command git push -u JackDanger HEAD
   else
-    git push -u origin HEAD
+    command git push -u origin HEAD
   fi
 }
 
