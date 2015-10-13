@@ -52,7 +52,6 @@ set nobackup
 set noswapfile
 set showcmd
 set autoread        " reload files when changed on disk
-set encoding=utf-8
 
 " keep the curser in the middle of the screen
 map <leader>o :set scrolloff=99999<CR>
