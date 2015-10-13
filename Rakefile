@@ -1,3 +1,4 @@
+require 'fileutils'
 task :install do
   [
 
@@ -18,6 +19,12 @@ task :install do
     ["~/.zshrc"         ,  "zshrc"],
 
   ].each do |destination, source|
-     `ln -s ~/.dotfiles/#{source} #{destination}`
+    next if File.stat(File.expand_path(destination)) rescue nil
+    next if File.symlink?(File.expand_path(destination))
+    cmd = "ln -s ~/.dotfiles/#{source} #{destination}"
+    puts cmd
+    system cmd
   end
 end
+
+task :default => :install
