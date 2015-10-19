@@ -35,7 +35,7 @@ function ss {
 
 # RSpec
 function rspec_last {
-  local last_changed=$(find spec -type f -name *_spec.rb -exec ls -1t "{}" + | head -n 1)
+  local last_changed=$(last_spec)
   local line=$1
   local args=$(tr -s ' ' ' ' <<< "-c $2 $3 $4 $5")
 
@@ -46,11 +46,14 @@ function rspec_last {
   if [[ -f bin/rspec ]] && [[ -z $SKIP_SPRING ]]; then
     cmd="bin/rspec $args $last_changed$line"
   else
-    cmd="rspec $args $last_changed$line"
+    cmd="bundle exec rspec $args $last_changed$line || rspec $args $last_changed$line"
   fi
 
   echo $cmd
   eval $cmd
+}
+function last_spec {
+  find spec -type f -name *_spec.rb -exec ls -1t "{}" + | head -n 1
 }
 function rspec_time {
   local specs=$*
