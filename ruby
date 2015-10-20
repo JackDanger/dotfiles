@@ -46,7 +46,10 @@ function rspec_last {
   if [[ -f bin/rspec ]] && [[ -z $SKIP_SPRING ]]; then
     cmd="bin/rspec $args $last_changed$line"
   else
-    cmd="bundle exec rspec $args $last_changed$line || rspec $args $last_changed$line"
+    cmd="rspec $args $last_changed$line"
+    if which bundle > /dev/null; then
+      cmd="bundle exec $cmd"
+    fi
   fi
 
   echo $cmd
