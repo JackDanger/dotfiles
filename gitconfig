@@ -4,7 +4,7 @@
   #email = jackdanger@squareup.com
 
 [apply]
-  whitespace = strip
+#  whitespace = strip
 
 [diff]
   color = auto

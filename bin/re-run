@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This program takes as it's arguments a program to run repeatedly. It runs one
+# This program takes as its arguments a program to run repeatedly. It runs one
 # time and then when `re-run` is invoked again (from any process on the machine)
 # it re-executes the original commands again in the original process.
 
@@ -59,7 +59,7 @@ function main() {
     # Make a subprocess that does nothing
     sleep 60 &
     # And (interruptibly) wait on it
-    wait %1
+    wait %1 || sleep 4
     sleep 0.1
   done
 }
