@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# This program takes as it's arguments a program to run repeatedly. It runs one
+# time and then when `re-run` is invoked again (from any process on the machine)
+# it re-executes the original commands again in the original process.
+
+function main() {
+  local cmd="$@"
+  local PIDFILE=/tmp/re-run.pid
+  local pid=$([[ -f $PIDFILE ]] && cat $PIDFILE)
+
+  function is_running {
+    # Check the fourth column of ps output for a given PID for the current
+    # program name.
+    ps -p $1 | grep $0 >/dev/null
+  }
+
+  # If no arguments are passed
+  if [[ -z $cmd ]]; then
+    # And the pid exists and matches a real instance of this program
+    if [[ -n $pid ]] && is_running $pid; then
+      # then sent an ALRM signal to that process and be done
+      kill -ALRM $pid
+      exit 0
+    else
+      # otherwise clean up the PIDFILE and print the USAGE
+      [[ -f $PIDFILE ]] && rm $PIDFILE
+      echo "Usage: $(basename $0) [cmd]"
+      echo ""
+      echo "Once this utility has been invoked with a cmd then that cmd"
+      echo "will be executed and will be re-executed every time this utility"
+      echo "receives an ALRM signal."
+      echo "To send this signal simple invoke this program with no arguments."
+      exit 1
+    fi
+  fi
+
+  # Otherwise arguments were passed and we will set up a function to
+  # continually re-run them.
+  function re-run-cmd {
+    $cmd
+  }
+
+  # And establish that function as our hook for receiving the ALRM signal
+  trap "re-run-cmd" ALRM
+
+  # And put the current process' pid into the right pidfile
+  echo $$ > $PIDFILE
+  # While making sure to clean it up when we're done
+  trap "rm -f $PIDFILE" EXIT
+
+  # Then we send that signal to ourselves
+  kill -ALRM $$
+
+  # And just wait forever, letting signals do all the work
+  while true; do
+    # As long as this process is running it should own this file
+    echo $$ > $PIDFILE
+    # Make a subprocess that does nothing
+    sleep 60 &
+    # And (interruptibly) wait on it
+    wait %1
+    sleep 0.1
+  done
+}
+
+main "$@"
