@@ -6,9 +6,7 @@
 
 function main() {
   local cmd="$@"
-  local PIDFILE=/tmp/re-run.pid
   local FIFO=/tmp/re-run.wait
-  local pid=$([[ -f $PIDFILE ]] && cat $PIDFILE)
 
   function is_running {
     # Check the fourth column of ps output for a given PID for the current
@@ -18,7 +16,7 @@ function main() {
 
   # If no arguments are passed
   if [[ -z $cmd ]]; then
-    # And the pid exists and matches a real instance of this program
+    # And the pipe exists
     if [[ -n $pid ]] && is_running $pid; then
       # then sent an ALRM signal to that process and be done
       kill -ALRM $pid
