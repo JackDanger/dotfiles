@@ -9,7 +9,6 @@ function main() {
   local FIFO=/tmp/re-run.wait
 
   function usage {
-    # otherwise print the USAGE
     echo "Usage: $(basename $0) [cmd]"
     echo ""
     echo "Once this utility has been invoked with a cmd then that cmd"
@@ -30,12 +29,12 @@ function main() {
 
     # Check if an instance of this program is already running
     pid=$(ps aux | grep "cat $FIFO" | grep -v grep | awk '{print $2}')
-    echo $pid
     if [[ -n $pid ]]; then
+      # if so then print the usage
       usage
       exit 1
     else
-      # cleanup the socket and retry
+      # otherwise cleanup the socket and retry
       rm -f $FIFO
       $0 $cmd
     fi
