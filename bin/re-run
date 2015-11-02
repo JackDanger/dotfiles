@@ -76,8 +76,9 @@ function main() {
 
   # And block while reading from it, running $cmd each time we receive a line.
   while read -r _ 2>/dev/null < $FIFO ; do
-    eval $cmd
+    $cmd
   done
 }
 
+set -x
 main "$@"
