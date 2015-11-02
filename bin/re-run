@@ -26,7 +26,7 @@ function main() {
   }
 
   function running {
-    ps ux | grep "/bin/bash $0" | grep -v grep | grep -v "$$"
+    ps ux | grep "/bin/bash $0" | grep -v grep | grep -v "$$" >/dev/null
   }
 
   # If the pipe exists
