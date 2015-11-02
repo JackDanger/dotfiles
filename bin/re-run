@@ -29,8 +29,8 @@ function main() {
 
     # Check if an instance of this program is already running
     pid=$(ps aux | grep "cat $FIFO" | grep -v grep | awk '{print $2}')
+    # if so then print the usage
     if [[ -n $pid ]]; then
-      # if so then print the usage
       usage
       exit 1
     else
