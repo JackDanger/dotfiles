@@ -17,42 +17,66 @@ function main() {
     exit 1
   }
 
+  # Echoes a blank line into the pipe and does so quickly, timing out if the
+  # pipe is blocked for too long.
+  function ping {
+    ( [ -p $FIFO ] &&  echo '' > $FIFO ) & pid=$!
+    ( sleep $TIMEOUT && kill -HUP $pid ) 2>/dev/null & watcher=$!
+    wait $pid 2>/dev/null && pkill -HUP -P $watcher
+  }
+
+  function running {
+    ps ux | grep "/bin/bash $0" | grep -v grep | grep -v "$$"
+  }
+
   # If the pipe exists
   if [ -p $FIFO ]; then
-    # and no arguments are passed
-    if [ -z "$cmd" ]; then
-      # then send a newline character to the pipe
-      echo '' > $FIFO
-      # and propagate any return status
-      exit $?
+    # and the server process is running
+    if running; then
+      # and no arguments are passed
+      if [ -z "$cmd" ]; then
+        # then send a newline character to the pipe
+        ping
+        # and bail
+        exit 0
+      else
+        # otherwise explain usage of the no-args form
+        echo "$0 is already running on your system."
+        usage
+        exit 1
+      fi
+    # The server process is not running
+    else
+      # and arguments are passed
+      if [ -z "$cmd" ]; then
+        # cleanup the socket and retry
+        rm -f $FIFO
+        exec $0 $cmd
+      fi
     fi
-
-    # Check if an instance of this program is already running
-    pid=$(ps aux | grep "cat $FIFO" | grep -v grep | awk '{print $2}')
-    # if so then print the usage
-    if [[ -n $pid ]]; then
+  # The pipe does not exist
+  else
+    # if no arguments are passed
+    if [ -z "$cmd" ]; then
+      # print the usage
       usage
       exit 1
-    else
-      # otherwise cleanup the socket and retry
-      rm -f $FIFO
-      $0 $cmd
     fi
   fi
 
-  # If the pipe does NOT exist then create it
+  # Create a named pipe owned by the current user
   rm -f $FIFO && mkfifo $FIFO
 
   # Ensure the pipe is cleaned up later
-  trap "rm -f $FIFO" EXIT
+  trap "rm -f $FIFO" EXIT QUIT
 
   # Prime the socket with a line ready to be read so the $cmd runs once right
   # at the start.
-  echo '' > $FIFO &
+  [ -p $FIFO ] && echo '' > $FIFO &
 
   # And block while reading from it, running $cmd each time we receive a line.
-  while cat < $FIFO; do
-    $cmd
+  while read -r _ 2>/dev/null < $FIFO ; do
+    eval $cmd
   done
 }
 
