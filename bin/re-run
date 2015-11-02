@@ -8,70 +8,53 @@ function main() {
   local cmd="$@"
   local FIFO=/tmp/re-run.wait
 
-  function is_running {
-    # Check the fourth column of ps output for a given PID for the current
-    # program name.
-    ps -p $1 | grep $0 >/dev/null
+  function usage {
+    # otherwise print the USAGE
+    echo "Usage: $(basename $0) [cmd]"
+    echo ""
+    echo "Once this utility has been invoked with a cmd then that cmd"
+    echo "will be executed. It will be re-executed every time this utility"
+    echo "is invoked without any arguments."
+    exit 1
   }
 
-  # If no arguments are passed
-  if [[ -z $cmd ]]; then
-    # And the pipe exists
-    if [[ -n $pid ]] && is_running $pid; then
-      # then sent an ALRM signal to that process and be done
-      kill -ALRM $pid
-      exit 0
-    else
-      # otherwise clean up the PIDFILE and print the USAGE
-      [[ -f $PIDFILE ]] && rm $PIDFILE
-      echo "Usage: $(basename $0) [cmd]"
-      echo ""
-      echo "Once this utility has been invoked with a cmd then that cmd"
-      echo "will be executed and will be re-executed every time this utility"
-      echo "receives an ALRM signal."
-      echo "To send this signal simple invoke this program with no arguments."
+  # If the pipe exists
+  if [ -p $FIFO ]; then
+    # and no arguments are passed
+    if [ -z "$cmd" ]; then
+      # then send a newline character to the pipe
+      echo '' > $FIFO
+      # and propagate any return status
+      exit $?
+    fi
+
+    # Check if an instance of this program is already running
+    pid=$(ps aux | grep "cat $FIFO" | grep -v grep | awk '{print $2}')
+    echo $pid
+    if [[ -n $pid ]]; then
+      usage
       exit 1
+    else
+      # cleanup the socket and retry
+      rm -f $FIFO
+      $0 $cmd
     fi
   fi
 
-  # Otherwise arguments were passed and we will set up a function to
-  # continually re-run them.
-  function re-run-cmd {
-    disable-wait
-    sleep 1
-    # As long as this process is running it should own this file
-    echo $$ > $PIDFILE
+  # If the pipe does NOT exist then create it
+  rm -f $FIFO && mkfifo $FIFO
+
+  # Ensure the pipe is cleaned up later
+  trap "rm -f $FIFO" EXIT
+
+  # Prime the socket with a line ready to be read so the $cmd runs once right
+  # at the start.
+  echo '' > $FIFO &
+
+  # And block while reading from it, running $cmd each time we receive a line.
+  while cat < $FIFO; do
     $cmd
-    setup-wait
-    wait %1
-  }
-
-  # We idle forever by waiting on a permanent subprocess that does nothing.
-  function setup-wait {
-    rm -f $FIFO && mkfifo $FIFO
-    cat $FIFO &
-  }
-
-  function disable-wait {
-    kill %1
-  }
-
-  # And establish that function as our hook for receiving the ALRM signal
-  trap "re-run-cmd" ALRM
-
-  # And put the current process' pid into the right pidfile
-  echo $$ > $PIDFILE
-  # While making sure to clean it up when we're done
-  trap "rm -f $PIDFILE" EXIT
-
-  # Establish the child process
-  setup-wait
-
-  # Then we send that signal to ourselves
-  kill -ALRM $$
-
-  # And pause until we receive a signal
-  wait %1
+  done
 }
 
 main "$@"
