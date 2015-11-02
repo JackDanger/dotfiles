@@ -80,5 +80,4 @@ function main() {
   done
 }
 
-set -x
 main "$@"
