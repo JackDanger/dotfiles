@@ -7,6 +7,7 @@
 function main() {
   local cmd="$@"
   local PIDFILE=/tmp/re-run.pid
+  local FIFO=/tmp/re-run.wait
   local pid=$([[ -f $PIDFILE ]] && cat $PIDFILE)
 
   function is_running {
@@ -38,7 +39,23 @@ function main() {
   # Otherwise arguments were passed and we will set up a function to
   # continually re-run them.
   function re-run-cmd {
+    disable-wait
+    sleep 1
+    # As long as this process is running it should own this file
+    echo $$ > $PIDFILE
     $cmd
+    setup-wait
+    wait %1
+  }
+
+  # We idle forever by waiting on a permanent subprocess that does nothing.
+  function setup-wait {
+    rm -f $FIFO && mkfifo $FIFO
+    cat $FIFO &
+  }
+
+  function disable-wait {
+    kill %1
   }
 
   # And establish that function as our hook for receiving the ALRM signal
@@ -49,19 +66,14 @@ function main() {
   # While making sure to clean it up when we're done
   trap "rm -f $PIDFILE" EXIT
 
+  # Establish the child process
+  setup-wait
+
   # Then we send that signal to ourselves
   kill -ALRM $$
 
-  # And just wait forever, letting signals do all the work
-  while true; do
-    # As long as this process is running it should own this file
-    echo $$ > $PIDFILE
-    # Make a subprocess that does nothing
-    sleep 60 &
-    # And (interruptibly) wait on it
-    wait %1 || sleep 4
-    sleep 0.1
-  done
+  # And pause until we receive a signal
+  wait %1
 }
 
 main "$@"
