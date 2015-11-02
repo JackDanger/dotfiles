@@ -72,7 +72,7 @@ function main() {
 
   # Prime the socket with a line ready to be read so the $cmd runs once right
   # at the start.
-  ping
+  ping &
 
   # And block while reading from it, running $cmd each time we receive a line.
   while read -r _ 2>/dev/null < $FIFO ; do
