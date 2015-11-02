@@ -21,7 +21,7 @@ function main() {
   # pipe is blocked for too long.
   function ping {
     ( [ -p $FIFO ] &&  echo '' > $FIFO ) & pid=$!
-    ( sleep $TIMEOUT && kill -HUP $pid ) 2>/dev/null & watcher=$!
+    ( sleep 1 && kill -HUP $pid ) 2>/dev/null & watcher=$!
     wait $pid 2>/dev/null && pkill -HUP -P $watcher
   }
 
