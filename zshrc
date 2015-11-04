@@ -2,6 +2,14 @@
 ZSH=$HOME/.zprezto
 ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
+# Homebrew told me so
+HOMEBREW_HELP=/usr/local/share/zsh/help
+if [ -d $HOMEBREW_HELP ]; then
+  unalias run-help
+  autoload run-help
+  HELPDIR=$HOMEBREW_HELP
+fi
+
 # COWBOY TIME
 setopt nocorrectall
 DISABLE_CORRECTION=true
