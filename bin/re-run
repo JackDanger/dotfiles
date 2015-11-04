@@ -48,7 +48,7 @@ function main() {
     # The server process is not running
     else
       # and arguments are passed
-      if [ -z "$cmd" ]; then
+      if [ -n "$cmd" ]; then
         # cleanup the socket and retry
         rm -f $FIFO
         exec $0 $cmd
