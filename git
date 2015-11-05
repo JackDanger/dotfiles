@@ -37,11 +37,7 @@ alias hard="git reset --hard"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 sha() {
-  if [ -n "$1" ];
-    then git rev-parse $1
-  else
-    git rev-parse HEAD
-  fi
+  git rev-parse ${1-HEAD}
 }
 
 
@@ -104,4 +100,5 @@ if [[ -z $ZSH ]]; then
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine gco
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine gl
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine glp
+  complete -o bashdefault -o default -o nospace -F _git_checkout_mine sha
 fi;
