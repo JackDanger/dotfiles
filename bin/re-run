@@ -14,13 +14,12 @@ function main() {
     echo "Once this utility has been invoked with a cmd then that cmd"
     echo "will be executed. It will be re-executed every time this utility"
     echo "is invoked without any arguments."
-    exit 1
   }
 
   # Echoes a blank line into the pipe and does so quickly, timing out if the
   # pipe is blocked for too long.
   function ping {
-    ( [ -p $FIFO ] &&  echo '' > $FIFO ) & pid=$!
+    ( [ -p $FIFO ] && echo 'pong' > $FIFO ) & pid=$!
     ( sleep 1 && kill -HUP $pid ) 2>/dev/null & watcher=$!
     wait $pid 2>/dev/null && pkill -HUP -P $watcher
   }
@@ -35,10 +34,17 @@ function main() {
     if running; then
       # and no arguments are passed
       if [ -z "$cmd" ]; then
-        # then send a newline character to the pipe
-        ping
-        # and bail
-        exit 0
+        # and the pipe is a socket
+        if [ -p $FIFO ]; then
+          # then send a newline character to the pipe
+          echo 'pong' > $FIFO
+          # and bail
+          exit 0
+        else
+          # fix the socket and retru
+          rm -f $FIFO
+          exec $0 $cmd
+        fi
       else
         # otherwise explain usage of the no-args form
         echo "$0 is already running on your system."
@@ -70,12 +76,12 @@ function main() {
   # Ensure the pipe is cleaned up later
   trap "rm -f $FIFO" EXIT QUIT
 
-  # Prime the socket with a line ready to be read so the $cmd runs once right
-  # at the start.
-  ping &
+  # Run $cmd once right at the start.
+  $cmd
 
-  # And block while reading from it, running $cmd each time we receive a line.
-  while read -r _ 2>/dev/null < $FIFO ; do
+  # Listen for any lines sent through the socket and run $cmd once each time
+  while read -r _  < $FIFO ; do
+    echo "$ $cmd"
     $cmd
   done
 }
