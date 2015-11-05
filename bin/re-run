@@ -16,14 +16,6 @@ function main() {
     echo "is invoked without any arguments."
   }
 
-  # Echoes a blank line into the pipe and does so quickly, timing out if the
-  # pipe is blocked for too long.
-  function ping {
-    ( [ -p $FIFO ] && echo 'pong' > $FIFO ) & pid=$!
-    ( sleep 1 && kill -HUP $pid ) 2>/dev/null & watcher=$!
-    wait $pid 2>/dev/null && pkill -HUP -P $watcher
-  }
-
   function running {
     ps ux | grep "/bin/bash $0" | grep -v grep | grep -v "$$" >/dev/null
   }
