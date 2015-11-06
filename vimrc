@@ -109,12 +109,6 @@ nmap <leader>P <ESC>:r!naked-pry<CR>
 " Wrap the current word in an escaped Mustache tag
 nmap <leader>M <ESC>ysiW}lysiW}lysiW}ea<Space><ESC>ea<Space><ESC>b
 
-" CTRL+direction to move panes
-map <C-h> <C-w>h
-map <C-j> <C-w><C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
 " type 'jj' in insert mode to escape.
 inoremap jj <ESC>
 " type ';;' in insert mode to escape and save
@@ -201,3 +195,12 @@ set tabstop=2
 set shiftwidth=2
 set expandtab " Overwritten for go, useful everywhere else
 
+" Native Vim/Tmux pane navigation
+" https://github.com/christoomey/vim-tmux-navigator
+let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_save_on_switch = 1
+noremap <silent> <C-h> :TmuxNavigateLeft<cr>
+noremap <silent> <C-j> :TmuxNavigateDown<cr>
+noremap <silent> <C-k> :TmuxNavigateUp<cr>
+noremap <silent> <C-l> :TmuxNavigateRight<cr>
+"noremap <silent> <C-\> :TmuxNavigatePrevious<cr>
