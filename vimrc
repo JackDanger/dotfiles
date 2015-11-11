@@ -199,8 +199,12 @@ set expandtab " Overwritten for go, useful everywhere else
 " https://github.com/christoomey/vim-tmux-navigator
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_save_on_switch = 1
-noremap <silent> <C-h> :TmuxNavigateLeft<cr>
-noremap <silent> <C-j> :TmuxNavigateDown<cr>
-noremap <silent> <C-k> :TmuxNavigateUp<cr>
-noremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+inoremap <silent> <C-h> <ESC>:TmuxNavigateLEft<cr>i
+inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>i
+inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>i
+inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>i
 "noremap <silent> <C-\> :TmuxNavigatePrevious<cr>
