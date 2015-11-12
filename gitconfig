@@ -18,7 +18,7 @@
 
 [core]
   excludesfile = ~/.gitignore
-	editor = nvim
+	editor = vim
   pager = less -FRSX
 
 [color]
