@@ -1,5 +1,5 @@
 if ! $(which profile_loaded >/dev/null); then
-function profile_loaded {}
+alias profile_loaded="true"
 
 [[ -f ~/.profile.before ]] && . ~/.profile.before
 
