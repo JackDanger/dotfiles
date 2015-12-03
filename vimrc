@@ -132,7 +132,7 @@ nnoremap + /\$\w\+_<CR>
 nnoremap _ f_x~
 
 " Autosave
-:au FocusLost * silent! wa
+":au FocusLost * silent! wa
 
 " Don't do funny stuff with JSON double quotes
 let g:vim_json_syntax_conceal = 0
