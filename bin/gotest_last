@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Testing
+function gotest_last {
+  local last_changed=$(last_gotest)
+  local package=$(dirname $last_changed)
+  local func=$1
+
+  if [ -n "$func" ]; then
+    args="-run $func"
+  fi
+
+  cmd="go test -v -race $args ${package}"
+  echo $cmd
+  eval $cmd
+}
+
+function last_gotest {
+  find . -type f -name *_test.go -exec ls -1t "{}" + | head -n 1
+}
+
+gotest_last "$@"

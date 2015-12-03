@@ -14,21 +14,4 @@ function golang-package {
   find $GOPATH/src/(square|*.(com|org|net))/* -type d -maxdepth 1 | grep $1 | head -n 1
 }
 
-# Testing
-function gotest_last {
-  local last_changed=$(last_gotest)
-  local package=$(dirname $last_changed)
-  local func=$1
-
-  if [ -n "$func" ]; then
-    args="-run $func"
-  fi
-
-  cmd="go test -v -race $args ${package}"
-  echo $cmd
-  eval $cmd
-}
-
-function last_gotest {
-  find . -type f -name *_test.go -exec ls -1t "{}" + | head -n 1
-}
+# Test helpers moved to ./bin/
