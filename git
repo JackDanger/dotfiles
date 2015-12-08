@@ -27,6 +27,7 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'
 alias rebase='git rebase'
+alias ibase='git rebase -i origin/master'
 alias grc='git rebase --continue'
 alias pr="git push -u origin HEAD && git cmp"
 alias gsp="git commit -m 'updating subproject'"

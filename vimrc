@@ -33,43 +33,13 @@ nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>h :nohl<CR>
 
-" Insert Go's err != nil checks automatically
-imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
-nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
-
 " \> goes to the next quickfix entry
-nmap <leader>> :cnext<CR>
+nmap <leader>. :cnext<CR>
 " \> autosaves and goes to the next quickfix entry in insert mode
-imap <leader>> <ESC>:w<CR>:cnext<CR>
+imap <leader>. <ESC>:w<CR>:cnext<CR>
 " \< goes backward
-nmap <leader>< :cprevious<CR>
-imap <leader>< <ESC>:w<CR>:cprevious<CR>
-
-set showmode
-set autowrite
-set nowritebackup
-set nobackup
-set noswapfile
-set showcmd
-set autoread        " reload files when changed on disk
-
-" keep the curser in the middle of the screen
-map <leader>o :set scrolloff=99999<CR>
-map <leader>O :set scrolloff=0<CR>
-
-set listchars=tab:\ \ ,trail:▫
-set wildmenu
-set wildmode=longest,list,full
-
-" recognize markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-" Add \( to be a way to turn text into links
-autocmd FileType markdown vmap <buffer> <leader>( S)i[]<ESC>ha
-autocmd FileType markdown nmap <buffer> <leader>( ysiw)i[]<ESC>ha
-" Add \[ to be a way to turn href into links
-autocmd FileType markdown vmap <buffer> <leader>[ S]f]a()<ESC>ha
-autocmd FileType markdown nmap <buffer> <leader>[ ysiw]f]a()<ESC>ha
-
+nmap <leader>, :cprevious<CR>
+imap <leader>, <ESC>:w<CR>:cprevious<CR>
 
 " Autoresizing
 autocmd VimResized * :wincmd =
@@ -80,7 +50,7 @@ nmap <leader>S ysiW
 
 " Ruby:
 " Turn instance variables into `let`s
-nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
+autocmd FileType ruby nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
 
 " Turn
 "   { |a| b }
@@ -88,7 +58,7 @@ nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
 "   do |a|
 "     b
 "   end
-nmap <leader>D 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
+autocmd FileType ruby nmap <leader>D 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
 
 " Turn
 "   do |a|
@@ -96,46 +66,44 @@ nmap <leader>D 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
 "   end
 " into
 "   { a: :b }
-nmap <leader>d 0?<SPACE>do<CR>mD%ce}<ESC>kJ`Dce {<ESC>J
+autocmd FileType ruby nmap <leader>d 0?<SPACE>do<CR>mD%ce}<ESC>kJ`Dce {<ESC>J
 
 " Add a binding.pry right above current line
-nmap <leader>B <ESC>O<ESC>ccrequire 'pry'<CR>binding.pry<ESC>:w<CR>
+autocmd FileType ruby nmap <leader>B <ESC>O<ESC>ccrequire 'pry'<CR>binding.pry<ESC>:w<CR>
 " Add a binding.pry right below current line
-nmap <leader>b <ESC>o<ESC>ccrequire 'pry'<CR>binding.pry<ESC>:w<CR>
+autocmd FileType ruby nmap <leader>b <ESC>o<ESC>ccrequire 'pry'<CR>binding.pry<ESC>:w<CR>
 
 " Insert pry without needing it in the Gemfile
-nmap <leader>P <ESC>:r!naked-pry<CR>
+autocmd FileType ruby nmap <leader>P <ESC>:r!naked-pry<CR>
 
+" Markdown:
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" Add \( to be a way to turn text into links
+autocmd FileType markdown vmap <buffer> <leader>( S)i[]<ESC>ha
+autocmd FileType markdown nmap <buffer> <leader>( ysiw)i[]<ESC>ha
+" Add \[ to be a way to turn href into links
+autocmd FileType markdown vmap <buffer> <leader>[ S]f]a()<ESC>ha
+autocmd FileType markdown nmap <buffer> <leader>[ ysiw]f]a()<ESC>ha
+
+" Mustache:
 " Wrap the current word in an escaped Mustache tag
 nmap <leader>M <ESC>ysiW}lysiW}lysiW}ea<Space><ESC>ea<Space><ESC>b
 
-" type 'jj' in insert mode to escape.
-inoremap jj <ESC>
-" type ';;' in insert mode to escape and save
-inoremap ;; <ESC>:w<CR>
-" type ';;' in normal mode to save
-nnoremap ;; <ESC>:w<CR>
-
-" Connect to system clipboard
-set clipboard=unnamed
-
-" Let's use `brew install fzf`
-set rtp+=~/.fzf/
-
-map <C-p> :FZF<CR>
-
+" Git:
+"
 " Always start on the first line of a git commit message
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
-" camelCasing for free
-nnoremap + /\$\w\+_<CR>
-nnoremap _ f_x~
-
-" Autosave
-":au FocusLost * silent! wa
-
+" JSON:
+"
 " Don't do funny stuff with JSON double quotes
 let g:vim_json_syntax_conceal = 0
+
+" Go:
+"
+" Insert Go's err != nil checks automatically
+imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
+nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
 
 " Go tags
 let g:tagbar_type_go = {
@@ -166,6 +134,37 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+" Use local golang plugin
+filetype off
+filetype plugin indent off
+set runtimepath+=$GOROOT/misc/vim
+filetype plugin indent on
+syntax on
+
+" Disable syntastic for go?
+" let g:syntastic_go_checkers = []
+" let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+let g:syntastic_go_checkers = ['golint', 'govet']
+function EnableGoCheckers ()
+  let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+endfunction
+function DisableGoCheckers ()
+  let g:syntastic_go_checkers = ['golint', 'govet']
+endfunction
+
+" run go vet in the quickfix list
+autocmd FileType go nmap <leader>v :cexpr system("go vet ./") \| copen
+
+" Turn on `go build` checking on save
+autocmd FileType go map <leader>b :call DisableGoCheckers()<CR>
+" And turn it back off
+autocmd FileType go map <leader>B :call EnableGoCheckers()<CR>
+
+" `go fmt` before save
+"autocmd FileType go autocmd BufWritePre <buffer> GoFmt
+unmap <leader>f
+autocmd FileType go map <leader>f :GoFmt<CR>
+
 " ********************************
 "
 " Custom Jack Danger vim
@@ -177,23 +176,42 @@ set ruler
 " Use Pathogen
 execute pathogen#infect()
 
-" Use local golang plugin
-filetype off
-filetype plugin indent off
-set runtimepath+=$GOROOT/misc/vim
-filetype plugin indent on
-syntax on
 
-" Disable syntastic for go?
-"let g:syntastic_go_checkers=[]
-" `go fmt` before save
-"autocmd FileType go autocmd BufWritePre <buffer> GoFmt
-unmap <leader>f
-autocmd FileType go map <leader>f :GoFmt<CR>
+" Autosave
+":au FocusLost * silent! wa
 
-set tabstop=2
-set shiftwidth=2
+set autoread        " reload files when changed on disk
+set autowrite
 set expandtab " Overwritten for go, useful everywhere else
+set nobackup
+set noswapfile
+set nowritebackup
+set shiftwidth=2
+set showcmd
+set showmode
+set tabstop=2
+set listchars=tab:\ \ ,trail:▫
+set wildmenu
+set wildmode=longest,list,full
+
+" keep the curser in the middle of the screen
+map <leader>o :set scrolloff=99999<CR>
+map <leader>O :set scrolloff=0<CR>
+
+" type 'jj' in insert mode to escape.
+inoremap jj <ESC>
+" type ';;' in insert mode to escape and save
+inoremap ;; <ESC>:w<CR>
+" type ';;' in normal mode to save
+nnoremap ;; <ESC>:w<CR>
+
+" Connect to system clipboard
+set clipboard=unnamed
+
+" Let's use `brew install fzf`
+set rtp+=~/.fzf/
+
+map <C-p> :FZF<CR>
 
 " Native Vim/Tmux pane navigation
 " https://github.com/christoomey/vim-tmux-navigator
