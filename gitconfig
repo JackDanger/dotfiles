@@ -52,3 +52,5 @@
 [alias]
   reauthor = commit --amend --reset-author -C HEAD
 
+[http]
+	cookiefile = /Users/jackdanger/.gitcookies
