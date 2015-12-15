@@ -152,18 +152,14 @@ function DisableGoCheckers ()
   let g:syntastic_go_checkers = ['golint', 'govet']
 endfunction
 
-" run go vet in the quickfix list
-autocmd FileType go nmap <leader>v :cexpr system("go vet ./") \| copen
-
 " Turn on `go build` checking on save
 autocmd FileType go map <leader>b :call DisableGoCheckers()<CR>
 " And turn it back off
 autocmd FileType go map <leader>B :call EnableGoCheckers()<CR>
 
-" `go fmt` before save
-"autocmd FileType go autocmd BufWritePre <buffer> GoFmt
-unmap <leader>f
-autocmd FileType go map <leader>f :GoFmt<CR>
+" run go vet in the quickfix list
+autocmd FileType go nmap <leader>v :cexpr system("go vet ./") \| copen
+
 
 " ********************************
 "
