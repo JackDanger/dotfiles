@@ -99,11 +99,16 @@ autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 " Don't do funny stuff with JSON double quotes
 let g:vim_json_syntax_conceal = 0
 
-" Go:
+" Go: (golang for searchability)
 "
 " Insert Go's err != nil checks automatically
 imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
 nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
+
+autocmd FileType go imap <leader>P <ESC>"tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
+autocmd FileType go nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
+autocmd FileType go imap <leader>p <ESC>"tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
+autocmd FileType go nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
 
 " Go tags
 let g:tagbar_type_go = {
@@ -139,7 +144,6 @@ filetype off
 filetype plugin indent off
 set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on
-syntax on
 
 " Disable syntastic for go?
 " let g:syntastic_go_checkers = []
@@ -152,13 +156,13 @@ function DisableGoCheckers ()
   let g:syntastic_go_checkers = ['golint', 'govet']
 endfunction
 
+" run go vet in the quickfix list
+autocmd FileType go nmap <leader>v :cexpr system("go vet ./") \| copen
+
 " Turn on `go build` checking on save
 autocmd FileType go map <leader>b :call DisableGoCheckers()<CR>
 " And turn it back off
 autocmd FileType go map <leader>B :call EnableGoCheckers()<CR>
-
-" run go vet in the quickfix list
-autocmd FileType go nmap <leader>v :cexpr system("go vet ./") \| copen
 
 
 " ********************************
