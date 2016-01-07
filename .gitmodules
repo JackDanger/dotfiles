@@ -7,3 +7,6 @@
 [submodule "janus-extensions/YouCompleteMe"]
 	path = janus-extensions/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "janus-extensions/vim-tmux-navigator"]
+	path = janus-extensions/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator.git
