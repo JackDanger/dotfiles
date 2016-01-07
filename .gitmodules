@@ -4,3 +4,6 @@
 [submodule "janus-extensions/Align"]
 	path = janus-extensions/Align
 	url = https://github.com/vim-scripts/Align.git
+[submodule "janus-extensions/YouCompleteMe"]
+	path = janus-extensions/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
