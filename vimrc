@@ -105,6 +105,7 @@ let g:vim_json_syntax_conceal = 0
 imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
 nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
 
+" Automatically insert debug lines
 autocmd FileType go imap <leader>P <ESC>"tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
 autocmd FileType go nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
 autocmd FileType go imap <leader>p <ESC>"tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
