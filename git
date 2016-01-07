@@ -34,6 +34,7 @@ alias gps="git pull --no-tags --recurse-submodules && git submodule update --ini
 alias git-unadd="git rm --cached"
 alias gpick="git cherry-pick"
 alias hard="git reset --hard"
+alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 rebase() {

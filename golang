@@ -1,6 +1,6 @@
 #/bin/bash
 
-PATH=$PATH:$GOPATH/bin
+add_to_path $GOPATH/bin
 # Edit a go package
 function gov {
   vim `golang-package $1`
