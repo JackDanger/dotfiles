@@ -1,5 +1,6 @@
 ## Path to your oh-my-zsh configuration.
-ZSH=$HOME/.zprezto
+ZSH=$HOME/.dotfiles/prezto
+ZDOTDIR=$HOME/.dotfiles/prezto
 ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
 # Homebrew told me so
@@ -56,6 +57,7 @@ plugins= #(python bundler)
 # source $ZSH/oh-my-zsh.sh
 # Prezto
 fpath=(~/.dotfiles/zsh $fpath)
+source $ZSH/init.zsh
 source $ZSH/runcoms/zshrc
 #zstyle ":prezto:module:prompt" theme "jackdanger"
 autoload -Uz promptinit && promptinit
