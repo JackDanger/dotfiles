@@ -10,3 +10,6 @@
 [submodule "janus-extensions/ag"]
 	path = janus-extensions/ag
 	url = https://github.com/rking/ag.vim.git
+[submodule "prezto"]
+	path = prezto
+	url = https://github.com/sorin-ionescu/prezto.git
