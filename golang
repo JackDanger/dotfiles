@@ -1,5 +1,4 @@
 #/bin/bash
-
 if [[ -n $GOPATH ]]; then
   add_to_path $GOPATH/bin
   # Edit a go package

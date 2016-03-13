@@ -10,7 +10,7 @@ function gotest_last {
     args="-run $func"
   fi
 
-  cmd="go test -v -race $args ${package}"
+  cmd="go test -v $args ${package}"
   echo $cmd
   eval $cmd
 }
