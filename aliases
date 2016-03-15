@@ -40,6 +40,7 @@ alias warmup='seq 1 $(sysctl -n hw.ncpu) | xargs -n 1 -P $(sysctl -n hw.ncpu) ye
 alias top='top -o cpu'
 
 alias timestamp="date +%Y-%m-%d-%H-%M-%S"
+alias timestampdb="date +%Y%m%d%H%M%S"
 alias datestamp="date +%Y-%m-%d"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
