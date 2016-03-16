@@ -6,6 +6,7 @@ alias glp='git log -p'
 alias glpf='git log -p --follow'
 alias log="git log --follow --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 alias gp='git push'
+alias gpf='git push --force-with-lease'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias ga='git add -A'
