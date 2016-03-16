@@ -16,8 +16,9 @@ ln -s $dotfiles/tmux.conf             ~/.tmux.conf   || true
 ln -s $dotfiles/vim/janus/vim/vimrc   ~/.vimrc       || true
 ln -s $dotfiles/vimrc                 ~/.vimrc.after || true
 ln -s $dotfiles/zshrc                 ~/.zshrc       || true
+ln -s $dotfiles/prezto                ~/.zprezto     || true
 
 # And install some just for Prezto
-for rcfile in $dotfiles/prezto/runcoms/^README.md(.N); do
+for rcfile in $dotfiles/prezto/runcoms/z*; do
   ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done

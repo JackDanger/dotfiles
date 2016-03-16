@@ -1,6 +1,5 @@
 ## Path to your oh-my-zsh configuration.
 ZSH=$HOME/.dotfiles/prezto
-ZDOTDIR=$HOME/.dotfiles/prezto
 ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
 # Homebrew told me so
@@ -57,6 +56,8 @@ plugins= #(python bundler)
 # source $ZSH/oh-my-zsh.sh
 # Prezto
 fpath=(~/.dotfiles/zsh $fpath)
+source ~/.fzf.zsh
+source $HOME/.dotfiles/zsh/git-completion.zsh
 source $ZSH/init.zsh
 source $ZSH/runcoms/zshrc
 #zstyle ":prezto:module:prompt" theme "jackdanger"
@@ -80,10 +81,9 @@ if [ -f ~/.zsh_nocorrect ]; then
   done < ~/.zsh_nocorrect
 fi
 
-if [[ -n `which direnv` ]]; then
+source ~/.dotfiles/profile
+
+if which direnv >/dev/null 2>/dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
-source ~/.dotfiles/profile
-source ~/.fzf.zsh
-source $HOME/.dotfiles/zsh/git-completion.zsh
