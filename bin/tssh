@@ -1,30 +1,58 @@
-#!/bin/bash
+#!/bin/bash -e
 
+# A script to ssh to multiple servers in tmux panes
+# Specify space-separated list of hosts as arguments or in HOSTS environment var
+
+# Based on:
 # https://gist.github.com/dmytro/3984680
+# http://linuxpixies.blogspot.jp/2011/06/tmux-copy-mode-and-how-to-control.html
 
-# D.Kovalov
-# Based on http://linuxpixies.blogspot.jp/2011/06/tmux-copy-mode-and-how-to-control.html
+# helper function to get fully-qualified active window from given session
+activewindow() {
+  echo "$1:$(tmux list-windows -t "$1" -F "#{window_active} #{window_index}" | sort | tail -n 1 | cut -f 2 -d ' ')"
+}
 
-# a script to ssh multiple servers over multiple tmux panes
+# helper function to get fully-qualified active pane from given window
+activepane() {
+  echo "$1.$(tmux list-panes -t "$1" -F "#{pane_active} #{pane_index}" | sort | tail -n 1 | cut -f 2 -d ' ')"
+}
+
+# run ssh command but hang on error so that we can actually see it
+ssh_command() {
+  echo "ssh $1 || (echo 'Press return to dismiss.' && read)"
+}
 
 starttmux() {
-    if [ -z "$HOSTS" ]; then
-       echo -n "Please provide of list of hosts separated by spaces [ENTER]: "
-       read HOSTS
-    fi
+  if [ -z "$HOSTS" ]; then
+    echo "Please provide of list of hosts separated by spaces." 1>&2
+    exit 1
+  fi
 
-    local hosts=( $HOSTS )
+  local hosts=( $HOSTS )
 
+  if [ -z "$TMUX" ]; then
+    # start a tmux session if we're not in tmux
+    local sessionid="$(tmux new-session -P -F "#{session_id}" -d "$(ssh_command ${hosts[0]})")"
+  else
+    # use current tmux session id
+    local sessionid="$(tmux display-message -p "#{session_id}")"
+    tmux new-window -a -t "$(activewindow "$sessionid")" "$(ssh_command ${hosts[0]})"
+  fi
 
-    tmux new-window "ssh ${hosts[0]}"
-    unset hosts[0];
-    for i in "${hosts[@]}"; do
-        tmux split-window -h  "ssh $i"
-        tmux select-layout tiled > /dev/null
-    done
-    tmux select-pane -t 0
-    tmux set-window-option synchronize-panes on > /dev/null
+  local activewindow="$(activewindow "$sessionid")"
 
+  tmux set-window-option -t "$activewindow" synchronize-panes on > /dev/null
+
+  unset hosts[0];
+  for i in "${hosts[@]}"; do
+    tmux split-window -h -t "$(activepane "$activewindow")" "$(ssh_command $i)"
+    tmux select-layout -t "$activewindow" tiled > /dev/null
+  done
+
+  if [ -z "$TMUX" ]; then
+    # attach to the session we created
+    tmux attach -t "$sessionid"
+  fi
 }
 
 HOSTS=${HOSTS:=$*}
