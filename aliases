@@ -56,6 +56,14 @@ function name {
   find $dir -name "*$1*"
 }
 
+pingme() {
+  $@
+  local retval=$?
+  [[ retval -eq 0 ]] && retval=success
+  osascript -e "display notification with title \"$* ($retval)\" sound name \"Glass\""
+  return $retval
+}
+
 function dotfiles {
   cd ~/.dotfiles
   git add .
