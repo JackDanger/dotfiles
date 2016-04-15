@@ -16,6 +16,16 @@ function add_to_path {
   fi
 }
 
+function append_to_path {
+  local DIR=$1
+  if [ "$(grep $DIR -c <<< $PATH)" -eq "1" ]; then
+    PATH=$(sed s,$DIR,, <<< $PATH):$DIR
+    PATH=$(sed -E s,:+,:,g <<< $PATH)
+  else
+    PATH=$PATH:$DIR
+  fi
+}
+
 source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/docker

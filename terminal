@@ -18,7 +18,8 @@ if ! $(which terminal_loaded > /dev/null); then
 function terminal_loaded {}
 
 export PAGER="less -FRSX"
-#export TERM=screen-256color
+
+export FZF_DEFAULT_OPTS='--reverse --inline-info'
 
 if [[ -z `which seq` ]]; then
   seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }
@@ -30,7 +31,7 @@ builtinhelp() {
 
 # Recently modified files
 recent () {
-  find * -type f -name '*[^.log]' -exec ls -1t "{}" + | head -n 10
+  find ${1-*} -type f -name '*[^.log]' -exec ls -1t "{}" + | head -n 10
 }
 
 # A shortcut for using awk like cut
