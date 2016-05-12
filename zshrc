@@ -56,7 +56,7 @@ plugins= #(python bundler)
 # source $ZSH/oh-my-zsh.sh
 # Prezto
 fpath=(~/.dotfiles/zsh $fpath)
-source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source $HOME/.dotfiles/zsh/git-completion.zsh
 source $ZSH/init.zsh
 source $ZSH/runcoms/zshrc
