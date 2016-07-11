@@ -72,10 +72,10 @@ function main() {
   $cmd
 
   # Listen for any lines sent through the socket and run $cmd once each time
-  while read -r _  < $FIFO ; do
+  while read -r _  < $FIFO; do
     echo "$ $cmd"
     $cmd
-  done
+  done 2>/dev/null
 }
 
 main "$@"
