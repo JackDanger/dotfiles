@@ -2,7 +2,7 @@
 if [[ -n $GOPATH ]]; then
   add_to_path $GOPATH/bin
 
-  if !which c; then
+  if ! which c > /dev/null; then
     alias c=cd
   fi
   # Edit a go package
