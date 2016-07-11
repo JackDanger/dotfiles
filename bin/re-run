@@ -75,7 +75,7 @@ function main() {
   while read -r _  < $FIFO; do
     echo "$ $cmd"
     $cmd
-  done 2>/dev/null
+  done
 }
 
 main "$@"
