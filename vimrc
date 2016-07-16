@@ -1,8 +1,9 @@
 " Default
 let mapleader = '\'
 
-" Rocking hard. No leader timeout
-set notimeout
+" Rocking hard. 500 milliseconds to execute a leader combo
+set timeoutlen=1000
+set ttimeoutlen=0
 
 " Alias these common mistypes, Shitf+w -> w
 "command W w
@@ -104,6 +105,10 @@ let g:vim_json_syntax_conceal = 0
 " Insert Go's err != nil checks automatically
 imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
 nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
+
+" toggle whether we `import "fmt"`;
+nmap <leader>f /"fmt"<CR>dd<CR><ESC>:w<CR><C-O>
+nmap <leader>F /import <CR>o  "fmt"<ESC>:w<CR><C-O>
 
 " Automatically insert debug lines
 autocmd FileType go imap <leader>P <ESC>"tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
