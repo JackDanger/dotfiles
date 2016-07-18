@@ -20,6 +20,8 @@ function terminal_loaded {}
 export PAGER="less -FRSX"
 
 export FZF_DEFAULT_OPTS='--reverse --inline-info'
+export FZF_DEFAULT_COMMAND="ag -l" # Supports ignoring files via .agignore
+export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 
 if [[ -z `which seq` ]]; then
   seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }

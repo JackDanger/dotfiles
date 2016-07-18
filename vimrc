@@ -1,8 +1,8 @@
 " Default
 let mapleader = '\'
 
-" Rocking hard. 500 milliseconds to execute a leader combo
-set timeoutlen=1000
+" Rocking hard. 800 milliseconds to execute a leader combo
+set timeoutlen=800
 set ttimeoutlen=0
 
 " Alias these common mistypes, Shitf+w -> w
