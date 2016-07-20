@@ -102,3 +102,11 @@ if which direnv >/dev/null 2>/dev/null; then
   eval "$(direnv hook zsh)"
 fi
 
+branch_and_dirty() {
+  if [[ -d .git ]]; then
+    git rev-parse --abbrev-ref HEAD | tr "\n" " "
+    git diff-index --cached HEAD -- && echo 臟
+  fi
+}
+PS1='%{$fg[red]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
+
