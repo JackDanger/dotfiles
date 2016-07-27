@@ -3,7 +3,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
-alias e="$EDITOR"
+alias e=$EDITOR
 alias a='ag --ignore log --ignore tags'
 alias ap='ag --ignore log --ignore tags --pager="less -FRX"'
 alias g='ag'
