@@ -12,6 +12,7 @@ ln -s $dotfiles/sshrc                 ~/.sshrc        || true
 ln -s $dotfiles/sshrc.d               ~/.sshrc.d      || true
 ln -s $dotfiles/tmux.conf             ~/.tmux.conf    || true
 ln -s $dotfiles/vimrc                 ~/.vimrc        || true
+ln -s $dotfiles/vimrc                 ~/.nvimrc       || true
 ln -s $dotfiles/zshrc                 ~/.zshrc        || true
 ln -s $dotfiles/prezto                ~/.zprezto      || true
 

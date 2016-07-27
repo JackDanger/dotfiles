@@ -69,6 +69,8 @@ nmap <leader>S ysiW
 
 " Define markdown filetype
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" Define HAR files as json
+autocmd BufNewFile,BufReadPost *.har set filetype=json
 
 " ********************************
 "
