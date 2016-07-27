@@ -17,7 +17,11 @@ if [[ -n $GOPATH ]]; then
 
   # find the directory of the first package name partially matching $1
   function golang-package {
-    find $GOPATH/src/(square|*.(com|org|net))/* -type d -maxdepth 1 | grep $1 | head -n 1
+    if [[ -n $ZSH ]]; then
+      eval "find ${GOPATH}/src/(square|*.(com|org|net))/* -type d -maxdepth 1" | grep $1 | head -n 1
+    else
+      find $GOPATH/src -type d | egrep '(square|com|org|net)/'  | grep traffic | head -n 1
+    fi
   }
 fi
 # Test helpers moved to ./bin/

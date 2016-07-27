@@ -15,8 +15,7 @@ if [[ -f /.crouton-targets ]]; then
 fi
 
 if ! $(which terminal_loaded > /dev/null); then
-terminal_loaded() {
-}
+terminal_loaded() { true; }
 
 export PAGER="less -FRSX"
 
