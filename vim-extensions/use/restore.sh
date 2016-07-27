@@ -1,0 +1,13 @@
+vim-go
+Align
+FZF
+YouCompleteMe
+ag
+nerdtree
+syntastic
+tagbar
+vim-fugitive
+vim-markdown
+vim-surround
+vim-tmux-navigator
+vim-vividchalk

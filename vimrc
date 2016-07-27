@@ -1,3 +1,25 @@
+set nocompatible
+
+" Some local filetype-specific config
+set rtp+=~/.dotfiles/vim2
+
+" Make backspace behave in a sane manner.
+set backspace=indent,eol,start
+
+" Use syntax highlighting on
+syntax on
+
+" Enable file type detection and do language-dependent indenting.
+filetype plugin indent on
+
+" Show line numbers on the left
+set number
+
+" And lines/columns in the status bar
+set ruler
+
+" Allow hidden buffers, don't limit to 1 file per window/split
+set hidden
 " Default
 let mapleader = '\'
 
@@ -13,6 +35,10 @@ command Q q
 nmap EE :e!<CR>
 nmap QQ :q!<CR>
 
+" Load all active extensions
+set rtp+=~/.dotfiles/vim-extensions/use/*
+
+" This is provided by an extension loaded in the above line
 color vividchalk
 
 " From http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
@@ -23,153 +49,27 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 " Leader-A sets up Ag to search for your selection (or the current word)
 nnoremap <leader>A viw"hy:Ag '<C-r>h'
 vnoremap <leader>A "hy:Ag '<C-r>h'
+" And lowercase just gives you the search prompt
+nmap <leader>a :Ag
 
 " Press F2 to paste without weird autointents
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 
 map <leader>l :Align
-nmap <leader>a :Ag
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>h :nohl<CR>
 
-" \> goes to the next quickfix entry
-nmap <leader>. :cnext<CR>
-" \> autosaves and goes to the next quickfix entry in insert mode
-imap <leader>. <ESC>:w<CR>:cnext<CR>
-" \< goes backward
-nmap <leader>, :cprevious<CR>
-imap <leader>, <ESC>:w<CR>:cprevious<CR>
-
 " Autoresizing
 autocmd VimResized * :wincmd =
 
-" Surround a word with \s
+" Surround a word with \s (uses surround.vim)
 nmap <leader>s ysiw
 nmap <leader>S ysiW
 
-" Ruby:
-" Turn instance variables into `let`s
-autocmd FileType ruby nmap <leader>L 0f@slet(:<ESC>f i)<ESC>f=s{<ESC>A }<ESC>
-
-" Turn
-"   { |a| b }
-" into
-"   do |a|
-"     b
-"   end
-autocmd FileType ruby nmap <leader>D 0f{sdo<CR><ESC>f}hxs<CR>end<ESC>
-
-" Turn
-"   do |a|
-"     b
-"   end
-" into
-"   { a: :b }
-autocmd FileType ruby nmap <leader>d 0?<SPACE>do<CR>mD%ce}<ESC>kJ`Dce {<ESC>J
-
-" Add a binding.pry right above current line
-autocmd FileType ruby nmap <leader>B <ESC>O<ESC>ccrequire 'pry'<CR>binding.pry<ESC>:w<CR>
-" Add a binding.pry right below current line
-autocmd FileType ruby nmap <leader>b <ESC>o<ESC>ccrequire 'pry'<CR>binding.pry<ESC>:w<CR>
-
-" Insert pry without needing it in the Gemfile
-autocmd FileType ruby nmap <leader>P <ESC>:r!naked-pry<CR>
-
-" Markdown:
+" Define markdown filetype
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-" Add \( to be a way to turn text into links
-autocmd FileType markdown vmap <buffer> <leader>( S)i[]<ESC>ha
-autocmd FileType markdown nmap <buffer> <leader>( ysiw)i[]<ESC>ha
-" Add \[ to be a way to turn href into links
-autocmd FileType markdown vmap <buffer> <leader>[ S]f]a()<ESC>ha
-autocmd FileType markdown nmap <buffer> <leader>[ ysiw]f]a()<ESC>ha
-
-" Mustache:
-" Wrap the current word in an escaped Mustache tag
-nmap <leader>M <ESC>ysiW}lysiW}lysiW}ea<Space><ESC>ea<Space><ESC>b
-
-" Git:
-"
-" Always start on the first line of a git commit message
-autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
-
-" JSON:
-"
-" Don't do funny stuff with JSON double quotes
-let g:vim_json_syntax_conceal = 0
-
-" Go: (golang for searchability)
-"
-" Insert Go's err != nil checks automatically
-imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
-nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
-
-" toggle whether we `import "fmt"`;
-nmap <leader>f /"fmt"<CR>dd<CR><ESC>:w<CR><C-O>
-nmap <leader>F /import <CR>o  "fmt"<ESC>:w<CR><C-O>
-
-" Automatically insert debug lines
-autocmd FileType go imap <leader>P <ESC>"tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
-autocmd FileType go nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
-autocmd FileType go imap <leader>p <ESC>"tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
-autocmd FileType go nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d \", )", expand("%s:t"), line("'<"))<CR>$"tP
-
-" Go tags
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
-
-" Use local golang plugin
-filetype off
-filetype plugin indent off
-set runtimepath+=$GOROOT/misc/vim
-filetype plugin indent on
-
-" Disable syntastic for go?
-" let g:syntastic_go_checkers = []
-" let g:syntastic_go_checkers = ['go', 'golint', 'govet']
-let g:syntastic_go_checkers = ['golint', 'govet']
-function EnableGoCheckers ()
-  let g:syntastic_go_checkers = ['go', 'golint', 'govet']
-endfunction
-function DisableGoCheckers ()
-  let g:syntastic_go_checkers = ['golint', 'govet']
-endfunction
-
-" run go vet in the quickfix list
-autocmd FileType go nmap <leader>v :cexpr system("go vet ./") \| copen
-
-" Turn on `go build` checking on save
-autocmd FileType go map <leader>b :call DisableGoCheckers()<CR>
-" And turn it back off
-autocmd FileType go map <leader>B :call EnableGoCheckers()<CR>
-
 
 " ********************************
 "
@@ -177,10 +77,8 @@ autocmd FileType go map <leader>B :call EnableGoCheckers()<CR>
 "
 " ********************************
 
-set ruler
-
-" Use Pathogen
-execute pathogen#infect()
+" Use Pathogen?
+" execute pathogen#infect()
 
 
 " Autosave
@@ -215,8 +113,6 @@ nnoremap ;; <ESC>:w<CR>
 set clipboard=unnamed
 
 " Let's use `brew install fzf`
-set rtp+=~/.fzf/
-
 map <C-p> :FZF<CR>
 
 " Native Vim/Tmux pane navigation
@@ -232,3 +128,23 @@ inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>i
 inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>i
 inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>i
 "noremap <silent> <C-\> :TmuxNavigatePrevious<cr>
+
+" I hacked apart youcompleteme.vim to disable the VimEnter autocmd for the
+" following so it could be something I can opt into manually:
+let g:skip_youcompleteme_autoload = 1
+noremap <leader>Y :call youcompleteme#Enable()<CR>
+
+" Use an interesting status line
+set statusline=   " clear the statusline for when vimrc is reloaded
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%f\                          " file name
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}] " encoding
+set statusline+=%=                           " right align
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
+
+" And always show it
+set laststatus=2

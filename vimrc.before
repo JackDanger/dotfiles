@@ -1,5 +1,0 @@
-
-call janus#disable_plugin('nerdcommenter')
-call janus#disable_plugin('ctrlp')
-call janus#disable_plugin('gist')
-call janus#disable_plugin('gundo')
