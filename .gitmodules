@@ -1,364 +1,244 @@
+[submodule "prezto"]
+	path = prezto
+	url = https://github.com/sorin-ionescu/prezto.git
+[submodule "vim-extensions/available/Align"]
+	path = vim-extensions/available/Align
+	url = https://github.com/vim-scripts/Align.git
+[submodule "vim-extensions/available/Arduino-syntax-file"]
+	path = vim-extensions/available/Arduino-syntax-file
+	url = https://github.com/vim-scripts/Arduino-syntax-file.git
+[submodule "vim-extensions/available/Colour-Sampler-Pack"]
+	path = vim-extensions/available/Colour-Sampler-Pack
+	url = https://github.com/vim-scripts/Colour-Sampler-Pack.git
+[submodule "vim-extensions/available/Kwbd.vim"]
+	path = vim-extensions/available/Kwbd.vim
+	url = https://github.com/rgarver/Kwbd.vim.git
+[submodule "vim-extensions/available/NrrwRgn"]
+	path = vim-extensions/available/NrrwRgn
+	url = https://github.com/chrisbra/NrrwRgn.git
 [submodule "vim-extensions/available/YouCompleteMe"]
 	path = vim-extensions/available/YouCompleteMe
 	url = https://github.com/JackDanger/YouCompleteMe.git
 	branch = patch-1
-[submodule "vim-extensions/available/ag"]
-	path = vim-extensions/available/ag
-	url = https://github.com/rking/ag.vim.git
-[submodule "prezto"]
-	path = prezto
-	url = https://github.com/sorin-ionescu/prezto.git
-[submodule "vim-extensions/available/Colour-Sampler-Pack"]
-	path = vim-extensions/available/Colour-Sampler-Pack
-	url = https://github.com/vim-scripts/Colour-Sampler-Pack.git
-[submodule "vim-extensions/available/vim-color-github"]
-	path = vim-extensions/available/vim-color-github
-	url = https://github.com/telamon/vim-color-github.git
-[submodule "vim-extensions/available/vim-tomorrow-theme"]
-	path = vim-extensions/available/vim-tomorrow-theme
-[submodule "vim-extensions/available/pyte"]
-	path = vim-extensions/available/pyte
-	url = https://github.com/vim-scripts/pyte.git
-[submodule "vim-extensions/available/vim-colors-solarized"]
-	path = vim-extensions/available/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "vim-extensions/available/ir_black"]
-	path = vim-extensions/available/ir_black
-	url = https://github.com/twerth/ir_black.git
-[submodule "vim-extensions/available/vim-pathogen"]
-	path = vim-extensions/available/vim-pathogen
-	url = https://github.com/tpope/vim-pathogen.git
-[submodule "vim-extensions/available/vim-vividchalk"]
-	path = vim-extensions/available/vim-vividchalk
-	url = https://github.com/tpope/vim-vividchalk.git
-[submodule "vim-extensions/available/vim-cucumber"]
-	path = vim-extensions/available/vim-cucumber
-	url = https://github.com/tpope/vim-cucumber.git
-[submodule "vim-extensions/available/csv.vim"]
-	path = vim-extensions/available/csv.vim
-	url = https://github.com/chrisbra/csv.vim.git
-[submodule "vim-extensions/available/vim-clojure-static"]
-	path = vim-extensions/available/vim-clojure-static
-	url = https://github.com/guns/vim-clojure-static.git
-[submodule "vim-extensions/available/vimerl"]
-	path = vim-extensions/available/vimerl
-	url = https://github.com/jimenezrick/vimerl.git
-[submodule "vim-extensions/available/vim-haml"]
-	path = vim-extensions/available/vim-haml
-	url = https://github.com/tpope/vim-haml.git
-[submodule "vim-extensions/available/vim-json"]
-	path = vim-extensions/available/vim-json
-	url = https://github.com/elzr/vim-json.git
-[submodule "vim-extensions/available/vim-javascript"]
-	path = vim-extensions/available/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
-[submodule "vim-extensions/available/vim-liquid"]
-	path = vim-extensions/available/vim-liquid
-	url = https://github.com/tpope/vim-liquid.git
-[submodule "vim-extensions/available/vim-haskell"]
-	path = vim-extensions/available/vim-haskell
-	url = https://github.com/wlangstroth/vim-haskell.git
-[submodule "vim-extensions/available/vim-less"]
-	path = vim-extensions/available/vim-less
-	url = https://github.com/groenewege/vim-less.git
-[submodule "vim-extensions/available/vim-ruby-minitest"]
-	path = vim-extensions/available/vim-ruby-minitest
-	url = https://github.com/sunaku/vim-ruby-minitest.git
-[submodule "vim-extensions/available/vim-mustache-handlebars"]
-	path = vim-extensions/available/vim-mustache-handlebars
-	url = https://github.com/mustache/vim-mustache-handlebars.git
-[submodule "vim-extensions/available/puppet-vim"]
-	path = vim-extensions/available/puppet-vim
-	url = https://github.com/ajf/puppet-vim.git
-[submodule "vim-extensions/available/vim-slim"]
-	path = vim-extensions/available/vim-slim
-	url = https://github.com/slim-template/vim-slim.git
-[submodule "vim-extensions/available/vim-rdoc"]
-	path = vim-extensions/available/vim-rdoc
-	url = https://github.com/depuracao/vim-rdoc.git
-[submodule "vim-extensions/available/scala-vim-support"]
-	path = vim-extensions/available/scala-vim-support
-	url = https://github.com/rosstimson/scala-vim-support.git
-[submodule "vim-extensions/available/ack.vim"]
-	path = vim-extensions/available/ack.vim
-	url = https://github.com/mileszs/ack.vim.git
-[submodule "vim-extensions/available/vim-endwise"]
-	path = vim-extensions/available/vim-endwise
-	url = https://github.com/tpope/vim-endwise.git
-[submodule "vim-extensions/available/vim-dispatch"]
-	path = vim-extensions/available/vim-dispatch
-	url = https://github.com/tpope/vim-dispatch.git
-[submodule "vim-extensions/available/vim-eunuch"]
-	path = vim-extensions/available/vim-eunuch
-	url = https://github.com/tpope/vim-eunuch.git
-[submodule "vim-extensions/available/vim-buffergator"]
-	path = vim-extensions/available/vim-buffergator
-	url = https://github.com/jeetsukumaran/vim-buffergator.git
-[submodule "vim-extensions/available/vim-css-color"]
-	path = vim-extensions/available/vim-css-color
-	url = https://github.com/ap/vim-css-color.git
-[submodule "vim-extensions/available/vim-indent-object"]
-	path = vim-extensions/available/vim-indent-object
-	url = https://github.com/michaeljsmith/vim-indent-object.git
-[submodule "vim-extensions/available/gundo.vim"]
-	path = vim-extensions/available/gundo.vim
-	url = https://github.com/sjl/gundo.vim.git
-[submodule "vim-extensions/available/vim-easymotion"]
-	path = vim-extensions/available/vim-easymotion
-	url = https://github.com/Lokaltog/vim-easymotion.git
-[submodule "vim-extensions/available/Kwbd.vim"]
-	path = vim-extensions/available/Kwbd.vim
-	url = https://github.com/rgarver/Kwbd.vim.git
-[submodule "vim-extensions/available/gist-vim"]
-	path = vim-extensions/available/gist-vim
-	url = https://github.com/mattn/gist-vim.git
-[submodule "vim-extensions/available/vim-go"]
-	path = vim-extensions/available/vim-go
-	url = https://github.com/fatih/vim-go.git
-[submodule "vim-extensions/available/ctrlp.vim"]
-	path = vim-extensions/available/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
-[submodule "vim-extensions/available/vim-ruby"]
-	path = vim-extensions/available/vim-ruby
-	url = https://github.com/vim-ruby/vim-ruby.git
-[submodule "vim-extensions/available/vim-fugitive"]
-	path = vim-extensions/available/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim-extensions/available/vim-matchit"]
-	path = vim-extensions/available/vim-matchit
-	url = https://github.com/edsono/vim-matchit.git
-[submodule "vim-extensions/available/vim-repeat"]
-	path = vim-extensions/available/vim-repeat
-	url = https://github.com/tpope/vim-repeat.git
-[submodule "vim-extensions/available/vim-multiple-cursors"]
-	path = vim-extensions/available/vim-multiple-cursors
-	url = https://github.com/terryma/vim-multiple-cursors.git
-[submodule "vim-extensions/available/vim-surround"]
-	path = vim-extensions/available/vim-surround
-	url = https://github.com/tpope/vim-surround.git
-[submodule "vim-extensions/available/nerdcommenter"]
-	path = vim-extensions/available/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "vim-extensions/available/supertab"]
-	path = vim-extensions/available/supertab
-	url = https://github.com/ervandew/supertab.git
-[submodule "vim-extensions/available/vim-addon-mw-utils"]
-	path = vim-extensions/available/vim-addon-mw-utils
-	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "vim-extensions/available/vim-unimpaired"]
-	path = vim-extensions/available/vim-unimpaired
-	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "vim-extensions/available/vim-trailing-whitespace"]
-	path = vim-extensions/available/vim-trailing-whitespace
-	url = https://github.com/bronson/vim-trailing-whitespace.git
-[submodule "vim-extensions/available/tlib_vim"]
-	path = vim-extensions/available/tlib_vim
-	url = https://github.com/tomtom/tlib_vim.git
-[submodule "vim-extensions/available/nerdtree"]
-	path = vim-extensions/available/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "vim-extensions/available/webapi-vim"]
-	path = vim-extensions/available/webapi-vim
-	url = https://github.com/mattn/webapi-vim.git
-[submodule "vim-extensions/available/vimwiki"]
-	path = vim-extensions/available/vimwiki
-	url = https://github.com/vim-scripts/vimwiki.git
-[submodule "vim-extensions/available/vim-vroom"]
-	path = vim-extensions/available/vim-vroom
-	url = https://github.com/skalnik/vim-vroom.git
-[submodule "vim-extensions/available/vim-rails"]
-	path = vim-extensions/available/vim-rails
-	url = https://github.com/tpope/vim-rails.git
 [submodule "vim-extensions/available/ZoomWin"]
 	path = vim-extensions/available/ZoomWin
 	url = https://github.com/itspriddle/ZoomWin.git
-[submodule "vim-extensions/available/NrrwRgn"]
-	path = vim-extensions/available/NrrwRgn
-	url = https://github.com/chrisbra/NrrwRgn.git
-[submodule "vim-extensions/available/vim-snippets"]
-	path = vim-extensions/available/vim-snippets
-	url = https://github.com/honza/vim-snippets.git
-[submodule "vim-extensions/available/tagbar"]
-	path = vim-extensions/available/tagbar
-	url = https://github.com/majutsushi/tagbar.git
-[submodule "vim-extensions/available/syntastic"]
-	path = vim-extensions/available/syntastic
-	url = https://github.com/scrooloose/syntastic.git
-[submodule "vim-extensions/available/janus-colors"]
-	path = vim-extensions/available/janus-colors
-	url = https://github.com/TechnoGate/janus-colors.git
-[submodule "vim-extensions/available/vim-getafe"]
-	path = vim-extensions/available/vim-getafe
-	url = https://github.com/larssmit/vim-getafe.git
-[submodule "vim-extensions/available/vim-elixir"]
-	path = vim-extensions/available/vim-elixir
-	url = https://github.com/elixir-lang/vim-elixir.git
-[submodule "vim-extensions/available/vim-coffee-script"]
-	path = vim-extensions/available/vim-coffee-script
-	url = https://github.com/kchmck/vim-coffee-script.git
-[submodule "vim-extensions/available/Arduino-syntax-file"]
-	path = vim-extensions/available/Arduino-syntax-file
-	url = https://github.com/vim-scripts/Arduino-syntax-file.git
-[submodule "vim-extensions/available/vim-git"]
-	path = vim-extensions/available/vim-git
-	url = https://github.com/tpope/vim-git.git
-[submodule "vim-extensions/available/vim-markdown"]
-	path = vim-extensions/available/vim-markdown
-	url = https://github.com/tpope/vim-markdown.git
-[submodule "vim-extensions/available/vim-node.js"]
-	path = vim-extensions/available/vim-node.js
-	url = https://github.com/mmalecki/vim-node.js.git
-[submodule "vim-extensions/available/scss-syntax.vim"]
-	path = vim-extensions/available/scss-syntax.vim
-	url = https://github.com/cakebaker/scss-syntax.vim.git
-[submodule "vim-extensions/available/textile.vim"]
-	path = vim-extensions/available/textile.vim
-	url = https://github.com/timcharper/textile.vim.git
-[submodule "vim-extensions/available/vim-snipmate"]
-	path = vim-extensions/available/vim-snipmate
-	url = https://github.com/garbas/vim-snipmate.git
-[submodule "vim-extensions/available/vim-visualstar"]
-	path = vim-extensions/available/vim-visualstar
-	url = https://github.com/thinca/vim-visualstar.git
+[submodule "vim-extensions/available/ack.vim"]
+	path = vim-extensions/available/ack.vim
+	url = https://github.com/mileszs/ack.vim.git
+[submodule "vim-extensions/available/ag"]
+	path = vim-extensions/available/ag
+	url = https://github.com/rking/ag.vim
 [submodule "vim-extensions/available/base16-vim"]
 	path = vim-extensions/available/base16-vim
 	url = https://github.com/chriskempson/base16-vim.git
+[submodule "vim-extensions/available/csv.vim"]
+	path = vim-extensions/available/csv.vim
+	url = https://github.com/chrisbra/csv.vim.git
+[submodule "vim-extensions/available/ctrlp.vim"]
+	path = vim-extensions/available/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "vim-extensions/available/gist-vim"]
+	path = vim-extensions/available/gist-vim
+	url = https://github.com/mattn/gist-vim.git
+[submodule "vim-extensions/available/gundo.vim"]
+	path = vim-extensions/available/gundo.vim
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "vim-extensions/available/ir_black"]
+	path = vim-extensions/available/ir_black
+	url = https://github.com/twerth/ir_black.git
+[submodule "vim-extensions/available/janus-colors"]
+	path = vim-extensions/available/janus-colors
+	url = https://github.com/TechnoGate/janus-colors.git
 [submodule "vim-extensions/available/molokai"]
 	path = vim-extensions/available/molokai
 	url = https://github.com/vim-scripts/molokai.git
+[submodule "vim-extensions/available/nerdcommenter"]
+	path = vim-extensions/available/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "vim-extensions/available/nerdtree"]
+	path = vim-extensions/available/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "vim-extensions/available/puppet-vim"]
+	path = vim-extensions/available/puppet-vim
+	url = https://github.com/ajf/puppet-vim.git
+[submodule "vim-extensions/available/pyte"]
+	path = vim-extensions/available/pyte
+	url = https://github.com/vim-scripts/pyte.git
+[submodule "vim-extensions/available/scala-vim-support"]
+	path = vim-extensions/available/scala-vim-support
+	url = https://github.com/rosstimson/scala-vim-support.git
+[submodule "vim-extensions/available/scss-syntax.vim"]
+	path = vim-extensions/available/scss-syntax.vim
+	url = https://github.com/cakebaker/scss-syntax.vim.git
+[submodule "vim-extensions/available/supertab"]
+	path = vim-extensions/available/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "vim-extensions/available/syntastic"]
+	path = vim-extensions/available/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "vim-extensions/available/tagbar"]
+	path = vim-extensions/available/tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "vim-extensions/available/textile.vim"]
+	path = vim-extensions/available/textile.vim
+	url = https://github.com/timcharper/textile.vim.git
+[submodule "vim-extensions/available/tlib_vim"]
+	path = vim-extensions/available/tlib_vim
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule "vim-extensions/available/vim-addon-mw-utils"]
+	path = vim-extensions/available/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "vim-extensions/available/vim-buffergator"]
+	path = vim-extensions/available/vim-buffergator
+	url = https://github.com/jeetsukumaran/vim-buffergator.git
+[submodule "vim-extensions/available/vim-clojure-static"]
+	path = vim-extensions/available/vim-clojure-static
+	url = https://github.com/guns/vim-clojure-static.git
+[submodule "vim-extensions/available/vim-coffee-script"]
+	path = vim-extensions/available/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "vim-extensions/available/vim-color-github"]
+	path = vim-extensions/available/vim-color-github
+	url = https://github.com/telamon/vim-color-github.git
+[submodule "vim-extensions/available/vim-colors-solarized"]
+	path = vim-extensions/available/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule "vim-extensions/available/vim-css-color"]
+	path = vim-extensions/available/vim-css-color
+	url = https://github.com/ap/vim-css-color.git
+[submodule "vim-extensions/available/vim-cucumber"]
+	path = vim-extensions/available/vim-cucumber
+	url = https://github.com/tpope/vim-cucumber.git
+[submodule "vim-extensions/available/vim-dispatch"]
+	path = vim-extensions/available/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch.git
+[submodule "vim-extensions/available/vim-easymotion"]
+	path = vim-extensions/available/vim-easymotion
+	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "vim-extensions/available/vim-elixir"]
+	path = vim-extensions/available/vim-elixir
+	url = https://github.com/elixir-lang/vim-elixir.git
+[submodule "vim-extensions/available/vim-endwise"]
+	path = vim-extensions/available/vim-endwise
+	url = https://github.com/tpope/vim-endwise.git
+[submodule "vim-extensions/available/vim-eunuch"]
+	path = vim-extensions/available/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch.git
+[submodule "vim-extensions/available/vim-fugitive"]
+	path = vim-extensions/available/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vim-extensions/available/vim-getafe"]
+	path = vim-extensions/available/vim-getafe
+	url = https://github.com/larssmit/vim-getafe.git
+[submodule "vim-extensions/available/vim-git"]
+	path = vim-extensions/available/vim-git
+	url = https://github.com/tpope/vim-git.git
+[submodule "vim-extensions/available/vim-go"]
+	path = vim-extensions/available/vim-go
+	url = https://github.com/fatih/vim-go.git
+[submodule "vim-extensions/available/vim-haml"]
+	path = vim-extensions/available/vim-haml
+	url = https://github.com/tpope/vim-haml.git
+[submodule "vim-extensions/available/vim-haml"]
+	path = vim-extensions/available/vim-haml
+	url = https://github.com/tpope/vim-haml.git
+[submodule "vim-extensions/available/vim-haskell"]
+	path = vim-extensions/available/vim-haskell
+	url = https://github.com/wlangstroth/vim-haskell.git
+[submodule "vim-extensions/available/vim-indent-object"]
+	path = vim-extensions/available/vim-indent-object
+	url = https://github.com/michaeljsmith/vim-indent-object.git
+[submodule "vim-extensions/available/vim-javascript"]
+	path = vim-extensions/available/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
+[submodule "vim-extensions/available/vim-json"]
+	path = vim-extensions/available/vim-json
+	url = https://github.com/elzr/vim-json.git
+[submodule "vim-extensions/available/vim-less"]
+	path = vim-extensions/available/vim-less
+	url = https://github.com/groenewege/vim-less.git
+[submodule "vim-extensions/available/vim-liquid"]
+	path = vim-extensions/available/vim-liquid
+	url = https://github.com/tpope/vim-liquid.git
+[submodule "vim-extensions/available/vim-liquid"]
+	path = vim-extensions/available/vim-liquid
+	url = https://github.com/tpope/vim-liquid.git
+[submodule "vim-extensions/available/vim-markdown"]
+	path = vim-extensions/available/vim-markdown
+	url = https://github.com/tpope/vim-markdown.git
+[submodule "vim-extensions/available/vim-matchit"]
+	path = vim-extensions/available/vim-matchit
+	url = https://github.com/edsono/vim-matchit.git
+[submodule "vim-extensions/available/vim-multiple-cursors"]
+	path = vim-extensions/available/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule "vim-extensions/available/vim-mustache-handlebars"]
+	path = vim-extensions/available/vim-mustache-handlebars
+	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule "vim-extensions/available/vim-node.js"]
+	path = vim-extensions/available/vim-node.js
+	url = https://github.com/mmalecki/vim-node.js.git
+[submodule "vim-extensions/available/vim-pathogen"]
+	path = vim-extensions/available/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim-extensions/available/vim-rails"]
+	path = vim-extensions/available/vim-rails
+	url = https://github.com/tpope/vim-rails.git
+[submodule "vim-extensions/available/vim-rdoc"]
+	path = vim-extensions/available/vim-rdoc
+	url = https://github.com/depuracao/vim-rdoc.git
+[submodule "vim-extensions/available/vim-repeat"]
+	path = vim-extensions/available/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
 [submodule "vim-extensions/available/vim-rspec"]
 	path = vim-extensions/available/vim-rspec
 	url = https://github.com/skwp/vim-rspec.git
-[submodule "vim-extensions/available/Align"]
-	path = vim-extensions/available/Align
-	url = https://github.com/vim-scripts/Align.git
+[submodule "vim-extensions/available/vim-ruby"]
+	path = vim-extensions/available/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "vim-extensions/available/vim-ruby-minitest"]
+	path = vim-extensions/available/vim-ruby-minitest
+	url = https://github.com/sunaku/vim-ruby-minitest.git
+[submodule "vim-extensions/available/vim-slim"]
+	path = vim-extensions/available/vim-slim
+	url = https://github.com/slim-template/vim-slim.git
+[submodule "vim-extensions/available/vim-snipmate"]
+	path = vim-extensions/available/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule "vim-extensions/available/vim-snippets"]
+	path = vim-extensions/available/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "vim-extensions/available/vim-surround"]
+	path = vim-extensions/available/vim-surround
+	url = https://github.com/tpope/vim-surround.git
 [submodule "vim-extensions/available/vim-tmux-navigator"]
 	path = vim-extensions/available/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-
-[submodule "vim-extensions/available/ack.vim"]
-  path = vim-extensions/available/ack.vim
-  url = https://github.com/mileszs/ack.vim.git
-[submodule "vim-extensions/available/ag"]
-  path = vim-extensions/available/ag
-  url = https://github.com/rking/ag.vim
-[submodule "vim-extensions/available/Arduino-syntax-file"]
-  path = vim-extensions/available/Arduino-syntax-file
-  url = https://github.com/vim-scripts/Arduino-syntax-file.git
-[submodule "vim-extensions/available/base16-vim"]
-  path = vim-extensions/available/base16-vim
-  url = https://github.com/chriskempson/base16-vim.git
-[submodule "vim-extensions/available/Colour-Sampler-Pack"]
-  path = vim-extensions/available/Colour-Sampler-Pack
-  url = https://github.com/vim-scripts/Colour-Sampler-Pack.git
-[submodule "vim-extensions/available/csv.vim"]
-  path = vim-extensions/available/csv.vim
-  url = https://github.com/chrisbra/csv.vim.git
-[submodule "vim-extensions/available/ir_black"]
-  path = vim-extensions/available/ir_black
-  url = https://github.com/twerth/ir_black.git
-[submodule "vim-extensions/available/janus-colors"]
-  path = vim-extensions/available/janus-colors
-  url = https://github.com/TechnoGate/janus-colors.git
-[submodule "vim-extensions/available/molokai"]
-  path = vim-extensions/available/molokai
-  url = https://github.com/vim-scripts/molokai.git
-[submodule "vim-extensions/available/puppet-vim"]
-  path = vim-extensions/available/puppet-vim
-  url = https://github.com/ajf/puppet-vim.git
-[submodule "vim-extensions/available/pyte"]
-  path = vim-extensions/available/pyte
-  url = https://github.com/vim-scripts/pyte.git
-[submodule "vim-extensions/available/scala-vim-support"]
-  path = vim-extensions/available/scala-vim-support
-  url = https://github.com/rosstimson/scala-vim-support.git
-[submodule "vim-extensions/available/scss-syntax.vim"]
-  path = vim-extensions/available/scss-syntax.vim
-  url = https://github.com/cakebaker/scss-syntax.vim.git
-[submodule "vim-extensions/available/textile.vim"]
-  path = vim-extensions/available/textile.vim
-  url = https://github.com/timcharper/textile.vim.git
-[submodule "vim-extensions/available/vim-clojure-static"]
-  path = vim-extensions/available/vim-clojure-static
-  url = https://github.com/guns/vim-clojure-static.git
-[submodule "vim-extensions/available/vim-coffee-script"]
-  path = vim-extensions/available/vim-coffee-script
-  url = https://github.com/kchmck/vim-coffee-script.git
-[submodule "vim-extensions/available/vim-color-github"]
-  path = vim-extensions/available/vim-color-github
-  url = https://github.com/telamon/vim-color-github.git
-[submodule "vim-extensions/available/vim-colors-solarized"]
-  path = vim-extensions/available/vim-colors-solarized
-  url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "vim-extensions/available/vim-cucumber"]
-  path = vim-extensions/available/vim-cucumber
-  url = https://github.com/tpope/vim-cucumber.git
-[submodule "vim-extensions/available/vim-dispatch"]
-  path = vim-extensions/available/vim-dispatch
-  url = https://github.com/tpope/vim-dispatch.git
-[submodule "vim-extensions/available/vim-elixir"]
-  path = vim-extensions/available/vim-elixir
-  url = https://github.com/elixir-lang/vim-elixir.git
-[submodule "vim-extensions/available/vim-endwise"]
-  path = vim-extensions/available/vim-endwise
-  url = https://github.com/tpope/vim-endwise.git
-[submodule "vim-extensions/available/vim-eunuch"]
-  path = vim-extensions/available/vim-eunuch
-  url = https://github.com/tpope/vim-eunuch.git
-[submodule "vim-extensions/available/vim-getafe"]
-  path = vim-extensions/available/vim-getafe
-  url = https://github.com/larssmit/vim-getafe.git
-[submodule "vim-extensions/available/vim-git"]
-  path = vim-extensions/available/vim-git
-  url = https://github.com/tpope/vim-git.git
-[submodule "vim-extensions/available/vim-haml"]
-  path = vim-extensions/available/vim-haml
-  url = https://github.com/tpope/vim-haml.git
-[submodule "vim-extensions/available/vim-haskell"]
-  path = vim-extensions/available/vim-haskell
-  url = https://github.com/wlangstroth/vim-haskell.git
-[submodule "vim-extensions/available/vim-javascript"]
-  path = vim-extensions/available/vim-javascript
-  url = https://github.com/pangloss/vim-javascript.git
-[submodule "vim-extensions/available/vim-json"]
-  path = vim-extensions/available/vim-json
-  url = https://github.com/elzr/vim-json.git
-[submodule "vim-extensions/available/vim-less"]
-  path = vim-extensions/available/vim-less
-  url = https://github.com/groenewege/vim-less.git
-[submodule "vim-extensions/available/vim-liquid"]
-  path = vim-extensions/available/vim-liquid
-  url = https://github.com/tpope/vim-liquid.git
-[submodule "vim-extensions/available/vim-markdown"]
-  path = vim-extensions/available/vim-markdown
-  url = https://github.com/tpope/vim-markdown.git
-[submodule "vim-extensions/available/vim-mustache-handlebars"]
-  path = vim-extensions/available/vim-mustache-handlebars
-  url = https://github.com/mustache/vim-mustache-handlebars.git
-[submodule "vim-extensions/available/vim-node.js"]
-  path = vim-extensions/available/vim-node.js
-  url = https://github.com/mmalecki/vim-node.js.git
-[submodule "vim-extensions/available/vim-pathogen"]
-  path = vim-extensions/available/vim-pathogen
-  url = https://github.com/tpope/vim-pathogen.git
-[submodule "vim-extensions/available/vim-rdoc"]
-  path = vim-extensions/available/vim-rdoc
-  url = https://github.com/depuracao/vim-rdoc.git
-[submodule "vim-extensions/available/vim-rspec"]
-  path = vim-extensions/available/vim-rspec
-  url = https://github.com/skwp/vim-rspec.git
-[submodule "vim-extensions/available/vim-ruby-minitest"]
-  path = vim-extensions/available/vim-ruby-minitest
-  url = https://github.com/sunaku/vim-ruby-minitest.git
-[submodule "vim-extensions/available/vim-slim"]
-  path = vim-extensions/available/vim-slim
-  url = https://github.com/slim-template/vim-slim.git
 [submodule "vim-extensions/available/vim-tomorrow-theme"]
-  path = vim-extensions/available/vim-tomorrow-theme
-  url = https://github.com/chriskempson/vim-tomorrow-theme.git
+	path = vim-extensions/available/vim-tomorrow-theme
+	url = https://github.com/chriskempson/vim-tomorrow-theme.git
+[submodule "vim-extensions/available/vim-trailing-whitespace"]
+	path = vim-extensions/available/vim-trailing-whitespace
+	url = https://github.com/bronson/vim-trailing-whitespace.git
+[submodule "vim-extensions/available/vim-unimpaired"]
+	path = vim-extensions/available/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "vim-extensions/available/vim-visualstar"]
+	path = vim-extensions/available/vim-visualstar
+	url = https://github.com/thinca/vim-visualstar.git
 [submodule "vim-extensions/available/vim-vividchalk"]
-  path = vim-extensions/available/vim-vividchalk
-  url = https://github.com/tpope/vim-vividchalk.git
+	path = vim-extensions/available/vim-vividchalk
+	url = https://github.com/tpope/vim-vividchalk.git
+[submodule "vim-extensions/available/vim-vroom"]
+	path = vim-extensions/available/vim-vroom
+	url = https://github.com/skalnik/vim-vroom.git
 [submodule "vim-extensions/available/vimerl"]
-  path = vim-extensions/available/vimerl
-  url = https://github.com/jimenezrick/vimerl.git
+	path = vim-extensions/available/vimerl
+	url = https://github.com/jimenezrick/vimerl.git
+[submodule "vim-extensions/available/vimwiki"]
+	path = vim-extensions/available/vimwiki
+	url = https://github.com/vim-scripts/vimwiki.git
+[submodule "vim-extensions/available/webapi-vim"]
+	path = vim-extensions/available/webapi-vim
+	url = https://github.com/mattn/webapi-vim.git
