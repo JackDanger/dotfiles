@@ -136,6 +136,38 @@ inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>i
 let g:skip_youcompleteme_autoload = 1
 noremap <leader>Y :call youcompleteme#Enable()<CR>
 
+" If we try to open a directory open NERD_tree
+  let NERDTreeIgnore=['\.pyc$', '\.pyo$', '\.rbc$', '\.rbo$', '\.class$', '\.o$', '\~$']
+
+  augroup AuNERDTreeCmd
+  autocmd AuNERDTreeCmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
+
+  " If the parameter is a directory, cd into it
+  function s:CdIfDirectory(directory)
+    let explicitDirectory = isdirectory(a:directory)
+    let directory = explicitDirectory || empty(a:directory)
+
+    if explicitDirectory
+      exe "cd " . fnameescape(a:directory)
+    endif
+
+    " Allows reading from stdin
+    " ex: git diff | mvim -R -
+    if strlen(a:directory) == 0
+      return
+    endif
+
+    if directory
+      NERDTree
+      wincmd p
+      bd
+    endif
+
+    if explicitDirectory
+      wincmd p
+    endif
+  endfunction
+
 " Use an interesting status line
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%-3.3n\                      " buffer number
