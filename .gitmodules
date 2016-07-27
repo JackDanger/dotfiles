@@ -140,9 +140,6 @@
 [submodule "vim-extensions/available/vim-haml"]
 	path = vim-extensions/available/vim-haml
 	url = https://github.com/tpope/vim-haml.git
-[submodule "vim-extensions/available/vim-haml"]
-	path = vim-extensions/available/vim-haml
-	url = https://github.com/tpope/vim-haml.git
 [submodule "vim-extensions/available/vim-haskell"]
 	path = vim-extensions/available/vim-haskell
 	url = https://github.com/wlangstroth/vim-haskell.git
@@ -158,9 +155,6 @@
 [submodule "vim-extensions/available/vim-less"]
 	path = vim-extensions/available/vim-less
 	url = https://github.com/groenewege/vim-less.git
-[submodule "vim-extensions/available/vim-liquid"]
-	path = vim-extensions/available/vim-liquid
-	url = https://github.com/tpope/vim-liquid.git
 [submodule "vim-extensions/available/vim-liquid"]
 	path = vim-extensions/available/vim-liquid
 	url = https://github.com/tpope/vim-liquid.git
