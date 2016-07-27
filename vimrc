@@ -58,7 +58,6 @@ set pastetoggle=<F2>
 
 map <leader>l :Align
 nmap <leader>] :TagbarToggle<CR>
-nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>h :nohl<CR>
 
 " Autoresizing
@@ -112,8 +111,11 @@ nnoremap ;; <ESC>:w<CR>
 " Connect to system clipboard
 set clipboard=unnamed
 
-" Let's use `brew install fzf`
+" Let's use FZF for our file finding
 map <C-p> :FZF<CR>
+
+" I like this shortcut for NERD_tree
+map <leader>n :NERDTreeToggle<CR>
 
 " Native Vim/Tmux pane navigation
 " https://github.com/christoomey/vim-tmux-navigator

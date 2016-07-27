@@ -3,7 +3,6 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
-alias e=$EDITOR
 alias a='ag --ignore log --ignore tags'
 alias ap='ag --ignore log --ignore tags --pager="less -FRX"'
 alias g='ag'
@@ -18,13 +17,13 @@ function jjj() { true; }
 
 
 if [[ -z "$(which fzf)" ]]; then
-  alias v=$EDITOR
+  alias v=vim
 else
   function smartvim() {
     if [[ -z "$1" ]]; then
-      e $(fzf)
+      vim $(fzf)
     else
-      e $*
+      vim $*
     fi
   }
   alias v=smartvim
