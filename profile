@@ -49,8 +49,6 @@ if [[ -n `which unsetopt` ]]; then
   # Fix the "no matches found" error when trying to
   # pass an asterisk to a command
   unsetopt nomatch 2>/dev/null
-else
-  echo "Unsetopt doesn't exist"
 fi
 
 # RVM (once)
