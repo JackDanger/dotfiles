@@ -133,13 +133,13 @@ inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>i
 inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>i
 "noremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 
-" \) goes to the next quickfix entry
-nmap <leader>0 :cnext<CR>
-" \) autosaves and goes to the next quickfix entry in insert mode
-imap <leader>0 <ESC>:w<CR>:cnext<CR>
-" \( goes backward
-nmap <leader>9 :cprevious<CR>
-imap <leader>9 <ESC>:w<CR>:cprevious<CR>
+" @n goes to the next quickfix entry
+nmap @n :cnext<CR>
+" @n autosaves and goes to the next quickfix entry in insert mode
+imap @n <ESC>:w<CR>:cnext<CR>
+" @p goes backward
+nmap @p :cprevious<CR>
+imap @p <ESC>:w<CR>:cprevious<CR>
 
 
 " I hacked apart youcompleteme.vim to disable the VimEnter autocmd for the
