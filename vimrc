@@ -1,7 +1,10 @@
 set nocompatible
 
+" Load all active extensions
+set rtp+=~/.dotfiles/vim-extensions/use/*
+
 " Some local filetype-specific config
-set rtp+=~/.dotfiles/vim2
+set rtp+=~/.dotfiles/vim
 
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
@@ -34,9 +37,6 @@ command WQ wq
 command Q q
 nmap EE :e!<CR>
 nmap QQ :q!<CR>
-
-" Load all active extensions
-set rtp+=~/.dotfiles/vim-extensions/use/*
 
 " This is provided by an extension loaded in the above line
 color vividchalk
@@ -132,6 +132,15 @@ inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>i
 inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>i
 inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>i
 "noremap <silent> <C-\> :TmuxNavigatePrevious<cr>
+
+" \) goes to the next quickfix entry
+nmap <leader>0 :cnext<CR>
+" \) autosaves and goes to the next quickfix entry in insert mode
+imap <leader>0 <ESC>:w<CR>:cnext<CR>
+" \( goes backward
+nmap <leader>9 :cprevious<CR>
+imap <leader>9 <ESC>:w<CR>:cprevious<CR>
+
 
 " I hacked apart youcompleteme.vim to disable the VimEnter autocmd for the
 " following so it could be something I can opt into manually:
