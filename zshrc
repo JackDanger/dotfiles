@@ -89,13 +89,6 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 #  eval "$(direnv hook $0)"
 #fi
 
-# Fix autocorrect
-if [ -f ~/.zsh_nocorrect ]; then
-  while read -r COMMAND; do
-    alias $COMMAND="nocorrect $COMMAND"
-  done < ~/.zsh_nocorrect
-fi
-
 source ~/.dotfiles/profile
 
 if which direnv >/dev/null 2>/dev/null; then
