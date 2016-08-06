@@ -1,4 +1,6 @@
 set nocompatible
+let vim_markdown_preview_temp_file=1
+let vim_markdown_preview_hotkey='<C-m>'
 
 " Load all active extensions
 set rtp+=~/.dotfiles/vim-extensions/use/*
