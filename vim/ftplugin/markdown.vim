@@ -8,4 +8,4 @@ nmap <buffer> <leader>( ysiw)i[]<ESC>ha
 " Add \[ to be a way to turn href into links
 vmap <buffer> <leader>[ S]f]a()<ESC>ha
 nmap <buffer> <leader>[ ysiw]f]a()<ESC>ha
-nmap <C-m> :w !grip --export - > /tmp/markdown.html && open /tmp/markdown.html<CR>
+nmap <leader>m :w !grip --export - > /tmp/markdown.html && open /tmp/markdown.html<CR>
