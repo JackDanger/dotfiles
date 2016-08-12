@@ -45,7 +45,7 @@ alias datestamp="date +%Y-%m-%d"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
 alias ccat='pygmentize -g'
-alias cless='pygmentize -g | less -r'
+function cless() { ccat $1 | less -r; }
 alias shuffle="perl -MList::Util=shuffle -e 'print shuffle(<STDIN>);'"
 
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
