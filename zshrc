@@ -98,7 +98,7 @@ fi
 branch_and_dirty() {
   if [[ -d .git ]]; then
     git rev-parse --abbrev-ref HEAD | tr "\n" " "
-    if [[ -n $(git diff-index --cached head --) ]] ||
+    if [[ -n $(git diff-index --cached HEAD --) ]] ||
        [[ -n $(git ls-files --exclude-standard -o -m -d) ]]; then
       echo -n 臟
     fi
