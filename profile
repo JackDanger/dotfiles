@@ -56,8 +56,8 @@ fi
 #add_to_path ~/.rvm/bin
 
 # chruby
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
+[[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
+[[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
 
 # Vi!?
 #set -o vi
