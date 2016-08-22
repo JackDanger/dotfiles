@@ -3,7 +3,7 @@ alias profile_loaded="true"
 
 [[ -f ~/.profile.before ]] && . ~/.profile.before
 
-export LC_ALL="en_US.UTF-8"
+[[ -z $LC_ALL ]] && export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
 function add_to_path {

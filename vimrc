@@ -31,7 +31,7 @@ set timeoutlen=800
 set ttimeoutlen=0
 
 " Alias these common mistypes, Shitf+w -> w
-"command W w
+command W w
 command Wq wq
 command WQ wq
 command Q q
