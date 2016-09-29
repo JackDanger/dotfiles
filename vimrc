@@ -26,6 +26,9 @@ set hidden
 " Default
 let mapleader = '\'
 
+" Don't change the cwd when opening a buffer
+set noautochdir
+
 " Rocking hard. 800 milliseconds to execute a leader combo
 set timeoutlen=800
 set ttimeoutlen=0
