@@ -71,6 +71,25 @@ publish() {
   fi
 }
 
+auto-fixup() {
+set -x
+  staged_files=$(git diff --name-only)
+  echo "staged files are: ${staged_files}"
+  for file in $staged_files; do
+    sha_to_fixup=$(git log -n1 --format=%h ${file})
+    # assert sha has not been merged
+    if git branch --contains ${sha_to_fixup} | egrep ' +master +'; then
+      1>&2 echo "no commit to fixup in this topic branch"
+      return 1
+    fi
+    echo $sha_to_fixup
+    git commit --fixup ${sha_to_fixup}
+    git stash
+    git rebase -i --autosquash ${sha_to_fixup}^
+    git stash pop
+  done
+}
+
 # Get the sha from which you divert from a specific other sha:
 #
 #   merge-base origin/green
