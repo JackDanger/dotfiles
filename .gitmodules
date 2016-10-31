@@ -65,6 +65,9 @@
 [submodule "vim-extensions/available/pyte"]
 	path = vim-extensions/available/pyte
 	url = https://github.com/vim-scripts/pyte.git
+[submodule "vim-extensions/available/ropevim"]
+	path = vim-extensions/available/ropevim
+	url = https://github.com/python-rope/ropevim.git
 [submodule "vim-extensions/available/scala-vim-support"]
 	path = vim-extensions/available/scala-vim-support
 	url = https://github.com/rosstimson/scala-vim-support.git
