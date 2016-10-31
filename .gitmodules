@@ -164,9 +164,6 @@
 [submodule "vim-extensions/available/vim-markdown"]
 	path = vim-extensions/available/vim-markdown
 	url = https://github.com/tpope/vim-markdown.git
-[submodule "vim-extensions/available/vim-matchit"]
-	path = vim-extensions/available/vim-matchit
-	url = https://github.com/edsono/vim-matchit.git
 [submodule "vim-extensions/available/vim-multiple-cursors"]
 	path = vim-extensions/available/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
