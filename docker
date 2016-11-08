@@ -1,3 +1,9 @@
 last_container() {
-  sudo docker ps | tail -n -1 | awk '{print $1}'
+  docker ps | tail -n -1 | awk '{print $1}'
 }
+
+alias docker-kill () {
+  last_container | xargs docker kill
+}
+
+alias dps="docker ps"
