@@ -9,7 +9,7 @@ docker-kill () {
   fi
   case $1 in
     all)
-      docker ps | tail +2 | xargs -n 1 docker kill
+      docker ps | tail +2 | awk '{print $1 }' | xargs -n 1 docker kill
     ;;
     first)
       docker ps | tail +2 | head -n 1 | xargs -n 1 docker kill
