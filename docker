@@ -2,8 +2,25 @@ last_container() {
   docker ps | tail -n -1 | awk '{print $1}'
 }
 
-alias docker-kill () {
-  last_container | xargs docker kill
+docker-kill () {
+  if [[ -z $1 ]]; then
+    echo "Usage: docker-kill [all|first|last|container_id]"
+    return
+  fi
+  case $1 in
+    all)
+      docker ps | tail +2 | xargs -n 1 docker kill
+    ;;
+    first)
+      docker ps | tail +2 | head -n 1 | xargs -n 1 docker kill
+    ;;
+    last)
+      docker ps | tail +2 | tail -n 1 | xargs -n 1 docker kill
+    ;;
+    *)
+      docker ps | tail +2 | grep $1 | xargs -n 1 docker kill
+    ;;
+  esac
 }
 
 alias dps="docker ps"
