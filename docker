@@ -31,8 +31,11 @@ docker-build-and-run() {
     echo $build_out
     return 1
   fi
+
   image=$(tail -n 1 <<< $build_out | awk '{print $3}')
-  [[ 0 -eq $# ]] && args="$@ $image" || args="$image"
+
+  [[ 0 -eq $# ]] && args="$image" || args="$@ $image"
+
   echo "docker run $args"
   docker run $args
   return $?
