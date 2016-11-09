@@ -25,7 +25,27 @@ docker-kill () {
   esac
 }
 
+# If in a directory with a Dockerfile build that dockerfile and immediately run
+# the image that results, passing along all arguments as flags to `docker run`.
+# Anything passed after the argument-final '--' will be passed as a runtime
+# command for the docker container to execute
 docker-build-and-run() {
+  local image
+  local args=$@
+  local cmd
+
+  USAGE=<<-EOUSAGE
+
+    docker-build-and-run -P -p 2000:3000 -- sh -c "echo hello"
+    -> docker build .
+    -> docker run -P -p 2000:3000 THE_BUILT_IMAGE sh -c "echo hello"
+EOUSAGE
+
+  if [[ ! -f Dockerfile ]]; then
+    echo $USAGE
+    return 1
+  fi
+
   build_out=$(2>&1 docker build .)
   if [[ 0 -ne $? ]]; then
     echo $build_out
@@ -33,10 +53,21 @@ docker-build-and-run() {
   fi
 
   image=$(tail -n 1 <<< $build_out | awk '{print $3}')
+  # Is a command specified?
+  if grep -q -- -- <<< $@; then
+    # Clear out the args array and rebuild by hand.
+    args=""
+    declare -a args
+    for token in "$@"; do
+      [[ '--' == $token ]] && token=$image
+      args+=($token)
+    done
+  else
+    # Just append the image name, nothing fancy here.
+    args+=($image)
+  fi
 
-  [[ 0 -eq $# ]] && args="$image" || args="$@ $image"
-
-  echo "docker run $args"
+  echo "docker run $args $image $cmd"
   docker run $args
   return $?
 }
