@@ -1,8 +1,10 @@
 #!/bin/bash
 
 last_container() {
-  docker ps | tail -n -1 | awk '{print $1}'
+  docker ps | tail +2 | tail -n -1 | awk '{print $1}'
 }
+
+alias dps="docker ps"
 
 docker-kill () {
   if [[ -z $1 ]]; then
@@ -24,6 +26,7 @@ docker-kill () {
     ;;
   esac
 }
+alias dkill=docker-kill
 
 # If in a directory with a Dockerfile build that dockerfile and immediately run
 # the image that results, passing along all arguments as flags to `docker run`.
@@ -31,10 +34,19 @@ docker-kill () {
 # command for the docker container to execute
 docker-build-and-run() {
   local image
-  local args=$@
+  local args=('run')
+  declare -a args
   local cmd
 
   USAGE=<<-EOUSAGE
+
+    docker-build-and-run
+    -> docker build .
+    -> docker run THE_BUILT_IMAGE
+
+    docker-build-and-run -P
+    -> docker build .
+    -> docker run -P THE_BUILT_IMAGE
 
     docker-build-and-run -P -p 2000:3000 -- sh -c "echo hello"
     -> docker build .
@@ -56,20 +68,19 @@ EOUSAGE
   # Is a command specified?
   if grep -q -- -- <<< $@; then
     # Clear out the args array and rebuild by hand.
-    args=""
-    declare -a args
     for token in "$@"; do
       [[ '--' == $token ]] && token=$image
       args+=($token)
     done
   else
     # Just append the image name, nothing fancy here.
+    for token in "$@"; do
+      args+=($token)
+    done
     args+=($image)
   fi
 
-  echo "docker run $args $image $cmd"
-  docker run $args
+  docker ${args[@]}
   return $?
 }
 
-alias dps="docker ps"
