@@ -1,3 +1,5 @@
+#!/bin/bash
+
 last_container() {
   docker ps | tail -n -1 | awk '{print $1}'
 }
@@ -12,15 +14,28 @@ docker-kill () {
       docker ps | tail +2 | awk '{print $1 }' | xargs -n 1 docker kill
     ;;
     first)
-      docker ps | tail +2 | head -n 1 | xargs -n 1 docker kill
+      docker ps | tail +2 | awk '{print $1 }' | head -n 1 | xargs -n 1 docker kill
     ;;
     last)
-      docker ps | tail +2 | tail -n 1 | xargs -n 1 docker kill
+      docker ps | tail +2 | awk '{print $1 }' | tail -n 1 | xargs -n 1 docker kill
     ;;
     *)
-      docker ps | tail +2 | grep $1 | xargs -n 1 docker kill
+      docker ps | tail +2 | awk '{print $1 }' | grep $1 | xargs -n 1 docker kill
     ;;
   esac
+}
+
+docker-build-and-run() {
+  build_out=$(2>&1 docker build .)
+  if [[ 0 -ne $? ]]; then
+    echo $build_out
+    return 1
+  fi
+  image=$(tail -n 1 <<< $build_out | awk '{print $3}')
+  [[ 0 -eq $# ]] && args="$@ $image" || args="$image"
+  echo "docker run $args"
+  docker run $args
+  return $?
 }
 
 alias dps="docker ps"
