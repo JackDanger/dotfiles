@@ -1,0 +1,25 @@
+#!/bin/bash
+
+SIGALRM=14
+set -euo pipefail
+
+function watch_and_kill() {
+  local seconds=$1
+  local pid=$2
+
+  sleep $seconds
+
+  # sending signal 0 returns successful of the process is killable, errors
+  # otherwise.
+  2>/dev/null \
+    kill -0 $pid &&
+    kill -$SIGALRM $pid &&
+    kill -0 $pid &&
+    kill -9 $pid
+}
+
+seconds=$1
+shift
+watch_and_kill $seconds $$ &
+exec "$@"
+
