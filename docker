@@ -58,6 +58,7 @@ EOUSAGE
     return 1
   fi
 
+  echo "docker build ."
   build_out=$(2>&1 docker build .)
   if [[ 0 -ne $? ]]; then
     echo $build_out
@@ -80,6 +81,7 @@ EOUSAGE
     args+=($image)
   fi
 
+  echo "docker ${args[@]}"
   docker ${args[@]}
   return $?
 }
