@@ -58,7 +58,7 @@ EOUSAGE
     return 1
   fi
 
-  echo "docker build ."
+  echo -n "docker build ."
   build_out=$(2>&1 docker build .)
   if [[ 0 -ne $? ]]; then
     echo $build_out
@@ -66,6 +66,7 @@ EOUSAGE
   fi
 
   image=$(tail -n 1 <<< $build_out | awk '{print $3}')
+  echo " => $image"
   # Is a command specified?
   if grep -q -- -- <<< $@; then
     # Clear out the args array and rebuild by hand.
