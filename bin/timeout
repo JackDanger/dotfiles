@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SIGALRM=14
-set -euo pipefail
+set -eo pipefail
 
 function watch_and_kill() {
   local seconds=$1
