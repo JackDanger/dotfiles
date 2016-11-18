@@ -236,3 +236,7 @@
 [submodule "vim-extensions/available/webapi-vim"]
 	path = vim-extensions/available/webapi-vim
 	url = https://github.com/mattn/webapi-vim.git
+[submodule "vim-extensions/available/python-mode"]
+	path = vim-extensions/available/python-mode
+	url = https://github.com/klen/python-mode.git
+
