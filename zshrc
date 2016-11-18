@@ -42,6 +42,7 @@ DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # We'll be using CTRL-l elsewhere
+bindkey -e
 bindkey "^o" clear-screen
 
 # I know what I'm doing
