@@ -40,7 +40,9 @@ alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 pr() {
   base=$(git merge-base head origin/master)
-  msg=$(git log ${base}..head --format="%s\n\n%b")
+  msg=$(git log ${base}..head --format="%s
+
+%b")
   echo $msg
   echo "Look good? [y]:"
   read confirm
