@@ -30,7 +30,6 @@ alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'
 alias ibase='git rebase -i origin/master'
 alias grc='git rebase --continue'
-alias pr="git push -u origin HEAD && git cmp"
 alias gsp="git commit -m 'updating subproject'"
 alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
 alias git-unadd="git rm --cached"
@@ -38,6 +37,13 @@ alias gpick="git cherry-pick"
 alias hard="git reset --hard"
 alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
+
+pr() {
+  pr_url=$(hub pull-request)
+  if [[ -n $pr_url ]]; then
+    open $pr_url
+  fi
+}
 
 rebase() {
   if [[ -z "$1" ]]; then

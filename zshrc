@@ -59,6 +59,7 @@ plugins= #(python bundler)
 fpath=(~/.dotfiles/zsh $fpath)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source $HOME/.dotfiles/zsh/git-completion.zsh
+source $HOME/.dotfiles/zsh/fzf-key-bindings.zsh
 source $ZSH/init.zsh
 source $ZSH/runcoms/zshrc
 #zstyle ":prezto:module:prompt" theme "jackdanger"
