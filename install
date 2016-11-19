@@ -2,6 +2,8 @@
 set -x
 dotfiles=$(cd $(dirname $0) && pwd)
 
+mkdir -p ~/.ipython/profile_default
+
 ln -s $dotfiles/bashrc                ~/.bashrc       || true
 ln -s $dotfiles/gemrc                 ~/.gemrc        || true
 ln -s $dotfiles/gitconfig             ~/.gitconfig    || true
