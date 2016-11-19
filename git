@@ -39,7 +39,10 @@ alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 pr() {
-  pr_url=$(hub pull-request)
+  base=$(git merge-base head origin/master)
+  msg=$(git log ${base}..head --format="%s\n\n%b")
+  publish
+  pr_url=$(hub pull-request -m $msg)
   if [[ -n $pr_url ]]; then
     open $pr_url
   fi

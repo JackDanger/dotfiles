@@ -44,6 +44,12 @@ COMPLETION_WAITING_DOTS="true"
 # We'll be using CTRL-l elsewhere
 bindkey -e
 bindkey "^o" clear-screen
+# # Discovered through:
+# # $ echo "<CTRL>v<FN>Del" | od -c
+# bindkey "^[[3~" delete-char
+# # And get meta-left and meta-right working
+# bindkey '\e\e[C' forward-word
+# bindkey '\e\e[D' backward-word
 
 # I know what I'm doing
 setopt CLOBBER
