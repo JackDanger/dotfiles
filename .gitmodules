@@ -240,3 +240,6 @@
 	path = vim-extensions/available/python-mode
 	url = https://github.com/klen/python-mode.git
 
+[submodule "vim-extensions/available/flake8-vim"]
+	path = vim-extensions/available/flake8-vim
+	url = https://github.com/andviro/flake8-vim.git
