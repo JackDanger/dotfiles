@@ -28,7 +28,6 @@ alias copyhead='git rev-parse HEAD | pbcopy'
 alias stash='git stash'
 alias unstash='git stash pop'
 alias fetch='git fetch --no-tags'
-alias ibase='git rebase -i origin/master'
 alias grc='git rebase --continue'
 alias gsp="git commit -m 'updating subproject'"
 alias gps="git pull --no-tags --recurse-submodules && git submodule update --init --recursive"
@@ -64,6 +63,9 @@ rebase() {
   else
     git rebase $@
   fi
+}
+ibase() {
+  rebase -i $@
 }
 
 sha() {

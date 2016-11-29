@@ -21,6 +21,9 @@ set number
 " And lines/columns in the status bar
 set ruler
 
+" It's not 1997 anymore
+set nojoinspaces
+
 " Allow hidden buffers, don't limit to 1 file per window/split
 set hidden
 " Default
