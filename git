@@ -58,14 +58,10 @@ pr() {
 }
 
 rebase() {
-  if [[ -z "$1" ]]; then
-    git rebase origin/master
-  else
-    git rebase $@
-  fi
+  git rebase ${1:-origin/master} ${@:2}
 }
 ibase() {
-  rebase -i $@
+  git rebase -i ${1:-origin/master} ${@:2}
 }
 
 sha() {
