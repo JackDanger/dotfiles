@@ -2,6 +2,3 @@
 benchmark: false
 verbose: true
 gem: --no-rdoc --no-ri
-:sources:
-- https://gems.vip.global.square/
-- https://gems.vip.global.square/private/
