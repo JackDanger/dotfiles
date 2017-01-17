@@ -45,7 +45,7 @@ nmap EE :e!<CR>
 nmap QQ :q!<CR>
 
 " This is provided by an extension loaded in the above line
-color vividchalk
+color slate
 
 " From http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
 " By pressing ctrl + r in the visual mode you will be prompted to enter text to replace with. Press enter and then confirm each change you agree with 'y' or decline with 'n'.

@@ -131,11 +131,7 @@ set -x
 #   merge-base
 #
 merge-base() {
-  if [[ -n "$1" ]]; then
-    command git merge-base $1 HEAD
-  else
-    command git merge-base master HEAD
-  fi
+  command git merge-base ${1:-master} HEAD
 }
 # stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
 if [[ -z $ZSH ]]; then

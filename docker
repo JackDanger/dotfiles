@@ -1,10 +1,44 @@
 #!/bin/bash
 
-last_container() {
-  docker ps | tail +2 | tail -n -1 | awk '{print $1}'
+alias dps="docker ps"
+
+# A shorthand for running a complex docker command and printint it first
+docker-echo () {
+  echo "=>" docker $@ 1>&2
+  docker $@
 }
 
-alias dps="docker ps"
+docker-all () {
+  docker ps | tail +2 | awk '{print $1 }'
+}
+docker-first () {
+  docker-all | head -n 1 | awk '{print $1 }'
+}
+docker-last () {
+  docker-all | tail -n 1 | awk '{print $1 }'
+}
+
+docker-exec () {
+  if [[ -z $1 ]]; then
+    echo "Usage: docker-exec [all|first|last|container_id] CMD"
+    return
+  fi
+  case $1 in
+    all)
+      docker-all | xargs -n 1 -I {} docker-echo exec {} "${@:2}"
+    ;;
+    first)
+      docker-echo exec $(docker-first) "${@:2}"
+    ;;
+    last)
+      docker-echo exec $(docker-last) "${@:2}"
+    ;;
+    *)
+      # Assume the arguments are just a CMD to be run on the last container
+    docker-exec last "$@"
+    ;;
+  esac
+}
 
 docker-kill () {
   if [[ -z $1 ]]; then
@@ -13,16 +47,16 @@ docker-kill () {
   fi
   case $1 in
     all)
-      docker ps | tail +2 | awk '{print $1 }' | xargs -n 1 docker kill
+      docker-all | xargs -n 1 docker-echo kill
     ;;
     first)
-      docker ps | tail +2 | awk '{print $1 }' | head -n 1 | xargs -n 1 docker kill
+      docker-first | xargs -n 1 docker-echo kill
     ;;
     last)
-      docker ps | tail +2 | awk '{print $1 }' | tail -n 1 | xargs -n 1 docker kill
+      docker-last | xargs -n 1 docker-echo kill
     ;;
     *)
-      docker ps | tail +2 | awk '{print $1 }' | grep $1 | xargs -n 1 docker kill
+      docker-all | grep $1 | xargs -n 1 docker-echo kill
     ;;
   esac
 }
@@ -82,8 +116,7 @@ EOUSAGE
     args+=($image)
   fi
 
-  echo "docker ${args[@]}"
-  docker ${args[@]}
+  docker-echo ${args[@]}
   return $?
 }
 
