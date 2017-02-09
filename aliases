@@ -73,7 +73,9 @@ function dotfiles {
   git push
   cd -
 }
-if [[ -n "$(which gsed)" ]]; then
+if which gsed; then
+  true # great
+else
   gsed() {
     sed $*
   }
