@@ -73,7 +73,7 @@ function dotfiles {
   git push
   cd -
 }
-if which gsed; then
+if which gsed &>/dev/null; then
   true # great
 else
   gsed() {
