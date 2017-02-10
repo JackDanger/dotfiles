@@ -7,7 +7,7 @@ let ftplugin_did_load_python = 1
 nmap gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Start a IPython session right below current line
-nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>:w<CR>
+nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>kJi<CR><ESC>:w<CR>
 " Add a pdb.trace() right below current line
 nmap <leader>b <ESC>o<ESC>ccimport pdb; pdb.set_trace()<ESC>:w<CR>
 
