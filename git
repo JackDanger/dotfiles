@@ -39,13 +39,14 @@ alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 pr() {
-  local title=$*
+  set -x
+  local title="$@"
   local base=$(git merge-base head origin/master)
   local msg=$(git log ${base}..head --reverse --format="%h
 %s
 
 %b")
-  if [[ -n $title ]]; then
+  if [[ -z $title ]]; then
     # The subject line of the first commit in the branch
     title=$(git log $(git log $(merge-base)..head --format="%h" | tail -n 1) --format="%s" | head -n 1)
   fi
