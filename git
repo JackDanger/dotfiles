@@ -39,7 +39,6 @@ alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 pr() {
-  set -x
   local title="$@"
   local base=$(git merge-base head origin/master)
   local msg=$(git log ${base}..head --reverse --format="%h
