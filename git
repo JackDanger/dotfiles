@@ -41,29 +41,63 @@ alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 pr() {
   local title="$@"
   local base=$(git merge-base head origin/master)
-  local msg=$(git log ${base}..head --reverse --format="%h
+  local msg
+  local gitlog_format
+  local commitcount=$(git log ${base}..head --oneline | wc -l)
+  if [[ $commitcount -gt 1 ]]; then
+    if [[ -z $title ]]; then
+      # The subject line of the first commit in the branch
+      title=$(git log $(git log $(merge-base)..head --format="%h" | tail -n 1) --format="%s" | head -n 1)
+    fi
+    msg=$(git log ${base}..head --reverse --format="%h
 %s
+%b")
+  else
+    msg=$(git log ${base}..head --reverse --format="%s
 
 %b")
-  if [[ -z $title ]]; then
-    # The subject line of the first commit in the branch
-    title=$(git log $(git log $(merge-base)..head --format="%h" | tail -n 1) --format="%s" | head -n 1)
   fi
-  msg="$title
+
+  if [[ -n $title ]]; then
+    msg="$title
 
 $msg"
-  echo $msg
-  echo "Look good? [y]:"
-  read confirm
-  if [[ $confirm != "y" ]]; then
+  fi
+
+  COMMIT_MSG_FILE=COMMIT.tmp
+  echo $msg > $COMMIT_MSG_FILE
+
+  if edit_and_confirm $COMMIT_MSG_FILE; then
+    echo "Creating pull request"
+  else
     echo "bailing"
+    rm -f $COMMIT_MSG_FILE
     return
   fi
-  echo "Creating pull request"
+
   publish
-  pr_url=$(hub pull-request -m $msg)
+  pr_url=$(hub pull-request -f $COMMIT_MSG_FILE)
+  rm -f $COMMIT_MSG_FILE
   if [[ -n $pr_url ]]; then
     open $pr_url
+  fi
+}
+
+function edit_and_confirm() {
+  local text_file=$1
+
+  cat $text_file
+  echo "Look good? [y]es or [e]dit or [q]uit:" 
+  read confirm
+
+  if [[ $confirm == "e" ]]; then
+    $VISUAL COMMIT.tmp
+    edit_and_confirm $text_file
+    return $?
+  elif [[ $confirm == "y" ]]; then
+    return 0
+  elif [[ $confirm == "q" ]]; then
+    return 1
   fi
 }
 
