@@ -76,7 +76,7 @@ $msg"
   fi
 
   publish
-  pr_url=$(hub pull-request -f $COMMIT_MSG_FILE)
+  pr_url=$(hub pull-request -F $COMMIT_MSG_FILE)
   rm -f $COMMIT_MSG_FILE
   if [[ -n $pr_url ]]; then
     open $pr_url
