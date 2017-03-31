@@ -2,7 +2,7 @@
 
 alias dps="docker ps"
 
-# A shorthand for running a complex docker command and printint it first
+# A shorthand for running a complex docker command and printing it first
 docker-echo () {
   echo "=>" docker $@ 1>&2
   docker $@

@@ -13,6 +13,8 @@ nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\n\", )", expa
 imap <leader>p <ESC>"tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d %%#v\\n\")", expand("%s:t"), line("'<"))<CR>$"tP
 nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%\#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
 
+nmap gd :GoDef<CR>
+
 " Go tags
 " TODO: is this even a thing?
 let g:tagbar_type_go = {

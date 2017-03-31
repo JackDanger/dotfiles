@@ -129,12 +129,15 @@ sha() {
 
 # Clones the repo from the provided URI and then cds into it
 clone() {
-  git clone --recursive $1 $2
-  if [[ -n $2 ]]; then
-    cd $2
-  else
-    cd $(basename $1 | sed s/\.git$//)
+  local source=$1
+  local dest=$2
+
+  if [[ -z $dest ]]; then
+    dest=$(basename $1 | sed s/\.git$//)
   fi
+
+  hub clone --recursive $source $dest
+  cd $dest
 }
 
 # Start a new remote branch and track it
