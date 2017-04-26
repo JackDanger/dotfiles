@@ -18,8 +18,8 @@
 	url = https://github.com/chrisbra/NrrwRgn.git
 [submodule "vim-extensions/available/YouCompleteMe"]
 	path = vim-extensions/available/YouCompleteMe
-	url = https://github.com/JackDanger/YouCompleteMe.git
-	branch = patch-1
+	url = https://github.com/Valloric/YouCompleteMe.git
+	branch = master
 [submodule "vim-extensions/available/ZoomWin"]
 	path = vim-extensions/available/ZoomWin
 	url = https://github.com/itspriddle/ZoomWin.git

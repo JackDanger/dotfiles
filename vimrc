@@ -83,11 +83,6 @@ autocmd BufNewFile,BufReadPost *.har set filetype=json
 " Custom Jack Danger vim
 "
 " ********************************
-
-" Use Pathogen?
-" execute pathogen#infect()
-
-
 " Autosave
 ":au FocusLost * silent! wa
 
