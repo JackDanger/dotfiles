@@ -78,6 +78,20 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 " Define HAR files as json
 autocmd BufNewFile,BufReadPost *.har set filetype=json
 
+
+" Go to the last line that we were on in a file:
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
 " ********************************
 "
 " Custom Jack Danger vim
