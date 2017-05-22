@@ -24,6 +24,7 @@ del os, atexit, readline, rlcompleter, save_history, historyPath
 
 def whereami(_=None):
     import traceback
+    line = None
     for stack_frame in traceback.extract_stack():
         if stack_frame[3] == 'from IPython.terminal.embed import embed; embed()':  # NOQA
             line = stack_frame[1]
