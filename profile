@@ -38,7 +38,7 @@ source ~/.dotfiles/python
 add_to_path ~/bin
 add_to_path ~/.dotfiles/bin
 
-export EDITOR=$(which vim)
+export EDITOR=$(which nvim vim | grep -v 'not found' | head -n 1)
 export VISUAL=$EDITOR
 
 
