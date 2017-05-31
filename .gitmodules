@@ -243,3 +243,6 @@
 [submodule "vim-extensions/available/flake8-vim"]
 	path = vim-extensions/available/flake8-vim
 	url = https://github.com/andviro/flake8-vim.git
+[submodule "vim-extensions/available/FZF"]
+	path = vim-extensions/available/FZF
+	url = https://github.com/junegunn/fzf.git
