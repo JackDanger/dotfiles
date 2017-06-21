@@ -246,3 +246,6 @@
 [submodule "vim-extensions/available/FZF"]
 	path = vim-extensions/available/FZF
 	url = https://github.com/junegunn/fzf.git
+[submodule "vim-extensions/available/python-imports"]
+	path = vim-extensions/available/python-imports
+	url = https://github.com/mgedmin/python-imports.vim.git
