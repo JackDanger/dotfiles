@@ -1,1 +1,12 @@
+#!/bin/bash
+
 export PYTHONSTARTUP=~/.pystartup
+
+function apip() {
+  if [[ -z $1 ]]; then
+    echo "USAGE: apip term"
+    return
+  fi
+  a "$@" $VIRTUAL_ENV/lib/python*/site-packages
+}
+
