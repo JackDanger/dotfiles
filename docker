@@ -47,16 +47,16 @@ docker-kill () {
   fi
   case $1 in
     all)
-      docker-all | xargs -n 1 docker-echo kill
+      docker-all | while read id; do docker-echo kill $id; done
     ;;
     first)
-      docker-first | xargs -n 1 docker-echo kill
+      docker-first | while read id; do docker-echo kill $id; done
     ;;
     last)
-      docker-last | xargs -n 1 docker-echo kill
+      docker-last | while read id; do docker-echo kill $id; done
     ;;
     *)
-      docker-all | grep $1 | xargs -n 1 docker-echo kill
+      docker-all | grep $1 | while read id; do docker-echo kill $id; done
     ;;
   esac
 }
