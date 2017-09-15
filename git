@@ -49,9 +49,8 @@ function git-back() {
   local n=0
   git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | \
     cut -d / -f 3- | \
-    tail -n +${back} | \
     while read branch; do
-  # Show the list we're working with
+    # Show the list we're working with
     n=$(( $n + 1 ))
     if [[ $n == $number_back ]]; then
       echo "* $num $branch"
