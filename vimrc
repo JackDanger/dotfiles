@@ -148,6 +148,9 @@ inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>i
 inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>i
 "noremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 
+" Break line on commas
+nmap <leader>, f,a<CR><ESC>
+
 " @n goes to the next quickfix entry
 nmap @n :cnext<CR>
 " @n autosaves and goes to the next quickfix entry in insert mode
