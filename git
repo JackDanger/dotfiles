@@ -20,7 +20,6 @@ alias gba='git branch -a'
 alias merged="git branch --contains HEAD | grep master"
 alias contains="git branch --contains"
 alias unmerged="git branch --no-merged master"
-alias gbr="git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | cut -d / -f 3-"
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
@@ -37,6 +36,17 @@ alias gpick="git cherry-pick"
 alias hard="git reset --hard"
 alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
+
+function gbr() {
+  echo "# To go to a branch: $ git-back NUM"
+  local n=0
+  git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | \
+    cut -d / -f 3- | \
+    while read branch; do
+      n=$(( $n + 1 ))
+      echo "$n $branch"
+    done
+}
 
 function git-back() {
   local number_back=$1
