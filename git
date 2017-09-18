@@ -38,6 +38,7 @@ alias soft="git reset"
 alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 function gbr() {
+  # list the previously checked out branches
   echo "# To go to a branch: $ git-back NUM"
   local n=0
   git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | \
@@ -48,7 +49,9 @@ function gbr() {
     done
 }
 
-function git-back() {
+function gb() {
+  # 'git back' command allows you to navigate to a previously checked out
+  # branch
   local number_back=$1
   if [[ -z $number_back ]]; then
     echo "USAGE: git back 3"
@@ -71,6 +74,7 @@ function git-back() {
     fi
   done
 }
+
 pr() {
   local title="$@"
   local base=$(git merge-base head origin/master)
