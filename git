@@ -39,40 +39,35 @@ alias current_branch="git symbolic-ref HEAD 2>/dev/null | cut -c12-"
 
 function gbr() {
   # list the previously checked out branches
-  echo "# To go to a branch: $ git-back NUM"
+  local go_to=$1
   local n=0
   git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | \
     cut -d / -f 3- | \
     while read branch; do
       n=$(( $n + 1 ))
-      echo "$n $branch"
+      if [[ -n $go_to ]]; then
+        # Go-to mode
+        if [[ $n -eq $go_to ]]; then
+          git checkout $branch
+          return
+        fi
+      else
+        # print mode
+        echo "$n $branch"
+      fi
     done
 }
 
 function gb() {
   # 'git back' command allows you to navigate to a previously checked out
   # branch
-  local number_back=$1
-  if [[ -z $number_back ]]; then
-    echo "USAGE: git back 3"
-    echo "Goes back in history to the third most recently used branch"
+  gbr
+  echo -n "Type a branch number to go to or [q]uit: " 
+  read branch_number
+  if [[ "$branch_number" == "q" ]]; then
+    return
   fi
-  # Tail has an off-by-one error built into its API :/
-  back=$(( $number_back + 1 ))
-  local n=0
-  git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | \
-    cut -d / -f 3- | \
-    while read branch; do
-    # Show the list we're working with
-    n=$(( $n + 1 ))
-    if [[ $n == $number_back ]]; then
-      echo "* $num $branch"
-      git checkout $branch
-      return
-    else
-      echo "  $num $branch"
-    fi
-  done
+  gbr $branch_number
 }
 
 pr() {
@@ -136,6 +131,16 @@ function edit_and_confirm() {
   elif [[ $confirm == "q" ]]; then
     return 1
   fi
+}
+
+prune_local_branches() {
+  set -x
+  git branch | while read branch; do
+    if [[ -n $(git branch --contains $branch | egrep '^  master$') ]]; then
+      echo "removing $branch because it's on master"
+      git branch -D $branch
+    fi
+  done
 }
 
 wip() {
