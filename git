@@ -134,7 +134,6 @@ function edit_and_confirm() {
 }
 
 prune_local_branches() {
-  set -x
   git branch | while read branch; do
     if [[ -n $(git branch --contains $branch | egrep '^  master$') ]]; then
       echo "removing $branch because it's on master"
