@@ -23,6 +23,7 @@ alias unmerged="git branch --no-merged master"
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
+alias m='git checkout master'
 alias clean='git clean -df'
 alias copyhead='git rev-parse HEAD | pbcopy'
 alias stash='git stash'
