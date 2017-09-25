@@ -249,3 +249,6 @@
 [submodule "vim-extensions/available/python-imports"]
 	path = vim-extensions/available/python-imports
 	url = https://github.com/mgedmin/python-imports.vim.git
+[submodule "vim-extensions/available/jedi-vim"]
+	path = vim-extensions/available/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim.git
