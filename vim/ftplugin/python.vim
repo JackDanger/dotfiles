@@ -23,6 +23,9 @@ nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ES
 " Add a pdb.trace() right below current line
 nmap <leader>b <ESC>o<ESC>ccimport pdb; pdb.set_trace()<ESC>:w<CR>
 
+" Add faulthandler to catch sigprof
+nmap <leader>f <ESC>o<ESC>ccimport faulthandler; import os; faulthandler.register(14); print("kill -s ALRM {}".format(os.getpid()))<ESC>:w<CR>
+
 map <leader>7 :set textwidth=72<CR>
 map <leader>1 :set textwidth=120<CR>
 

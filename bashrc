@@ -34,3 +34,17 @@ fi
 source ~/.dotfiles/profile
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+if [[ -n /usr/local/bin/direnv ]]; then
+  eval "
+_direnv_hook() {
+  local previous_exit_status=$?;
+  eval "$(direnv export bash)";
+  return $previous_exit_status;
+};
+if ! [[ "$PROMPT_COMMAND" =~ _direnv_hook ]]; then
+  PROMPT_COMMAND="_direnv_hook;$PROMPT_COMMAND";
+fi"
+fi
+if [[ -n $(which direnv) ]]; then
+  eval "$(direnv hook bash)"
+fi
