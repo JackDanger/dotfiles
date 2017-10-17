@@ -134,6 +134,7 @@ function edit_and_confirm() {
   fi
 }
 
+# Remove local branches where the HEAD has been merged to master
 prune_local_branches() {
   git branch | while read branch; do
     if [[ $branch == "master" ]]; then
