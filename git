@@ -136,12 +136,12 @@ function edit_and_confirm() {
 
 prune_local_branches() {
   git branch | while read branch; do
-    if [[ $branch == "msater" ]]; then
+    if [[ $branch == "master" ]]; then
       echo "not deleting master"
     elif [[ $branch =~ "\* " ]]; then
       # This is the current branch
-      echo "not deleting current branch"
-    elif [[ -n $(git branch --contains $branch | egrep '^  master$') ]]; then
+      echo "not deleting current branch '${branch}'"
+    elif [[ -n $(git branch --contains $(git rev-parse ${branch}) | egrep '^[\* ] master$') ]]; then
       echo "removing $branch because it's on master"
       git branch -D $branch
     else
