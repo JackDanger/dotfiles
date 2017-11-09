@@ -73,20 +73,20 @@ function gb() {
 
 pr() {
   local title="$@"
-  local base=$(git merge-base head origin/master)
+  local base=$(git merge-base HEAD origin/master)
   local msg
   local gitlog_format
-  local commitcount=$(git log ${base}..head --oneline | wc -l)
+  local commitcount=$(git log ${base}..HEAD --oneline | wc -l)
   if [[ $commitcount -gt 1 ]]; then
     if [[ -z $title ]]; then
       # The subject line of the first commit in the branch
-      title=$(git log $(git log $(merge-base)..head --format="%h" | tail -n 1) --format="%s" | head -n 1)
+      title=$(git log $(git log $(merge-base)..HEAD --format="%h" | tail -n 1) --format="%s" | HEAD -n 1)
     fi
-    msg=$(git log ${base}..head --reverse --format="%h
+    msg=$(git log ${base}..HEAD --reverse --format="%h
 %s
 %b")
   else
-    msg=$(git log ${base}..head --reverse --format="%s
+    msg=$(git log ${base}..HEAD --reverse --format="%s
 
 %b")
   fi
