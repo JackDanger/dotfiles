@@ -1,3 +1,4 @@
+#!/bin/bash
 if ! $(which profile_loaded >/dev/null); then
 alias profile_loaded="true"
 

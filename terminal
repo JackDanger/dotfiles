@@ -1,3 +1,4 @@
+#!/bin/bash
 if [[ -f /.crouton-targets ]]; then
   # If loading a keymap would result in a change
   chromebook() {

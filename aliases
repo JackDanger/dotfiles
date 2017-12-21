@@ -88,10 +88,14 @@ function camelcase {
   fi
 }
 function c {
-  if [[ -n $TMUX ]]; then
-    tmux rename-window $(basename $1 | camelcase)
+  if [[ -n "$1" ]]; then
+    if [[ -n $TMUX ]]; then
+      tmux rename-window $(basename $1 | camelcase)
+    fi
+    cd $1
+  else
+    echo "USAGE: c /some/path"
   fi
-  cd $1
 }
 
 function tac {
