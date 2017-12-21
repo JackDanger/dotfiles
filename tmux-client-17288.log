@@ -1,0 +1,64 @@
+1513837935.750207 client started (17288): version 2.6, socket /private/tmp/tmux-501/default, protocol 8
+1513837935.750244 on Darwin 16.7.0 Darwin Kernel Version 16.7.0: Mon Nov 13 21:56:25 PST 2017; root:xnu-3789.72.11~1/RELEASE_X86_64; libevent 2.1.8-stable (select)
+1513837935.750287 socket is /private/tmp/tmux-501/default
+1513837935.750303 trying connect
+1513837935.750331 connect failed: Connection refused
+1513837935.750474 lock file is /private/tmp/tmux-501/default.lock
+1513837935.750586 flock succeeded
+1513837935.750591 got lock (6)
+1513837935.750598 trying connect
+1513837935.750605 connect failed: Connection refused
+1513837935.751095 add peer 0x7ff27a801800: 7 (0x0)
+1513837935.752318 sending message 100 to peer 0x7ff27a801800 (4 bytes)
+1513837935.752335 sending message 101 to peer 0x7ff27a801800 (15 bytes)
+1513837935.752342 sending message 102 to peer 0x7ff27a801800 (13 bytes)
+1513837935.752347 sending message 108 to peer 0x7ff27a801800 (28 bytes)
+1513837935.752363 sending message 104 to peer 0x7ff27a801800 (0 bytes)
+1513837935.752368 sending message 107 to peer 0x7ff27a801800 (4 bytes)
+1513837935.752374 sending message 105 to peer 0x7ff27a801800 (60 bytes)
+1513837935.752379 sending message 105 to peer 0x7ff27a801800 (66 bytes)
+1513837935.752385 sending message 105 to peer 0x7ff27a801800 (76 bytes)
+1513837935.752390 sending message 105 to peer 0x7ff27a801800 (14 bytes)
+1513837935.752395 sending message 105 to peer 0x7ff27a801800 (22 bytes)
+1513837935.752401 sending message 105 to peer 0x7ff27a801800 (14 bytes)
+1513837935.752406 sending message 105 to peer 0x7ff27a801800 (17 bytes)
+1513837935.752411 sending message 105 to peer 0x7ff27a801800 (32 bytes)
+1513837935.752417 sending message 105 to peer 0x7ff27a801800 (15 bytes)
+1513837935.752422 sending message 105 to peer 0x7ff27a801800 (27 bytes)
+1513837935.752427 sending message 105 to peer 0x7ff27a801800 (23 bytes)
+1513837935.752433 sending message 105 to peer 0x7ff27a801800 (120 bytes)
+1513837935.752438 sending message 105 to peer 0x7ff27a801800 (20 bytes)
+1513837935.752443 sending message 105 to peer 0x7ff27a801800 (20 bytes)
+1513837935.752449 sending message 105 to peer 0x7ff27a801800 (23 bytes)
+1513837935.752454 sending message 105 to peer 0x7ff27a801800 (57 bytes)
+1513837935.752459 sending message 105 to peer 0x7ff27a801800 (16 bytes)
+1513837935.752464 sending message 105 to peer 0x7ff27a801800 (19 bytes)
+1513837935.752470 sending message 105 to peer 0x7ff27a801800 (19 bytes)
+1513837935.752475 sending message 105 to peer 0x7ff27a801800 (38 bytes)
+1513837935.752480 sending message 105 to peer 0x7ff27a801800 (61 bytes)
+1513837935.752486 sending message 105 to peer 0x7ff27a801800 (8 bytes)
+1513837935.752491 sending message 105 to peer 0x7ff27a801800 (35 bytes)
+1513837935.752496 sending message 105 to peer 0x7ff27a801800 (30 bytes)
+1513837935.752502 sending message 105 to peer 0x7ff27a801800 (32 bytes)
+1513837935.752507 sending message 105 to peer 0x7ff27a801800 (32 bytes)
+1513837935.752513 sending message 105 to peer 0x7ff27a801800 (19 bytes)
+1513837935.752518 sending message 105 to peer 0x7ff27a801800 (17 bytes)
+1513837935.752523 sending message 105 to peer 0x7ff27a801800 (41 bytes)
+1513837935.752528 sending message 105 to peer 0x7ff27a801800 (26 bytes)
+1513837935.752533 sending message 105 to peer 0x7ff27a801800 (25 bytes)
+1513837935.752538 sending message 105 to peer 0x7ff27a801800 (24 bytes)
+1513837935.752544 sending message 105 to peer 0x7ff27a801800 (43 bytes)
+1513837935.752549 sending message 105 to peer 0x7ff27a801800 (26 bytes)
+1513837935.752554 sending message 105 to peer 0x7ff27a801800 (26 bytes)
+1513837935.752560 sending message 105 to peer 0x7ff27a801800 (22 bytes)
+1513837935.752565 sending message 105 to peer 0x7ff27a801800 (17 bytes)
+1513837935.752570 sending message 105 to peer 0x7ff27a801800 (15 bytes)
+1513837935.752575 sending message 106 to peer 0x7ff27a801800 (0 bytes)
+1513837935.752583 sending message 200 to peer 0x7ff27a801800 (4 bytes)
+1513837935.752588 client loop enter
+1513837935.761316 peer 0x7ff27a801800 message 207
+1513837935.761329 sending message 208 to peer 0x7ff27a801800 (0 bytes)
+1513837935.768759 peer 0x7ff27a801800 message 203
+1513837935.768772 sending message 205 to peer 0x7ff27a801800 (0 bytes)
+1513837935.769011 peer 0x7ff27a801800 message 204
+1513837935.769021 client loop exit
