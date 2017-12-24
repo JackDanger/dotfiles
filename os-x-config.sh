@@ -16,6 +16,11 @@ osascript -e 'tell application "System Preferences" to quit'
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
+# Jack Danger's overwrites
+###############################################################################
+defaults write se.cocoabeans.apptivate TAShowStatusbarIcon 0
+
+###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
 
@@ -106,7 +111,7 @@ sudo systemsetup -setrestartfreeze on
 sudo systemsetup -setcomputersleep Off > /dev/null
 
 # Disable Notification Center and remove the menu bar icon
-launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
+# launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
 
 # Disable automatic capitalization as it’s annoying when typing code
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false

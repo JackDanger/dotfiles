@@ -113,3 +113,5 @@ branch_and_dirty() {
   fi
 }
 PS1='%{$fg[red]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
+export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+>/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)

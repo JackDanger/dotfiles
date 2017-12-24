@@ -71,6 +71,13 @@ function gb() {
   gbr $branch_number
 }
 
+b() {
+  local branch=$(echo $* | tr 'A-Z ' 'a-z-')
+  git checkout -b jack/${branch}
+  git commit -a -m "$*"
+  pr
+}
+
 pr() {
   local title="$@"
   local base=$(git merge-base HEAD origin/master)
