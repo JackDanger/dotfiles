@@ -1,27 +1,22 @@
 #/bin/bash
-if [[ -n $GOPATH ]]; then
-  add_to_path $GOPATH/bin
 
-  if ! which c > /dev/null 2>/dev/null; then
-    alias c=cd
+&>/dev/null which go && add_to_path $(go env GOPATH)/bin
+
+# Edit a go package
+function gov {
+  vim `golang-package $1`
+}
+
+# `cd` to a specific package
+function gocd {
+  c `golang-package $1`
+}
+
+# find the directory of the first package name partially matching $1
+function golang-package {
+  if [[ -n $ZSH ]]; then
+    eval "find ${GOPATH}/src/(square|*.(com|org|net))/* -type d -maxdepth 1" | grep $1 | head -n 1
+  else
+    find $GOPATH/src -type d | egrep '(square|com|org|net)/'  | grep $1 | head -n 1
   fi
-  # Edit a go package
-  function gov {
-    vim `golang-package $1`
-  }
-
-  # `cd` to a specific package
-  function gocd {
-    c `golang-package $1`
-  }
-
-  # find the directory of the first package name partially matching $1
-  function golang-package {
-    if [[ -n $ZSH ]]; then
-      eval "find ${GOPATH}/src/(square|*.(com|org|net))/* -type d -maxdepth 1" | grep $1 | head -n 1
-    else
-      find $GOPATH/src -type d | egrep '(square|com|org|net)/'  | grep $1 | head -n 1
-    fi
-  }
-fi
-# Test helpers moved to ./bin/
+}
