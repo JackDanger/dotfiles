@@ -1,22 +1,13 @@
-#/bin/bash
+#!/bin/bash
 
 &>/dev/null which go && add_to_path $(go env GOPATH)/bin
 
-# Edit a go package
-function gov {
-  vim `golang-package $1`
-}
-
 # `cd` to a specific package
 function gocd {
-  c `golang-package $1`
+  c `golang-package`
 }
 
 # find the directory of the first package name partially matching $1
 function golang-package {
-  if [[ -n $ZSH ]]; then
-    eval "find ${GOPATH}/src/(square|*.(com|org|net))/* -type d -maxdepth 1" | grep $1 | head -n 1
-  else
-    find $GOPATH/src -type d | egrep '(square|com|org|net)/'  | grep $1 | head -n 1
-  fi
+  find $(go env GOPATH)/src -depth 3 -type d | fzf
 }
