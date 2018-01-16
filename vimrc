@@ -121,7 +121,8 @@ map <leader>O :set scrolloff=0<CR>
 " type 'jj' in insert mode to escape.
 inoremap jj <ESC>
 " type ';;' in insert mode to escape and save
-inoremap ;; <ESC>:w<CR>
+" TMP: Unsure if this is worth the cost of losing all semicolons
+"inoremap ;; <ESC>:w<CR>
 " type ';;' in normal mode to save
 nnoremap ;; :w<CR>
 
