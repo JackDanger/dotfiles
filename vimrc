@@ -23,6 +23,7 @@ set ruler
 
 " It's not 1997 anymore
 set nojoinspaces
+
 " Allow hidden buffers, don't limit to 1 file per window/split
 set hidden
 " Default
@@ -119,9 +120,11 @@ map <leader>O :set scrolloff=0<CR>
 
 " type 'jj' in insert mode to escape.
 inoremap jj <ESC>
-" type 'CTRL-;' in insert mode to escape and save
-inoremap <C-E> <ESC>:w<CR>
-nnoremap <C-E> :w<CR>
+" type ';;' in insert mode to escape and save
+" TMP: Unsure if this is worth the cost of losing all semicolons
+"inoremap ;; <ESC>:w<CR>
+" type ';;' in normal mode to save
+nnoremap ;; :w<CR>
 
 " Connect to system clipboard
 set clipboard=unnamed
