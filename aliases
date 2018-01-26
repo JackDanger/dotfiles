@@ -36,7 +36,7 @@ alias ack='ack --smart-case'
 
 alias ip='ipconfig getifaddr en0'
 alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-alias warmup='seq 1 $(sysctl -n hw.ncpu) | xargs -n 1 -P $(sysctl -n hw.ncpu) yes > /dev/null'
+alias warmup='seq 1 $(sysctl -n hw.physicalcpu) | xargs -n 1 -P $(sysctl -n hw.physicalcpu) yes > /dev/null'
 alias top='top -o cpu'
 
 alias timestamp="date +%Y-%m-%d-%H-%M-%S"
