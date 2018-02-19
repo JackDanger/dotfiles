@@ -125,6 +125,8 @@ inoremap jj <ESC>
 "inoremap ;; <ESC>:w<CR>
 " type ';;' in normal mode to save
 nnoremap ;; :w<CR>
+nnoremap <C-e> :w<CR>
+inoremap <C-e> <ESC>:w<CR>
 
 " Connect to system clipboard
 set clipboard=unnamed
