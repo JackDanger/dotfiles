@@ -6,7 +6,6 @@ alias l='ls -lAG'
 alias e=nvim
 alias a='ag --ignore log --ignore tags'
 alias ap='ag --ignore log --ignore tags --pager="less -FRX"'
-alias g='ag'
 
 # no-ops for when I mis-vim my windows
 function k()   { true; }

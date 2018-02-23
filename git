@@ -17,13 +17,13 @@ alias gca='git commit -v -a'
 alias amend='git commit -v --amend'
 alias fixup='git commit --amend -C HEAD'
 alias gba='git branch -a'
-alias merged="git branch --contains HEAD | grep master"
+alias merged='git branch --contains HEAD | grep $(default-branch)'
 alias contains="git branch --contains"
-alias unmerged="git branch --no-merged master"
+alias unmerged='git branch --no-merged $(default-branch)'
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
-alias m='git checkout master'
+alias m='git checkout $(default-branch)'
 alias clean='git clean -df'
 alias copyhead='git rev-parse HEAD | pbcopy'
 alias stash='git stash'
@@ -73,14 +73,18 @@ function gb() {
 
 b() {
   local branch=$(echo $* | tr 'A-Z ' 'a-z-')
-  git checkout -b jack/${branch}
+  git checkout -b jackdanger/${branch}
+}
+
+bb() {
+  b $@
   git commit -a -m "$*"
   pr
 }
 
 pr() {
   local title="$@"
-  local base=$(git merge-base HEAD origin/master)
+  local base=$(git merge-base HEAD origin/$(default-branch))
   local msg
   local gitlog_format
   local commitcount=$(git log ${base}..HEAD --oneline | wc -l)
@@ -141,15 +145,15 @@ function edit_and_confirm() {
   fi
 }
 
-# Remove local branches where the HEAD has been merged to master
+# Remove local branches where the HEAD has been merged to $(default-branch)
 prune_local_branches() {
   git branch | while read branch; do
-    if [[ $branch == "master" ]]; then
+  if [[ $branch == "$(default-branch)" ]]; then
       echo "not deleting master"
     elif [[ $branch =~ "\* " ]]; then
       # This is the current branch
       echo "not deleting current branch '${branch}'"
-    elif [[ -n $(git branch --contains $(git rev-parse ${branch}) | egrep '^[\* ] master$') ]]; then
+    elif [[ -n $(git branch --contains $(git rev-parse ${branch}) | egrep "^[\* ] $(default-branch)$") ]]; then
       echo "removing $branch because it's on master"
       git branch -D $branch
     else
@@ -173,14 +177,18 @@ unwip() {
 }
 
 rebase() {
-  git rebase ${1:-origin/master} ${@:2}
+  git rebase ${1:-origin/$(default-branch)} ${@:2}
 }
 ibase() {
-  git rebase -i ${1:-origin/master} ${@:2}
+  git rebase -i ${1:-origin/$(default-branch)} ${@:2}
 }
 
 sha() {
   git rev-parse ${1-HEAD}
+}
+
+default-branch() {
+  git symbolic-ref refs/remotes/origin/HEAD | xargs basename
 }
 
 
@@ -213,7 +221,7 @@ set -x
   for file in $staged_files; do
     sha_to_fixup=$(git log -n1 --format=%h ${file})
     # assert sha has not been merged
-    if git branch --contains ${sha_to_fixup} | egrep ' +master +'; then
+    if git branch --contains ${sha_to_fixup} | egrep " +$(default-branch) +"; then
       1>&2 echo "no commit to fixup in this topic branch"
       return 1
     fi
@@ -234,7 +242,7 @@ set -x
 #   merge-base
 #
 merge-base() {
-  command git merge-base ${1:-master} HEAD
+  command git merge-base ${1:-$(default-branch)} HEAD
 }
 # stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
 if [[ -z $ZSH ]]; then
