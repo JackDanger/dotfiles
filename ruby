@@ -1,4 +1,4 @@
-alias bedit='EDITOR=subl bundle open'
+alias bedit='bundle open'
 alias be='bundle exec ' # Leave a trailing space to allow further expansion
 alias routes='rake routes | less'
 alias restart='touch tmp/restart.txt'

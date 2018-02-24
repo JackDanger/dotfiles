@@ -15,6 +15,9 @@ if [[ -f /.crouton-targets ]]; then
   cd /code/meet
 fi
 
+# Don't you dare decide this for me
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 if ! $(which terminal_loaded > /dev/null); then
 terminal_loaded() { true; }
 
