@@ -63,6 +63,9 @@ fi
 # Vi!?
 #set -o vi
 
+# Don't you dare decide this for me
+export HOMEBREW_NO_AUTO_UPDATE=1
+
 function profile {
   $EDITOR ~/.profile.local && source ~/.profile.local
 }
