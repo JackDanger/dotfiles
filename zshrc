@@ -59,13 +59,18 @@ setopt CLOBBER
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins= #(python bundler)
 
-# Oh-My-Zsh
-# source $ZSH/oh-my-zsh.sh
-# Prezto
-fpath=(~/.dotfiles/zsh $fpath)
+# FZF
+export FZF_TMUX=0;
+export FZF_CTRL_T_OPTS='--height 40% --reverse --preview "highlight -O ansi -l {} 2>/dev/null || cat {}"'
+export FZF_CTRL_R_OPTS='--height 40%';
+export FZF_ALT_C_OPTS='--height 40% --reverse';
+export FZF_COMPLETION_OPTS='--height 40% --reverse';
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source $HOME/.dotfiles/zsh/git-completion.zsh
 source $HOME/.dotfiles/zsh/fzf-key-bindings.zsh
+
+# Prezto ZSH
+fpath=(~/.dotfiles/zsh $fpath)
+source $HOME/.dotfiles/zsh/git-completion.zsh
 source $ZSH/init.zsh
 source $ZSH/runcoms/zshrc
 #zstyle ":prezto:module:prompt" theme "jackdanger"

@@ -56,3 +56,5 @@
 
 [http]
 	cookiefile = /Users/jackdanger/.gitcookies
+[credential]
+	helper = osxkeychain

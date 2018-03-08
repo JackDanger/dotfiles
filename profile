@@ -66,6 +66,10 @@ fi
 # Don't you dare decide this for me
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Apptivate shortcuts
+alias apptivate_show='defaults write se.cocoabeans.apptivate TAShowStatusbarIcon 1'
+alias apptivate_hide='defaults write se.cocoabeans.apptivate TAShowStatusbarIcon 0'
+
 function profile {
   $EDITOR ~/.profile.local && source ~/.profile.local
 }
