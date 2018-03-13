@@ -1,7 +1,6 @@
 alias bedit='bundle open'
 alias be='bundle exec ' # Leave a trailing space to allow further expansion
 alias routes='rake routes | less'
-alias restart='touch tmp/restart.txt'
 alias migrate='rake db:migrate db:test:prepare db:schema:dump'
 alias last_migration="vim \`find db/migrate/ | tail -n 1\`"
 alias ru=chruby
