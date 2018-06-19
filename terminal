@@ -59,6 +59,10 @@ words () {
   done
 }
 
+parameterize() {
+  tr -cd '[[:alpha:]] ' | tr ' ' '-'
+}
+
 # Parent pid
 ppid () { ps -p ${1:-$$} -o ppid=; }
 
