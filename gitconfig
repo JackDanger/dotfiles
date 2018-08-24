@@ -42,7 +42,7 @@
   untracked = cyan
 [github]
   user = JackDanger
-  token = 6c85beea83506ded200b5d7438edbc26
+  token = 6c95db986c572f4d79e5a39da80148430a6c8781
 [push]
   config = default
   default = tracking
