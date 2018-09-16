@@ -73,6 +73,9 @@ autocmd VimResized * :wincmd =
 nmap <leader>s ysiw
 nmap <leader>S ysiW
 
+" Go to the next place that ctags thinks a thing might be defined
+noremap <C-d> :tn<CR>
+
 " Define markdown filetype
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 " Define HAR files as json

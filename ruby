@@ -10,6 +10,9 @@ function def {
   ag $phrase $2
 }
 
+# Rails ctags support
+alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log . $(bundle list --paths)'
+
 # RSpec
 function rspec_last {
   local last_changed=$(last_spec)
