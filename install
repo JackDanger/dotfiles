@@ -7,6 +7,7 @@ mkdir -p ~/.ipython/profile_default
 ln -s $dotfiles/bashrc                ~/.bashrc       || true
 ln -s $dotfiles/gemrc                 ~/.gemrc        || true
 ln -s $dotfiles/gitconfig             ~/.gitconfig    || true
+ln -s $dotfiles/gitignore             ~/.gitignore    || true
 ln -s $dotfiles/oh-my-zsh             ~/.oh-my-zsh    || true
 ln -s $dotfiles/pystartup             ~/.pystartup    || true
 ln -s $dotfiles/pryrc                 ~/.pryrc        || true
