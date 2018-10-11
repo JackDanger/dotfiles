@@ -11,6 +11,7 @@
 [diff]
   color = auto
   rename = copy 
+	renameLimit = 999999
 
 [pager]
   color = true 
@@ -43,6 +44,9 @@
 [github]
   user = JackDanger
   token = 6c95db986c572f4d79e5a39da80148430a6c8781
+
+[buildkite]
+  apikey = 195ea92ddc907df820db17602100ba6409dae4c4
 [push]
   config = default
   default = tracking

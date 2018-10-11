@@ -20,6 +20,7 @@ alias gba='git branch -a'
 alias merged='git branch --contains HEAD | grep $(default-branch)'
 alias contains="git branch --contains"
 alias unmerged='git branch --no-merged $(default-branch)'
+alias applying='git show $(cat .git/rebase-merge/stopped-sha)'
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'

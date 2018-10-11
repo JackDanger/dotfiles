@@ -2,7 +2,7 @@ alias bedit='bundle open'
 alias be='bundle exec ' # Leave a trailing space to allow further expansion
 alias routes='rake routes | less'
 alias migrate='rake db:migrate db:test:prepare db:schema:dump'
-alias last_migration="vim \`find db/migrate/ | tail -n 1\`"
+alias last_migration="vim \`find db/migrate/ | sort | tail -n 1\`"
 alias ru=chruby
 function def {
   local phrase=$1
