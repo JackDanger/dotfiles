@@ -38,6 +38,14 @@ function rspec_last {
 function last_spec {
   find spec -type f -name *_spec.rb -exec ls -1t "{}" + | head -n 1
 }
+
+function rubofix_last {
+  dir=${1:-.}
+  last=$(find ${dir} -type f -name *.rb -exec ls -1t "{}" + | head -n 1)
+  echo rubocop -a ${last}
+  rubocop -a ${last}
+}
+
 function rspec_time {
   local specs=$*
   bundle exec rspec $specs -f d -p 2>/dev/null
