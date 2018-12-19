@@ -66,8 +66,8 @@ parameterize() {
 # Parent pid
 ppid () { ps -p ${1:-$$} -o ppid=; }
 
-add_to_path ~/bin
-add_to_path /usr/local/sbin
-add_to_path /usr/local/bin
+path+=~/bin
+path+=/usr/local/sbin
+path+=/usr/local/bin
 
 fi # end terminal_loaded()

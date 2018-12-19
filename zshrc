@@ -110,7 +110,6 @@ fi
 
 branch_and_dirty() {
   if [[ -d .git ]]; then
-    git rev-parse --abbrev-ref HEAD | tr "\n" " "
     if [[ -n $(git diff-index --cached HEAD --) ]] ||
        [[ -n $(git ls-files --exclude-standard -o -m -d) ]]; then
       echo -n 臟
@@ -118,5 +117,9 @@ branch_and_dirty() {
   fi
 }
 PS1='%{$fg[red]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
-export VIRTUALENVWRAPPER_PYTHON=$(which python3)
->/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
+
+function virtualenv {
+  unfunction virtualenv
+  export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+  >/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
+}

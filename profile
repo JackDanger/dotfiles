@@ -7,26 +7,6 @@ alias profile_loaded="true"
 [[ -z $LC_ALL ]] && export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
-function add_to_path {
-  local DIR=$1
-  if [ "$(grep $DIR -c <<< $PATH)" -eq "1" ]; then
-    PATH=$DIR:$(sed s,$DIR,, <<< $PATH)
-    PATH=$(sed -E s,:+,:,g <<< $PATH)
-  else
-    PATH=$DIR:$PATH
-  fi
-}
-
-function append_to_path {
-  local DIR=$1
-  if [ "$(grep $DIR -c <<< $PATH)" -eq "1" ]; then
-    PATH=$(sed s,$DIR,, <<< $PATH):$DIR
-    PATH=$(sed -E s,:+,:,g <<< $PATH)
-  else
-    PATH=$PATH:$DIR
-  fi
-}
-
 source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/docker
@@ -36,8 +16,10 @@ source ~/.dotfiles/golang
 source ~/.dotfiles/ruby
 source ~/.dotfiles/python
 
-add_to_path ~/bin
-add_to_path ~/.dotfiles/bin
+typeset -U path
+
+path+=~/bin
+path+=~/.dotfiles/bin
 
 export EDITOR=$(which nvim vim | grep -v 'not found' | head -n 1)
 export VISUAL=$EDITOR
@@ -51,10 +33,6 @@ if [[ -n `which unsetopt` ]]; then
   # pass an asterisk to a command
   unsetopt nomatch 2>/dev/null
 fi
-
-# RVM (once)
-#grep .rvm >/dev/null<<<$PATH || [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-#add_to_path ~/.rvm/bin
 
 # chruby
 [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
