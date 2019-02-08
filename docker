@@ -8,6 +8,19 @@ docker-echo () {
   docker $@
 }
 
+dockerfile-from-image () {
+  local helper_image="dockerfile-from-image"
+  local image=$1
+  if [[ -z "${image}" ]]; then
+    >&2 echo "USAGE: ${0} some/docker:image"
+    return 1
+  fi
+  if ! docker images | grep -q ${helper_image}; then
+    docker pull ${helper_image}
+  fi
+  docker run -it -v /var/run/docker.sock:/var/run/docker.sock --rm ${helper_image} ${image}
+}
+
 docker-all () {
   docker ps | tail +2 | awk '{print $1 }'
 }
