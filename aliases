@@ -39,8 +39,8 @@ alias warmup='seq 1 $(sysctl -n hw.ncpu) | xargs -n 1 -P $(sysctl -n hw.ncpu) ye
 alias top='top -o cpu'
 
 # Terraform
-alias plan="terraform plan -out=terraform.plan"
-alias apply="terraform apply terraform.plan"
+alias plan="terraform plan -out=.terraform/plan"
+alias apply="terraform apply .terraform/plan"
 
 alias timestamp="date +%Y-%m-%d-%H-%M-%S"
 alias timestampdb="date +%Y%m%d%H%M%S"
