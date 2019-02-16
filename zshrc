@@ -117,7 +117,7 @@ branch_and_dirty() {
     fi
   fi
 }
-PS1='%f%b%{$fg[red]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
+PS1='%f%b%{$fg[green]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
 
 function virtualenv {
   unfunction virtualenv

@@ -9,5 +9,9 @@ function gocd {
 
 # find the directory of the first package name partially matching $1
 function golang-package {
-  find $(go env GOPATH)/src -depth 3 -type d | fzf
+  if uname | grep Darwin -q; then
+    find $(go env GOPATH)/src -depth 3 -type d | fzf
+  else
+    find $(go env GOPATH)/src -depth -maxdepth 3 -type d | fzf
+  fi
 }
