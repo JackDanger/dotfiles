@@ -28,5 +28,5 @@ ln -s $dotfiles/ipython_config.py     ~/.ipython/profile_default/ipython_config.
 
 # And install some just for Prezto
 for rcfile in $dotfiles/prezto/runcoms/z*; do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  ln -s "$rcfile" "${rcfile:t}"
 done
