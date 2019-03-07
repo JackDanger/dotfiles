@@ -10,3 +10,6 @@ function apip() {
   a "$@" $VIRTUAL_ENV/lib/python*/site-packages
 }
 
+if which pyenv &>/dev/null; then
+  eval "$(pyenv init -)"
+fi
