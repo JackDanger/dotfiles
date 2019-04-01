@@ -102,6 +102,8 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 #  eval "$(direnv hook $0)"
 #fi
 
+PS1='%f%b%{$fg[green]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
+
 source ~/.dotfiles/profile
 
 if which direnv >/dev/null 2>/dev/null; then
@@ -117,8 +119,6 @@ branch_and_dirty() {
     fi
   fi
 }
-PS1='%f%b%{$fg[green]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
-
 function virtualenv {
   unfunction virtualenv
   export VIRTUALENVWRAPPER_PYTHON=$(which python3)

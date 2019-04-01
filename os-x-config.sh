@@ -18,7 +18,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 ###############################################################################
 # Jack Danger's overwrites
 ###############################################################################
-defaults write se.cocoabeans.apptivate TAShowStatusbarIcon 0
+defaults write se.cocoabeans.apptivate TAShowStatusbarIcon 1
 
 ###############################################################################
 # General UI/UX                                                               #
