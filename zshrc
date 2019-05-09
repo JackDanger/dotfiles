@@ -124,3 +124,5 @@ function virtualenv {
   export VIRTUALENVWRAPPER_PYTHON=$(which python3)
   >/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
 }
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh

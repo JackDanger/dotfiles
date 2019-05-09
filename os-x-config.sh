@@ -931,3 +931,7 @@ for app in "Activity Monitor" \
 	killall "${app}" &> /dev/null
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
+
+# Added by Jack
+defaults write com.apple.PowerChime ChimeOnAllHardware -bool false; killall PowerChime
+

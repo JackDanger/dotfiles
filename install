@@ -26,6 +26,9 @@ ln -s $dotfiles/zshrc                 ~/.zshrc        || true
 ln -s $dotfiles/prezto                ~/.zprezto      || true
 ln -s $dotfiles/ipython_config.py     ~/.ipython/profile_default/ipython_config.py || true
 
+# Set up Apptivate config
+ln -s ~/Library/Application\ Support/Apptivate/hotkeys ~/Google\ Drive/configs/apptivate_hotkeys.bplist
+
 # And install some just for Prezto
 for rcfile in $dotfiles/prezto/runcoms/z*; do
   ln -s "$rcfile" "${rcfile:t}"

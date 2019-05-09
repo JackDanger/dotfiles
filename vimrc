@@ -217,5 +217,8 @@ set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
+" Use any per-project .vimrc files
+set exrc
+
 " And always show it
 set laststatus=2
