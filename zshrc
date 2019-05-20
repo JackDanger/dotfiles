@@ -97,18 +97,7 @@ setopt CLOBBER
 
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
-# Direnv
-#if [[ -n "$(which direnv)" ]]; then
-#  eval "$(direnv hook $0)"
-#fi
-
-PS1='%f%b%{$fg[green]%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
-
 source ~/.dotfiles/profile
-
-if which direnv >/dev/null 2>/dev/null; then
-  eval "$(direnv hook zsh)"
-fi
 
 branch_and_dirty() {
   if [[ -d .git ]]; then
@@ -119,10 +108,17 @@ branch_and_dirty() {
     fi
   fi
 }
+
+if [[ -z "${PS1Color}" ]]; then
+  PS1Color='green'
+fi
+PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[red]%}$ %f%b'
+
 function virtualenv {
   unfunction virtualenv
   export VIRTUALENVWRAPPER_PYTHON=$(which python3)
   >/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
 }
+
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh

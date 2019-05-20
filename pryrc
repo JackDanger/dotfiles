@@ -12,4 +12,19 @@ module Kernel
       instance_variable_get "@#{name}"
     end
   end
+
+  def instance_variables_hash
+    instance_variables.reduce({}) { |acc, name| acc.update name => instance_variable_get(name) }
+  end
+end
+
+
+begin
+  require 'pbcopy'
+rescue LoadError
+  begin
+    require '/Users/jackdanger/.gem/ruby/2.5.1/gems/pbcopy-1.0.1/lib/pbcopy.rb'
+    require '/Users/jackdanger/.gem/ruby/2.5.1/gems/pasteboard-1.0/lib/pasteboard.rb'
+  rescue LoadError
+  end
 end
