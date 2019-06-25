@@ -43,7 +43,7 @@ function gbr() {
   # list the previously checked out branches
   local go_to=$1
   local n=0
-  git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(refname)' | \
+  git for-each-ref --count=$(( $(tput lines) - 1 )) --sort=-committerdate refs/heads/ --format='%(refname)' | \
     cut -d / -f 3- | \
     while read branch; do
       n=$(( $n + 1 ))

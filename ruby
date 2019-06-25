@@ -1,7 +1,7 @@
 alias bedit='bundle open'
 alias be='bundle exec ' # Leave a trailing space to allow further expansion
 alias routes='rake routes | less'
-alias migrate='rake db:migrate db:test:prepare db:schema:dump'
+alias migrate='rake db:migrate db:test:prepare'
 alias last_migration="vim \`find db/migrate/ | sort | tail -n 1\`"
 alias ru=chruby
 function def {
@@ -11,7 +11,7 @@ function def {
 }
 
 # Rails ctags support
-alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log . $(bundle list --paths)'
+alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log . $(which bundle &>/dev/null && bundle list --paths)'
 
 # RSpec
 function rspec_last {
