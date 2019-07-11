@@ -14,40 +14,14 @@ imap <leader>p <ESC>"tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d %%#v\\n\")", 
 nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%\#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
 
 nmap gd :GoDef<CR>
+nmap gf :GoFmt<CR>
 
-" Go tags
-" TODO: is this even a thing?
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+" Use gopls LSP for everything
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " Disable syntastic for go?
-" let g:syntastic_go_checkers = []
-" let g:syntastic_go_checkers = ['go', 'golint', 'govet']
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_go_checkers = ['golint', 'govet']
 function EnableGoCheckers ()
   let g:syntastic_go_checkers = ['go', 'golint', 'govet']
@@ -55,6 +29,9 @@ endfunction
 function DisableGoCheckers ()
   let g:syntastic_go_checkers = ['golint', 'govet']
 endfunction
+
+" Always `go fmt` on save
+
 
 " run go vet in the quickfix list
 nmap <leader>v :cexpr system("go vet ./") \| copen
