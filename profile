@@ -38,6 +38,17 @@ fi
 [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
 [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
 
+function mkvirtualenv() {
+  unfunction mkvirtualenv
+  source $(which virtualenvwrapper.sh)
+  mkvirtualenv "$@"
+}
+function workon() {
+  unfunction workon
+  source $(which virtualenvwrapper.sh)
+  workon "$@"
+}
+
 # Vi!?
 #set -o vi
 
