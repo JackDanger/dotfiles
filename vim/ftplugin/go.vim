@@ -8,10 +8,10 @@ imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
 nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
 
 " Automatically insert debug lines
-imap <leader>P <ESC>"tyiWo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\\n\")", expand("%s:t"), line("'<"))<CR>$"tP
 nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
-imap <leader>p <ESC>"tyiwo<ESC>V:s/^/\=printf("fmt.Println(\"%s:%d %%#v\\n\")", expand("%s:t"), line("'<"))<CR>$"tP
-nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%\#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
+nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
+imap <leader>P <ESC><leader>P
+imap <leader>p <ESC><leader>p
 
 nmap gd :GoDef<CR>
 nmap gf :GoFmt<CR>

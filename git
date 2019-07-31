@@ -72,6 +72,12 @@ function gb() {
   gbr $branch_number
 }
 
+bd() {
+  local branch=$(echo $* | tr 'A-Z ' 'a-z-')
+  git branch -D jackdanger/${branch}
+  git checkout -b jackdanger/${branch}
+}
+
 b() {
   local branch=$(echo $* | tr 'A-Z ' 'a-z-')
   git checkout -b jackdanger/${branch}

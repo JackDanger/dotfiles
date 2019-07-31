@@ -115,11 +115,5 @@ if [[ -z "${PS1Color}" ]]; then
 fi
 PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[${PS1DollarColor}]%}$ %f%b'
 
-function virtualenv {
-  unfunction virtualenv
-  export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-  >/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
-}
-
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
