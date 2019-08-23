@@ -38,29 +38,6 @@ fi
 [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
 [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
 
-# Python virtualenvs
-
-function virtualenv {
-  unfunction virtualenv
-  export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-  >/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
-  virtualenv "$@"
-}
-
-function mkvirtualenv() {
-  unfunction mkvirtualenv
-  source $(which virtualenvwrapper.sh)
-  mkvirtualenv "$@"
-}
-
-function workon() {
-  unfunction workon
-  export WORKON_HOME=$HOME/.virtualenvs
-  export PROJECT_HOME=$HOME/.virtualenvs/devel
-  source $(which virtualenvwrapper.sh)
-  workon "$@"
-}
-
 # Vi!?
 #set -o vi
 

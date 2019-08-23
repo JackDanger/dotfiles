@@ -13,3 +13,27 @@ function apip() {
 if which pyenv &>/dev/null; then
   eval "$(pyenv init -)"
 fi
+
+# lazy-load virtualenv functions
+
+function virtualenv {
+  unfunction virtualenv
+  export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+  >/dev/null which virtualenvwrapper.sh && source $(which virtualenvwrapper.sh)
+  virtualenv "$@"
+}
+
+function mkvirtualenv() {
+  unfunction mkvirtualenv
+  source $(which virtualenvwrapper.sh)
+  mkvirtualenv "$@"
+}
+
+function workon() {
+  unfunction workon
+  export WORKON_HOME=$HOME/.virtualenvs
+  export PROJECT_HOME=$HOME/.virtualenvs/devel
+  source $(which virtualenvwrapper.sh)
+  workon "$@"
+}
+
