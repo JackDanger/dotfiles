@@ -100,10 +100,12 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 source ~/.dotfiles/profile
 
 branch_and_dirty() {
-  git rev-parse --abbrev-ref HEAD | tr "\n" " "
-  if [[ -n $(git diff-index --cached HEAD --) ]] ||
-     [[ -n $(git ls-files --exclude-standard -o -m -d) ]]; then
-    echo -n 臟
+  if [ -d .git ] || [ -d ../.git ] || [ -d ../../.git ]; then
+    git rev-parse --abbrev-ref HEAD | tr "\n" " "
+    if [[ -n $(git diff-index --cached HEAD --) ]] ||
+       [[ -n $(git ls-files --exclude-standard -o -m -d) ]]; then
+      echo -n 臟
+    fi
   fi
 }
 
