@@ -1,7 +1,2 @@
 #!/bin/bash
-
-sum=0
-while read line; do
-  sum=$(( $sum + $line ))
-done
-echo $sum
+awk 'BEGIN { sum = 0.0 } { sum += $0 } END { print sum }'

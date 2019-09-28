@@ -30,8 +30,8 @@ function DisableGoCheckers ()
   let g:syntastic_go_checkers = ['golint', 'govet']
 endfunction
 
-" Always `go fmt` on save
-
+" `go fmt` on CTRL+SHIFT+e
+nmap <C-E> :GoFmt<CR>:w<CR>
 
 " run go vet in the quickfix list
 nmap <leader>v :cexpr system("go vet ./") \| copen
