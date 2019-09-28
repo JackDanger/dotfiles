@@ -8,10 +8,13 @@ imap <leader>e <CR>if err != nil {<CR>return nil, err<CR>}<CR>
 nmap <leader>e <ESC>oif err != nil {<CR>return nil, err<CR>}<CR><ESC>
 
 " Automatically insert debug lines
-nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
-nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP
+nmap <leader>P "tyiWo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP:GoImport fmt<CR>gf<CTRL>o
+nmap <leader>p "tyiwo<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d %%\#v\\n\", )", expand("%s:t"), line("'<"))<CR>$"tP:GoImport fmt<CR>gf<CTRL>o
 imap <leader>P <ESC><leader>P
-imap <leader>p <ESC><leader>p
+imap <leader>p <ESC><leader>P
+" And cheap 'here' print statements
+nmap <leader>l o<ESC>V:s/^/\=printf("fmt.Printf(\"%s:%d --\\n\")", expand("%s:t"), line("'<"))<CR>:GoImport fmt<CR>gf<CTRL>o
+imap <leader>l <ESC><leader>l
 
 nmap gd :GoDef<CR>
 nmap gf :GoFmt<CR>
