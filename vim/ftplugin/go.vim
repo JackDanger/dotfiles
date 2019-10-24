@@ -19,6 +19,10 @@ imap <leader>l <ESC><leader>l
 nmap gd :GoDef<CR>
 nmap gf :GoFmt<CR>
 
+" Make it easy to use the 'aws' package for creating pointers
+nmap <leader>w <leader>s)iaws.
+imap <leader>w <ESC><leader>a
+
 " Use gopls LSP for everything
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'

@@ -98,7 +98,7 @@ pr() {
   if [[ $commitcount -gt 1 ]]; then
     if [[ -z $title ]]; then
       # The subject line of the first commit in the branch
-      title=$(git log $(git log ${base}..HEAD --format="%h" | tail -n 1) --format="%s" | HEAD -n 1)
+      title=$(git log $(git log ${base}..HEAD --format="%h" | tail -n 1) --format="%s" | head -n 1)
     fi
     msg=$(git log ${base}..HEAD --reverse --format="%h
 %s
