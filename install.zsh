@@ -1,6 +1,22 @@
 dotfiles=$(cd $(dirname $0) && pwd)
 pushd $dotfiles
 
+# somewhat portable installer
+system_install() {
+  if which apt &>/dev/null; then
+    sudo apt install -y $@
+  elif which yum &>/dev/null; then
+    sudo yum install -y $@
+  elif [[ "Darwin" == "$(uname)" ]]; then
+    brew install $@
+  else
+    >&2 echo "System not recognized: $(uname -a)"
+    exit 1
+  fi
+}
+
+system_install git
+
 # Let's track most of our dotfiles in git
 dotfilenames=(
 bashrc
@@ -32,6 +48,16 @@ done
 mkdir -p ~/.ipython/profile_default
 if [[ ! -f ~/.ipython/profile_default/ipython_config.py ]]; then
   ln -s $dotfiles/ipython_config.py     ~/.ipython/profile_default/ipython_config.py
+fi
+
+# Ensure we have the go version manager installed
+if which gvm &>/dev/null; then
+  true
+else
+  echo "Installing gvm (the go version manager)"
+  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+  echo 'source /home/studiodanger/.gvm/scripts/gvm' >> ~/.profile.local
+  system_install golang
 fi
 
 if [[ "Darwin" == "$(uname)" ]]; then
