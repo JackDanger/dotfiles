@@ -1,35 +1,5 @@
-#/bin/bash
+#!/bin/bash
 
-if [[ -z "${ZSH}" ]]; then
-  >&2 echo "This script must be run under zsh"
-  exit 1
-fi
-set -x
 dotfiles=$(cd $(dirname $0) && pwd)
 
-mkdir -p ~/.ipython/profile_default
-
-ln -s $dotfiles/bashrc                ~/.bashrc       || true
-ln -s $dotfiles/gemrc                 ~/.gemrc        || true
-ln -s $dotfiles/gitconfig             ~/.gitconfig    || true
-ln -s $dotfiles/gitignore             ~/.gitignore    || true
-ln -s $dotfiles/oh-my-zsh             ~/.oh-my-zsh    || true
-ln -s $dotfiles/pystartup             ~/.pystartup    || true
-ln -s $dotfiles/pryrc                 ~/.pryrc        || true
-ln -s $dotfiles/pypirc                ~/.pypirc       || true
-ln -s $dotfiles/sshrc                 ~/.sshrc        || true
-ln -s $dotfiles/sshrc.d               ~/.sshrc.d      || true
-ln -s $dotfiles/tmux.conf             ~/.tmux.conf    || true
-ln -s $dotfiles/vimrc                 ~/.vimrc        || true
-ln -s $dotfiles/vimrc                 ~/.nvimrc       || true
-ln -s $dotfiles/zshrc                 ~/.zshrc        || true
-ln -s $dotfiles/prezto                ~/.zprezto      || true
-ln -s $dotfiles/ipython_config.py     ~/.ipython/profile_default/ipython_config.py || true
-
-# Set up Apptivate config
-ln -s ~/Library/Application\ Support/Apptivate/hotkeys ~/Google\ Drive/configs/apptivate_hotkeys.bplist
-
-# And install some just for Prezto
-for rcfile in $dotfiles/prezto/runcoms/z*; do
-  ln -s "$rcfile" "${rcfile:t}"
-done
+exec /usr/bin/env zsh ${dotfiles}/install.zsh
