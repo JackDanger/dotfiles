@@ -106,7 +106,8 @@ function c {
     cd $1
   else
     code=${CODE_HOME:-~/www}
-    cd ${code}/$(cd $code; find * -depth -2 -type d | fzf)
+    dir=$(find $code -depth -3 -type d | fzf)
+    [[ -n "${dir}" ]] && c $dir
   fi
 }
 
