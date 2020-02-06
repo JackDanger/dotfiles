@@ -16,6 +16,10 @@ system_install() {
 }
 
 system_install git
+system_install thesilversearcher
+system_install chruby
+system_install ruby-install
+system_install fzf
 
 # Let's track most of our dotfiles in git
 dotfilenames=(
