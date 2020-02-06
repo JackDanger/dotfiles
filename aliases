@@ -105,7 +105,8 @@ function c {
     fi
     cd $1
   else
-    echo "USAGE: c /some/path"
+    code=${CODE_HOME:-~/www}
+    cd ${code}/$(cd $code; find * -depth -2 -type d | fzf)
   fi
 }
 
