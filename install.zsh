@@ -66,7 +66,7 @@ fi
 
 if [[ "Darwin" == "$(uname)" ]]; then
   # Set up Apptivate config
-  ln -s ~/Google\ Drive/configs/apptivate_hotkeys.bplist  ~/Library/Application\ Support/Apptivate/hotkeys
+  ln -s ~/Google\ Drive/configs/apptivate_hotkeys  ~/Library/Application\ Support/Apptivate/hotkeys
 fi
 
 # And install some just for Prezto

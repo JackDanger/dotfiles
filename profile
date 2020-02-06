@@ -7,14 +7,15 @@ alias profile_loaded="true"
 [[ -z $LC_ALL ]] && export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
-source ~/.dotfiles/terminal
 source ~/.dotfiles/aliases
 source ~/.dotfiles/docker
 source ~/.dotfiles/git
-source ~/.dotfiles/xcode
 source ~/.dotfiles/golang
-source ~/.dotfiles/ruby
+source ~/.dotfiles/node
 source ~/.dotfiles/python
+source ~/.dotfiles/ruby
+source ~/.dotfiles/terminal
+source ~/.dotfiles/xcode
 
 typeset -U path
 
