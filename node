@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# lazy-load nvm functions
+
+function nvm {
+  unfunction nvm
+  source /usr/local/Cellar/nvm/0.35.2/nvm.sh
+  nvm "$@"
+}

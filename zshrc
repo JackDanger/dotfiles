@@ -127,3 +127,4 @@ source /usr/local/opt/chruby/share/chruby/auto.sh
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [[ -f /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/slss.zsh ]] && . /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/slss.zsh
+

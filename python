@@ -10,9 +10,12 @@ function apip() {
   a "$@" $VIRTUAL_ENV/lib/python*/site-packages
 }
 
-if which pyenv &>/dev/null; then
-  eval "$(pyenv init -)"
-fi
+pyenv() {
+  unfunction pyenv
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
+}
 
 # lazy-load virtualenv functions
 
