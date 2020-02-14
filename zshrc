@@ -117,14 +117,3 @@ PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/serverless.zsh ]] && . /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/sls.zsh ]] && . /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/slss.zsh ]] && . /www/balancing/services/slacknowledge/node_modules/tabtab/.completions/slss.zsh
-
