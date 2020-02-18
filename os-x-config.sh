@@ -29,10 +29,10 @@ echo "What's this computer name? (name-as-hostname)"
 read hostName
 
 # Set computer name (as done via System Preferences → Sharing)
-sudo scutil --set ComputerName titleName
-sudo scutil --set HostName hostName
-sudo scutil --set LocalHostName hostName
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string hostName
+sudo scutil --set ComputerName ${titleName}
+sudo scutil --set HostName ${hostName}
+sudo scutil --set LocalHostName ${hostName}
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string ${hostName}
 
 # Set standby delay to 24 hours (default is 1 hour)
 sudo pmset -a standbydelay 86400
