@@ -632,7 +632,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>4A0845E2-2CAA-4B69-AC99-ED95C91EF122</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>6</integer>
+	<integer>7</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1353,6 +1353,8 @@
 	<real>602625981.01807702</real>
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
+	<key>OpenTmuxWindowsIn</key>
+	<integer>0</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -1403,7 +1405,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-16T12:46:33Z</date>
+	<date>2020-02-17T22:32:57Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
