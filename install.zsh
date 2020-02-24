@@ -1,5 +1,5 @@
 dotfiles=$(cd $(dirname $0) && pwd)
-pushd $dotfiles
+cd $dotfiles
 
 # somewhat portable installer
 system_install() {
@@ -60,7 +60,7 @@ if which gvm &>/dev/null; then
 else
   echo "Installing gvm (the go version manager)"
   bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-  echo 'source /home/studiodanger/.gvm/scripts/gvm' >> ~/.profile.local
+  echo 'source ~/.gvm/scripts/gvm' >> ~/.profile.local
   system_install golang
 fi
 
