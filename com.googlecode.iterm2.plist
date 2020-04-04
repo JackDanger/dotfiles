@@ -82,7 +82,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>586 546 620 392 0 0 1792 1120 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 645 585 452 0 0 1792 1097 </string>
+	<string>0 0 1792 1120 0 0 1792 1097 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 0 1792 1120 0 0 1792 1097 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -299,7 +299,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Yes</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -614,7 +614,7 @@
 			<key>Window Type</key>
 			<integer>0</integer>
 			<key>Working Directory</key>
-			<string>/Users/jackdanger</string>
+			<string>/Users/jackdanger/www</string>
 		</dict>
 	</array>
 	<key>NoSyncAllAppVersions</key>
@@ -1405,7 +1405,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-17T22:32:57Z</date>
+	<date>2020-02-20T01:08:33Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>

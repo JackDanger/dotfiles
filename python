@@ -40,3 +40,34 @@ function workon() {
   workon "$@"
 }
 
+pip_dependencies() {
+  if [[ ! -f setup.py ]]; then
+    >&2 echo "Run this in a directory with setup.py in it"
+    return 1
+  fi
+  if [ "0" == "$(wc -l < setup.py)" ]; then
+    >&2 echo "Your setup.py is empty (are you piping this command into it?)"
+    return 1
+  fi
+
+  local start_line=$(grep 'install_requires=\[' setup.py -n | cut -d : -f 1)
+
+  if [ "" == "${start_line}" ]; then
+    >&2 echo "setup.py appears corrupted (no 'install_requires' line found)"
+    return 1
+  fi
+
+  local header=$(head -n ${start_line} setup.py)
+  local body=$(pip freeze | grep -v '-e git' | gsed 's/\(.\+\)/        "\1",/g')
+  local footer="    ],)"
+
+  if [[ "$1" == "--update" ]] || [[ "$1" == "-U" ]]; then
+    echo $header  > setup.py
+    echo $body   >> setup.py
+    echo $footer >> setup.py
+  else
+    echo $header
+    echo $body
+    echo $footer
+  fi
+}
