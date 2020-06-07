@@ -89,6 +89,19 @@ bb() {
   pr
 }
 
+# ticket
+t() {
+  local ticket_number=$1; shift;
+  local branch=$(echo $* | tr 'A-Z ' 'a-z-')
+
+  if current_branch | grep -q '^[A-Z]{3,}'; then
+    echo -n 'Already on'
+    current_branch
+  else
+    git checkout -b "${JIRA_PROJECT:-DEV}-${ticket_number}/${branch}"
+  fi
+}
+
 pr() {
   local title="$@"
   local base=$(git merge-base HEAD origin/$(default-branch))
@@ -209,7 +222,7 @@ clone() {
   fi
 
   hub clone --recursive $source $dest
-  cd $dest
+  c $dest
 }
 
 # Start a new remote branch and track it
