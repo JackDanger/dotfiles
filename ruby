@@ -11,7 +11,7 @@ function def {
 }
 
 # Rails ctags support
-alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log . $(which bundle &>/dev/null && bundle list --paths)'
+alias rtags='ctags -R --languages=ruby --exclude=.git --exclude=log . $(which bundle &>/dev/null && bundle list --paths | grep -v "The dependency")'
 
 # RSpec
 function rspec_last {
