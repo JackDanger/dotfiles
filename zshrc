@@ -95,6 +95,7 @@ setopt extendedhistory
 # I know what I'm doing
 setopt CLOBBER
 
+# I don't know what I'm doing
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
 source ~/.dotfiles/profile
@@ -109,6 +110,12 @@ branch_and_dirty() {
   fi
 }
 
+# Print a new line before each prompt (except for the first prompt of a session)
+# precmd() {
+#   precmd() {
+#     print ""
+#   }
+# }
 if [[ -z "${PS1Color}" ]]; then
   PS1Color='green'
   PS1DollarColor='red'

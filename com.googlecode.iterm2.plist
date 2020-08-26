@@ -77,14 +77,16 @@
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
 	<string>496 506 799 448 0 0 1792 1097 </string>
+	<key>NSWindow Frame SUAutomaticUpdateAlert</key>
+	<string>-1204 1462 616 174 -1792 770 1792 1120 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>696 743 400 129 0 0 1792 1120 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>586 546 620 392 0 0 1792 1120 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1792 1120 0 0 1792 1097 </string>
+	<string>0 0 3360 1890 0 0 3360 1890 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 0 1792 1120 0 0 1792 1097 </string>
+	<string>429 1043 585 452 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>249 92 570 452 0 0 1792 1097 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -621,18 +623,21 @@
 	<array>
 		<string>3.3.8</string>
 		<string>3.3.9</string>
+		<string>3.3.12</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1792, 1120}}</string>
+		<string>{{0, 0}, {3360, 1890}}</string>
 		<key>topLeft</key>
-		<string>{574, 892}</string>
+		<string>{269, 595}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>4A0845E2-2CAA-4B69-AC99-ED95C91EF122</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>7</integer>
+	<integer>33</integer>
+	<key>NoSyncNeverPromptToChangeOption</key>
+	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -994,6 +999,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentTab.currentSession.terminalIconName</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.terminalWindowName</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -1394,6 +1407,10 @@
 	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
+	<key>QuickPasteBytesPerCall</key>
+	<integer>1152</integer>
+	<key>QuickPasteDelayBetweenCalls</key>
+	<real>0.0066666663624346256</real>
 	<key>SUAutomaticallyUpdate</key>
 	<true/>
 	<key>SUEnableAutomaticChecks</key>
@@ -1405,7 +1422,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-20T01:08:33Z</date>
+	<date>2020-07-29T21:56:28Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -1421,6 +1438,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.9</string>
+	<string>3.3.12</string>
 </dict>
 </plist>
