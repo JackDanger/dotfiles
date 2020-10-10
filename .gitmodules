@@ -59,9 +59,6 @@
 [submodule "vim-extensions/available/nerdtree"]
 	path = vim-extensions/available/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "vim-extensions/available/puppet-vim"]
-	path = vim-extensions/available/puppet-vim
-	url = https://github.com/ajf/puppet-vim.git
 [submodule "vim-extensions/available/pyte"]
 	path = vim-extensions/available/pyte
 	url = https://github.com/vim-scripts/pyte.git
