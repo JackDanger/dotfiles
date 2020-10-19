@@ -8,7 +8,7 @@ alias profile_loaded="true"
 export LANG="en_US.UTF-8"
 
 source ~/.dotfiles/aliases
-source ~/.dotfiles/athena
+source ~/.dotfiles/athena.sh
 source ~/.dotfiles/docker
 source ~/.dotfiles/git
 source ~/.dotfiles/golang
