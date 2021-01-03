@@ -4,6 +4,6 @@
 
 function nvm {
   unfunction nvm
-  source /usr/local/Cellar/nvm/0.35.2/nvm.sh
+  source /usr/local/Cellar/nvm/*/nvm.sh
   nvm "$@"
 }
