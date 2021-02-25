@@ -127,3 +127,8 @@ if [ -d /usr/local/opt/chruby ]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
   source /usr/local/opt/chruby/share/chruby/auto.sh
 fi
+
+export PATHSTREAM_ROOT=/Users/jackdanger/www/pathstream
+source ${PATHSTREAM_ROOT}/tools/profile
+
+export PATH="$HOME/.poetry/bin:$PATH"
