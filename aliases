@@ -15,6 +15,7 @@ function j()   { true; }
 function jj()  { true; }
 function jjj() { true; }
 
+function QQ() { exit; }
 
 if [[ -z "$(which fzf)" ]]; then
   alias v=nvim
