@@ -166,7 +166,7 @@ nmap @p :cprevious<CR>
 imap @p <ESC>:w<CR>:cprevious<CR>
 
 " Git shortcuts
-nmap <leader>gb :Gblame<CR>
+nmap <leader>gb :Git blame<CR>
 
 " I hacked apart youcompleteme.vim to disable the VimEnter autocmd for the
 " following so it could be something I can opt into manually:
