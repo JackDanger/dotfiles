@@ -223,7 +223,7 @@ clone() {
     dest=$(basename $1 | sed s/\.git$//)
   fi
 
-  hub clone --recursive $source $dest
+  gh repo clone $source $dest -- --recursive
   c $dest
 }
 
