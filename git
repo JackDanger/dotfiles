@@ -142,7 +142,11 @@ $msg"
   fi
 
   publish
-  pr_url=$(hub pull-request -F $COMMIT_MSG_FILE)
+
+  title=$(head -n 1 ${COMMIT_MSG_FILE})
+  body=$(tail -n +3 ${COMMIT_MSG_FILE})
+  pr_url=$(gh pr create -t $title -b $body)
+
   rm -f $COMMIT_MSG_FILE
   if [[ -n $pr_url ]]; then
     open $pr_url
