@@ -129,6 +129,7 @@ if [ -d /usr/local/opt/chruby ]; then
 fi
 
 export PATHSTREAM_ROOT=/Users/jackdanger/www/pathstream
-source ${PATHSTREAM_ROOT}/tools/profile
+work_profile=${PATHSTREAM_ROOT}/tools/profile
+[[ -f $work_profile ]] && source $work_profile
 
 export PATH="$HOME/.poetry/bin:$PATH"
