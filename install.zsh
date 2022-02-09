@@ -3,12 +3,12 @@ cd $dotfiles
 
 # somewhat portable installer
 system_install() {
-  if which apt &>/dev/null; then
+  if [[ "Darwin" == "$(uname)" ]]; then
+    brew install $@
+  elif which apt &>/dev/null; then
     sudo apt install -y $@
   elif which yum &>/dev/null; then
     sudo yum install -y $@
-  elif [[ "Darwin" == "$(uname)" ]]; then
-    brew install $@
   else
     >&2 echo "System not recognized: $(uname -a)"
     exit 1
