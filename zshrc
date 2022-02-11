@@ -123,13 +123,9 @@ fi
 PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[${PS1DollarColor}]%}$ %f%b'
 
 
-if [ -d /usr/local/opt/chruby ]; then
-  source /usr/local/opt/chruby/share/chruby/chruby.sh
-  source /usr/local/opt/chruby/share/chruby/auto.sh
+brew_prefix=$(brew --prefix)
+if [ -d ${brew_prefix}/opt/chruby ]; then
+  source ${brew_prefix}/opt/chruby/share/chruby/chruby.sh
+  source ${brew_prefix}/opt/chruby/share/chruby/auto.sh
 fi
 
-export PATHSTREAM_ROOT=/Users/jackdanger/www/pathstream
-work_profile=${PATHSTREAM_ROOT}/tools/profile
-[[ -f $work_profile ]] && source $work_profile
-
-export PATH="$HOME/.poetry/bin:$PATH"
