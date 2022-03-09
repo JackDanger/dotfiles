@@ -105,7 +105,7 @@ branch_and_dirty() {
     git rev-parse --abbrev-ref HEAD | tr "\n" " "
     if [[ -n $(git diff-index --cached HEAD --) ]] ||
        [[ -n $(git ls-files --exclude-standard -o -m -d) ]]; then
-      echo -n 臟
+      echo -n "骯"
     fi
   fi
 }
@@ -129,3 +129,7 @@ if [ -d ${brew_prefix}/opt/chruby ]; then
   source ${brew_prefix}/opt/chruby/share/chruby/auto.sh
 fi
 
+
+export PATHSTREAM_ROOT=/Users/jackdanger/pathstream
+export PATHSTREAM_USER=jackdanger
+source ${PATHSTREAM_ROOT}/tools/profile
