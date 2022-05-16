@@ -59,6 +59,9 @@ setopt CLOBBER
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins= #(python bundler)
 
+# auto virtualenv
+[[ -f $HOME/.dotfiles/virtualenv-auto-activate.sh ]] && source $HOME/.dotfiles/virtualenv-auto-activate.sh
+
 # FZF
 export FZF_TMUX=0;
 export FZF_CTRL_T_OPTS='--height 40% --reverse --preview "highlight -O ansi -l {} 2>/dev/null || cat {}"'

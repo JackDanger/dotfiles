@@ -105,6 +105,20 @@ t() {
 }
 
 pr() {
+  open_pr open $@
+}
+
+draft() {
+  open_pr draft $@
+}
+
+open_pr() {
+  local state=$1
+  shift
+
+  local draft=""
+  [[ "$state" == 'draft' ]] && draft="--draft"
+
   local title="$@"
   local base=$(git merge-base HEAD origin/$(default-branch))
   local msg
@@ -145,7 +159,7 @@ $msg"
 
   title=$(head -n 1 ${COMMIT_MSG_FILE})
   body=$(tail -n +3 ${COMMIT_MSG_FILE})
-  pr_url=$(gh pr create -t $title -b "${body}")
+  pr_url=$(gh pr create ${draft} -t $title -b "${body}")
 
   rm -f $COMMIT_MSG_FILE
   if [[ -n $pr_url ]]; then
