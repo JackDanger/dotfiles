@@ -86,9 +86,11 @@ b() {
 }
 
 bb() {
+  set -e
   b $@
   git commit -a -m "$*"
   pr
+  set +e
 }
 
 # ticket
