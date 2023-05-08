@@ -102,7 +102,7 @@ function camelcase {
 function c {
   if [[ -n "$1" ]]; then
     if [[ -n $TMUX ]]; then
-      tmux rename-window $(basename $1 | camelcase)
+      tmux rename-window "$(basename $1 | camelcase)"
     fi
     cd $1
   else
