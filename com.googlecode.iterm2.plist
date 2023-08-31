@@ -4,12 +4,16 @@
 <dict>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>ConvertDosNewlines</key>
+	<true/>
 	<key>Coprocess MRU</key>
 	<array>
 		<string>/Users/jackdanger/.dotfiles/bin/re-run</string>
 	</array>
 	<key>Default Bookmark Guid</key>
 	<string>0F449749-28E2-4DCA-8906-23281C812441</string>
+	<key>EscapeShellCharsWithBackslash</key>
+	<false/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideFromDockAndAppSwitcher</key>
@@ -546,6 +550,16 @@
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
+	<key>PasteSpecialChunkDelay</key>
+	<real>0.01584892950094165</real>
+	<key>PasteSpecialChunkSize</key>
+	<integer>64</integer>
+	<key>PasteSpecialRegex</key>
+	<string></string>
+	<key>PasteSpecialSubstitution</key>
+	<string></string>
+	<key>PasteSpecialUseRegexSubstitution</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -584,9 +598,9 @@
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuickPasteBytesPerCall</key>
-	<integer>1140</integer>
+	<integer>2565</integer>
 	<key>QuickPasteDelayBetweenCalls</key>
-	<real>0.0067340065725147724</real>
+	<real>0.0029928917065262794</real>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>UseLionStyleFullscreen</key>

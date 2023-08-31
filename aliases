@@ -34,6 +34,8 @@ alias grab='cat | pbcopy'
 alias trail='tail -n 300 -F'
 alias ack='ack --smart-case'
 
+alias apti='sudo apt install -y'
+
 alias ip='ipconfig getifaddr en0'
 alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 alias warmup='seq 1 $(sysctl -n hw.ncpu) | xargs -n 1 -P $(sysctl -n hw.ncpu) yes > /dev/null'
