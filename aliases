@@ -53,6 +53,15 @@ function apply_via() {
   aws-vault exec "$@" -- terraform apply .terraform/plan
 }
 
+function umount() {
+  if which diskutil &>/dev/null
+  then
+    sudo diskutil unmount $@
+  else
+    sudo unmount $@
+  fi
+}
+
 alias timestamp="date +%Y-%m-%d-%H-%M-%S"
 alias timestampdb="date +%Y%m%d%H%M%S"
 alias datestamp="date +%Y-%m-%d"

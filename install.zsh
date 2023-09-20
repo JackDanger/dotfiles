@@ -27,6 +27,7 @@ bashrc
 gemrc
 gitconfig
 gitignore
+jq
 pystartup
 pryrc
 pypirc

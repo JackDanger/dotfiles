@@ -126,7 +126,7 @@ fi
 PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[${PS1DollarColor}]%}$ %f%b'
 
 
-brew_prefix=$(brew --prefix)
+brew_prefix=$(brew --prefix &>/dev/null)
 if [ -d ${brew_prefix}/opt/chruby ]; then
   source ${brew_prefix}/opt/chruby/share/chruby/chruby.sh
   source ${brew_prefix}/opt/chruby/share/chruby/auto.sh
