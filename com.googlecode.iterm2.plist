@@ -550,8 +550,10 @@
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
+	<key>PMPrintingPanelSize</key>
+	<string>{777, 828}</string>
 	<key>PasteSpecialChunkDelay</key>
-	<real>0.01584892950094165</real>
+	<real>0.099999996802456373</real>
 	<key>PasteSpecialChunkSize</key>
 	<integer>64</integer>
 	<key>PasteSpecialRegex</key>
