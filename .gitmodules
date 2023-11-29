@@ -249,3 +249,6 @@
 [submodule "vim-extensions/available/jedi-vim"]
 	path = vim-extensions/available/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git
+[submodule "vim-extensions/available/vim-dichromatic"]
+	path = vim-extensions/available/vim-dichromatic
+	url = https://github.com/romainl/vim-dichromatic.git

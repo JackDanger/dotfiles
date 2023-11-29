@@ -44,8 +44,8 @@ command Q q
 nmap EE :e!<CR>
 nmap QQ :q!<CR>
 
-" There's no good color scheme
-color default
+" There's one good color scheme
+colorscheme dichromatic
 
 " From http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
 " By pressing ctrl + r in the visual mode you will be prompted to enter text to replace with. Press enter and then confirm each change you agree with 'y' or decline with 'n'.
