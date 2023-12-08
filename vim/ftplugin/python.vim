@@ -187,3 +187,4 @@ let b:undo_ftplugin = 'setlocal cinkeys<'
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
+

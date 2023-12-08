@@ -78,8 +78,12 @@ noremap <C-d> :tn<CR>
 
 " Define markdown filetype
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
 " Define HAR files as json
 autocmd BufNewFile,BufReadPost *.har set filetype=json
+
+" Disable PyMode's vertical line at 80 chars
+autocmd BufRead *.py setlocal colorcolumn=0
 
 
 " Go to the last line that we were on in a file:
