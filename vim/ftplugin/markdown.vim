@@ -9,3 +9,6 @@ nmap <buffer> <leader>( ysiw)i[]<ESC>ha
 vmap <buffer> <leader>[ S]f]a()<ESC>ha
 nmap <buffer> <leader>[ ysiw]f]a()<ESC>ha
 nmap <leader>m :w !grip --export - > /tmp/markdown.html && open /tmp/markdown.html<CR>
+
+nmap <buffer> <leader>I :%s/\(\[.*\]: .*\.png\) width.*$/\1/g<CR>
+
