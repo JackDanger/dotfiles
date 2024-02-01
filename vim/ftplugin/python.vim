@@ -16,6 +16,8 @@ setlocal indentkeys-=0#
 setlocal include=^\\s*\\(from\\\|import\\)
 setlocal define=^\\s*\\(def\\\|class\\)
 
+let g:syntastic_python_pylint_post_args="--max-line-length=120"
+
 " For imports with leading .., append / and replace additional .s with ../
 let b:grandparent_match = '^\(.\.\)\(\.*\)'
 let b:grandparent_sub = '\=submatch(1)."/".repeat("../",strlen(submatch(2)))'

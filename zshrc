@@ -132,7 +132,3 @@ if [ -d ${brew_prefix}/opt/chruby ]; then
   source ${brew_prefix}/opt/chruby/share/chruby/auto.sh
 fi
 
-
-export PATHSTREAM_ROOT=/Users/jackdanger/pathstream
-export PATHSTREAM_USER=jackdanger
-source ${PATHSTREAM_ROOT}/tools/profile
