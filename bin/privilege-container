@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo 'cut -f 3 -d : /etc/passwd | while read user_id; do ls -1 -d /* | grep -v mnt | xargs -n 1 -I {} find {} -uid $(( 100000 + $user_id )) | xargs -I {} chown -h $user_id {} ; done'
+
