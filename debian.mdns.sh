@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt remove -y avahi-daemon avahi-utils
-apt autoremove
+apt autoremove -y
 
 if [ -f /etc/systemd/resolved.conf ]; then
   sed -i'' /LLMNR/s/.*/LLMNR=yes/ /etc/systemd/resolved.conf
