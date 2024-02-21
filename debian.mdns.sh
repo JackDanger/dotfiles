@@ -2,8 +2,10 @@
 
 apt remove -y avahi-daemon avahi-utils
 
-sed -i'' /LLMNR/s/.*/LLMNR=yes/ /etc/systemd/resolved.conf
-sed -i'' /MulticastDNS/s/.*/MulticastDNS=yes/ /etc/systemd/resolved.conf
+if [ -f /etc/systemd/resolved.conf ]; then
+  sed -i'' /LLMNR/s/.*/LLMNR=yes/ /etc/systemd/resolved.conf
+  sed -i'' /MulticastDNS/s/.*/MulticastDNS=yes/ /etc/systemd/resolved.conf
+fi
 
 declare -A interfaces=$(ip link | egrep -o ': (.*):' | sed s/://g | awk -F @ '{print $1}' | grep -v lo)
 
@@ -18,9 +20,13 @@ elif which resolvectl; then
   done
 fi
 
-# Persist mDNS settings after reboot
+##
+## Persist mDNS settings after reboot
+##
+
 # for networkd
-for interface in $interfaces; do
+if [ -d /etc/systemd/network/ ]; then
+  for interface in $interfaces; do
     cat > /etc/systemd/network/${interface}.network <<-EOS
 [Match]
 Name=${interface}
@@ -28,10 +34,13 @@ Name=${interface}
 [Network]
 MulticastDNS=yes
 EOS
-done
+  done
+fi
 # for NetworkManager
-cat > /etc/NetworkManager/conf.d/enable-mdns.conf <<-EOS
+if [ -d /etc/NetworkManager/ ]; then
+  cat > /etc/NetworkManager/conf.d/enable-mdns.conf <<-EOS
 [connection]
 connection.mdns=2
 EOS
+fi
 
