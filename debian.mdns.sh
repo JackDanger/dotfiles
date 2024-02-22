@@ -38,7 +38,7 @@ EOS
   done
 fi
 # for NetworkManager
-if [ -d /etc/NetworkManager/ ]; then
+if [ -d /etc/NetworkManager/conf.d ]; then
   cat > /etc/NetworkManager/conf.d/enable-mdns.conf <<-EOS
 [connection]
 connection.mdns=2
