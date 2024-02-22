@@ -6,7 +6,7 @@ apt install -y curl gnupg2
 
 curl "https://raw.githubusercontent.com/JackDanger/dotfiles/main/debian.mdns.sh" -H "Cache-Control: no-cache" | bash
 
-tee -a /etc/bash.bashrc <<-EOS
+grep -q daemon-reload /etc/bash.bashrc || tee -a /etc/bash.bashrc <<-EOS
 alias l='ls -lAG'
 alias reload='systemctl daemon-reload'
 alias start='systemctl start'
