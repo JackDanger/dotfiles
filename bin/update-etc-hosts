@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# For replacing lines in /etc/hosts
+file=$1
+
+while IFS= read -r line; do
+  host=$(echo $line | awk '{print $2}')
+  if grep $host $file; then
+    sed -i'' "/${host}/s/*.*/${line}/g" $file
+  else
+    echo $line >> $file
+  fi
+done
