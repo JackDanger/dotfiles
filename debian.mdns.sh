@@ -10,17 +10,6 @@ fi
 
 declare -A interfaces=$(ip link | egrep -o ': (.*):' | sed s/://g | awk -F @ '{print $1}' | grep -v lo)
 
-# Allow .local hostname lookups via mDNS resolution
-if which systemd-resolve; then
-  for interface in $interfaces; do
-    systemd-resolve --set-mdns=yes --interface=${interface}
-  done
-elif which resolvectl; then
-  for interface in $interfaces; do
-    resolvectl mdns ${interface} yes
-  done
-fi
-
 ##
 ## Persist mDNS settings after reboot
 ##
@@ -45,3 +34,16 @@ connection.mdns=2
 EOS
 fi
 
+# Allow .local hostname lookups via mDNS resolution
+if which systemd-resolve; then
+  for interface in $interfaces; do
+    systemd-resolve --set-mdns=yes --interface=${interface}
+  done
+elif which resolvectl; then
+  for interface in $interfaces; do
+    resolvectl mdns ${interface} yes
+  done
+fi
+
+systemctl restart systemd-resolved
+resolvectl status
