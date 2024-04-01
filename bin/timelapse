@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -x
+set -euo pipefail
+
+input=$1
+if [[ -z "$1" ]]; then
+  >&2 echo "Usage: $0 file.mp4"
+  exit 1
+fi
+
+extension=$(cut -d . -f 2- <<<$input)
+name=$(basename $input ".{$extension}")
+output="${name}.timelapse.${extension}"
+
+# Make a 300x speed video of the input
+ffmpeg -i $input -vf select='not(mod(n\,300))',setpts=N/FRAME_RATE/TB $output
+
+# Install the python script that removes black frames
+which deblack &>/dev/null || pip install git+https://github.com/FarisHijazi/deblack
+
+# And remove frames we can't even see
+deblack $output
+
+echo "Timelapse at $output"
