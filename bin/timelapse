@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -x
 set -euo pipefail
 
 input=$1
@@ -9,17 +8,25 @@ if [[ -z "$1" ]]; then
   exit 1
 fi
 
-extension=$(cut -d . -f 2- <<<$input)
-name=$(basename $input ".{$extension}")
-output="${name}.timelapse.${extension}"
+factor=${2:-300}
 
-# Make a 300x speed video of the input
-ffmpeg -i $input -vf select='not(mod(n\,300))',setpts=N/FRAME_RATE/TB $output
+extension=$(cut -d . -f 2- <<<$input)
+name=$(basename $input ".${extension}")
+output="${name}.timelapse-${factor}x.${extension}"
+
+# Drop all but every $factor frames
+ffmpeg -i $input -vf "select='not(mod(n\,${factor}))',setpts=N/FRAME_RATE/TB" $output
 
 # Install the python script that removes black frames
 which deblack &>/dev/null || pip install git+https://github.com/FarisHijazi/deblack
 
 # And remove frames we can't even see
-deblack $output
+deblack $output || true
+deblack_file="${name}.timelapse-${factor}x.out.${extension}"
+
+if [[ -f "${deblack_file}" ]]; then
+  echo "Found black frames, removed them"
+  mv $deblack_file $output
+fi
 
 echo "Timelapse at $output"
