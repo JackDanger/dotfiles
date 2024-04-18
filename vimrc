@@ -85,6 +85,10 @@ autocmd BufNewFile,BufReadPost *.har set filetype=json
 " Disable PyMode's vertical line at 80 chars
 autocmd BufRead *.py setlocal colorcolumn=0
 
+" Start a IPython session right below current line
+" from IPython.terminal.embed import embed; embed()
+nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>kJi<CR><ESC>:w<CR>
+
 
 " Go to the last line that we were on in a file:
 function! ResCur()
