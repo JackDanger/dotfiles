@@ -190,3 +190,4 @@ let b:undo_ftplugin = 'setlocal cinkeys<'
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
+nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>kJi<CR><ESC>:w<CR>

@@ -1,4 +1,5 @@
 set nocompatible
+set encoding=utf-8
 
 " Load all active extensions
 set rtp+=~/.dotfiles/vim-extensions/use/*
