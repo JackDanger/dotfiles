@@ -1,12 +1,12 @@
 #!/bin/bash
 
-set -euo pipefail
-
 input=$1
 if [[ -z "$1" ]]; then
   >&2 echo "Usage: $0 file.mp4"
   exit 1
 fi
+set -euo pipefail
+
 
 factor=${2:-300}
 
