@@ -2,7 +2,7 @@
 
 input=$1
 if [[ -z "$1" ]]; then
-  >&2 echo "Usage: $0 file.mp4"
+  >&2 echo "Usage: $0 file.mp4 [factor=300]"
   exit 1
 fi
 set -euo pipefail

@@ -190,4 +190,8 @@ let b:undo_ftplugin = 'setlocal cinkeys<'
 let &cpo = s:keepcpo
 unlet s:keepcpo
 
+# Get rid of that annoying line
+# What is this, 1978? Am I reading this on a cathode ray tube?
+set g:pymode_options_max_line_length
+
 nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>kJi<CR><ESC>:w<CR>
