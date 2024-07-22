@@ -14,10 +14,20 @@ historyPath = os.path.expanduser("~/.pyhistory")
 
 def save_history(historyPath=historyPath):
     import readline
-    readline.write_history_file(historyPath)
+    try:
+        readline.write_history_file(historyPath)
+    except (OSError, IOError) as e:
+        print(f"Error saving history file: {e}")
 
 if os.path.exists(historyPath):
-    readline.read_history_file(historyPath)
+    try:
+        readline.read_history_file(historyPath)
+    except (OSError, IOError) as e:
+        print(f"Error reading history file: {e}")
+else:
+    # Create the file if it doesn't exist
+    with open(historyPath, 'w') as f:
+        pass
 
 atexit.register(save_history)
 del os, atexit, readline, rlcompleter, save_history, historyPath

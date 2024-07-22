@@ -6,17 +6,35 @@
 " Last Change:	Mon, 5 October 2020
 " https://github.com/tpict/vim-ftplugin-python
 
-if exists("b:did_ftplugin") | finish | endif
-let b:did_ftplugin = 1
+if exists("ftplugin_did_load_python")
+  finish
+endif
+let ftplugin_did_load_python = 1
+
+" Pylint configuration file
+let g:pymode_lint_config = '$HOME/.pylintrc'
+let g:pymode_lint_options_pycodestyle = {'max_line_length': 180}
+let g:pymode_options_max_line_length = 180
+
+" My fav debugger
+nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>kJi<CR><ESC>:w<CR>
+
+
+" Vim filetype plugin file
+" Language:	python
+" Maintainer:	Tom Picton <tom@tompicton.com>
+" Previous Maintainer: James Sully <sullyj3@gmail.com>
+" Previous Maintainer: Johannes Zellner <johannes@zellner.org>
+" Last Change:	2024/05/13
+" https://github.com/tpict/vim-ftplugin-python
+
 let s:keepcpo= &cpo
 set cpo&vim
 
 setlocal cinkeys-=0#
 setlocal indentkeys-=0#
 setlocal include=^\\s*\\(from\\\|import\\)
-setlocal define=^\\s*\\(def\\\|class\\)
-
-let g:syntastic_python_pylint_post_args="--max-line-length=120"
+setlocal define=^\\s*\\(\\(async\\s\\+\\)\\?def\\\|class\\)
 
 " For imports with leading .., append / and replace additional .s with ../
 let b:grandparent_match = '^\(.\.\)\(\.*\)'
@@ -58,14 +76,14 @@ let b:next_end='\v\S\n*(%$\|^(\s*\n*)*(class\|def\|async def)\|^\S)'
 let b:prev_end='\v\S\n*(^(\s*\n*)*(class\|def\|async def)\|^\S)'
 
 if !exists('g:no_plugin_maps') && !exists('g:no_python_maps')
-    execute "nnoremap <silent> <buffer> ]] :call <SID>Python_jump('n', '". b:next_toplevel."', 'W', v:count1)<cr>"
-    execute "nnoremap <silent> <buffer> [[ :call <SID>Python_jump('n', '". b:prev_toplevel."', 'Wb', v:count1)<cr>"
-    execute "nnoremap <silent> <buffer> ][ :call <SID>Python_jump('n', '". b:next_endtoplevel."', 'W', v:count1, 0)<cr>"
-    execute "nnoremap <silent> <buffer> [] :call <SID>Python_jump('n', '". b:prev_endtoplevel."', 'Wb', v:count1, 0)<cr>"
-    execute "nnoremap <silent> <buffer> ]m :call <SID>Python_jump('n', '". b:next."', 'W', v:count1)<cr>"
-    execute "nnoremap <silent> <buffer> [m :call <SID>Python_jump('n', '". b:prev."', 'Wb', v:count1)<cr>"
-    execute "nnoremap <silent> <buffer> ]M :call <SID>Python_jump('n', '". b:next_end."', 'W', v:count1, 0)<cr>"
-    execute "nnoremap <silent> <buffer> [M :call <SID>Python_jump('n', '". b:prev_end."', 'Wb', v:count1, 0)<cr>"
+    execute "nnoremap <silent> <buffer> ]] :<C-U>call <SID>Python_jump('n', '". b:next_toplevel."', 'W', v:count1)<cr>"
+    execute "nnoremap <silent> <buffer> [[ :<C-U>call <SID>Python_jump('n', '". b:prev_toplevel."', 'Wb', v:count1)<cr>"
+    execute "nnoremap <silent> <buffer> ][ :<C-U>call <SID>Python_jump('n', '". b:next_endtoplevel."', 'W', v:count1, 0)<cr>"
+    execute "nnoremap <silent> <buffer> [] :<C-U>call <SID>Python_jump('n', '". b:prev_endtoplevel."', 'Wb', v:count1, 0)<cr>"
+    execute "nnoremap <silent> <buffer> ]m :<C-U>call <SID>Python_jump('n', '". b:next."', 'W', v:count1)<cr>"
+    execute "nnoremap <silent> <buffer> [m :<C-U>call <SID>Python_jump('n', '". b:prev."', 'Wb', v:count1)<cr>"
+    execute "nnoremap <silent> <buffer> ]M :<C-U>call <SID>Python_jump('n', '". b:next_end."', 'W', v:count1, 0)<cr>"
+    execute "nnoremap <silent> <buffer> [M :<C-U>call <SID>Python_jump('n', '". b:prev_end."', 'Wb', v:count1, 0)<cr>"
 
     execute "onoremap <silent> <buffer> ]] :call <SID>Python_jump('o', '". b:next_toplevel."', 'W', v:count1)<cr>"
     execute "onoremap <silent> <buffer> [[ :call <SID>Python_jump('o', '". b:prev_toplevel."', 'Wb', v:count1)<cr>"
@@ -112,8 +130,12 @@ if !exists('*<SID>Python_jump')
 endif
 
 if has("browsefilter") && !exists("b:browsefilter")
-    let b:browsefilter = "Python Files (*.py)\t*.py\n" .
-                \ "All Files (*.*)\t*.*\n"
+    let b:browsefilter = "Python Files (*.py)\t*.py\n"
+    if has("win32")
+	let b:browsefilter .= "All Files (*.*)\t*\n"
+    else
+	let b:browsefilter .= "All Files (*)\t*\n"
+    endif
 endif
 
 if !exists("g:python_recommended_style") || g:python_recommended_style != 0
@@ -189,11 +211,3 @@ let b:undo_ftplugin = 'setlocal cinkeys<'
 
 let &cpo = s:keepcpo
 unlet s:keepcpo
-
-" Get rid of that annoying line
-" What is this, 1978? Am I reading this on a cathode ray tube?
-let g:pymode_options_max_line_length
-let g:pymode_lint_cwindow = 0
-
-
-nmap <leader>B <ESC>o<ESC>ccfrom IPython.terminal.embed import embed; embed()<ESC>kJi<CR><ESC>:w<CR>
