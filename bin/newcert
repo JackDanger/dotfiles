@@ -1,4 +1,5 @@
 #!/bin/bash
 
-set -x
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/newcert.key -out /etc/ssl/certs/newcert.crt
+hostname=${1:-newcert}
+
+echo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/${hostname}.key -out /etc/ssl/certs/${hostname}.crt -subj "/CN=${hostname}"

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+hostname=$1
+port=$2
+
+if [[ -z "${hostname}" ]] || [[ -z "${port}" ]]; then
+  >&2 echo "Usage: $0 HOSTNAME PORT"
+  exit 1
+fi
+
+cat <<-EOS 
+# $(newcert $hostname)
+server {
+    listen 80;
+    server_name ${hostname};
+    return 301 https://\$host\$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name ${hostname};
+
+    ssl_certificate /etc/ssl/certs/${hostname}.crt;
+    ssl_certificate_key /etc/ssl/private/${hostname}.key;
+
+    location / {
+        proxy_pass http://localhost:${port};
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOS
+
