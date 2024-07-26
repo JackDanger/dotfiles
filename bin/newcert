@@ -1,5 +1,19 @@
 #!/bin/bash
 
 hostname=${1:-newcert}
+shift
 
-echo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/${hostname}.key -out /etc/ssl/certs/${hostname}.crt -subj "/CN=${hostname}"
+extensions=""
+if [[ -n "${1}" ]]; then
+  extensions=" -extensions SAN -config <(echo \"[req]\"; echo \"distinguished_name=req\"; echo \"[SAN]\"; echo \"subjectAltName="
+  for extension in $@; do
+    extensions="${extensions}DNS:${extension},"
+  done
+  # remove final comma
+  extensions=$(echo "${extensions}" | sed 's/.$//')
+  # close with paren
+  extensions="${extensions}\")"
+  
+fi
+
+echo "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/${hostname}.key -out /etc/ssl/certs/${hostname}.crt -subj \"/CN=${hostname}\" $extensions"
