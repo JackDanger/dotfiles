@@ -6,10 +6,6 @@
 	<true/>
 	<key>ConvertDosNewlines</key>
 	<true/>
-	<key>Coprocess MRU</key>
-	<array>
-		<string>/Users/jackdanger/.dotfiles/bin/re-run</string>
-	</array>
 	<key>Default Bookmark Guid</key>
 	<string>0F449749-28E2-4DCA-8906-23281C812441</string>
 	<key>EscapeShellCharsWithBackslash</key>
