@@ -4,6 +4,7 @@ cd $dotfiles
 # somewhat portable installer
 system_install() {
   if [[ "Darwin" == "$(uname)" ]]; then
+    which brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew install $@
   elif which apt &>/dev/null; then
     sudo apt install -y $@
