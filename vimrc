@@ -1,8 +1,9 @@
 set nocompatible
 set encoding=utf-8
 
+
 " Define python location
-let g:python3_host_prog = '/opt/homebrew/bin/python3'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " Load all active extensions
 set rtp+=~/.dotfiles/vim-extensions/use/*
