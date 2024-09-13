@@ -4,6 +4,8 @@
 <dict>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>BracketedPasteMode</key>
+	<true/>
 	<key>ConvertDosNewlines</key>
 	<true/>
 	<key>Default Bookmark Guid</key>
@@ -565,7 +567,7 @@
 	<key>PasteSpecialChunkDelay</key>
 	<real>0.099999996802456373</real>
 	<key>PasteSpecialChunkSize</key>
-	<integer>64</integer>
+	<integer>16</integer>
 	<key>PasteSpecialRegex</key>
 	<string></string>
 	<key>PasteSpecialSubstitution</key>
@@ -613,8 +615,12 @@
 	<integer>2565</integer>
 	<key>QuickPasteDelayBetweenCalls</key>
 	<real>0.0029928917065262794</real>
+	<key>ShowFullScreenTabBar</key>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>TabTransform</key>
+	<integer>0</integer>
 	<key>UseLionStyleFullscreen</key>
 	<false/>
 	<key>VisualIndicatorForEsc</key>

@@ -68,9 +68,12 @@ alias timestampdb="date +%Y%m%d%H%M%S"
 alias datestamp="date +%Y-%m-%d"
 alias jsonpretty='python -mjson.tool'
 alias clj='rlwrap clj'
-alias ccat='pygmentize -g'
+alias ccat='which pygmentize 2>/dev/null && pygmentize -g || python3 -m pygments -g'
 function cless() { ccat $1 | less -r; }
 alias shuffle="perl -MList::Util=shuffle -e 'print shuffle(<STDIN>);'"
+
+alias awslogin='aws-vault login'
+alias awsshell='aws-vault exec'
 
 [[ -f ~/.aliases.local ]] && . ~/.aliases.local
 

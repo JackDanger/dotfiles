@@ -62,7 +62,7 @@ function gbr() {
 
 function gb() {
   # 'git back' command allows you to navigate to a previously checked out branch
-  current=$(current_branch)
+  local current=$(current_branch)
   selected=$(
     git for-each-ref --count=$(( $(tput lines) - 1 )) --sort=-committerdate refs/heads/ --format='%(refname)' | \
     cut -d / -f 3- | \

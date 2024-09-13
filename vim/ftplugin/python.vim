@@ -11,6 +11,13 @@ if exists("ftplugin_did_load_python")
 endif
 let ftplugin_did_load_python = 1
 
+" Define python location
+let g:python3_host_prog = '/usr/bin/python3'
+let g:pymode = 1
+let g:pymode_python = 'python3'
+let g:pymode_lint = 1
+let g:pymode_lint_checker = 'pylint'
+
 " Pylint configuration file
 let g:pymode_lint_config = '$HOME/.pylintrc'
 let g:pymode_lint_options_pycodestyle = {'max_line_length': 180}
