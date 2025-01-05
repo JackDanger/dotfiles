@@ -20,6 +20,10 @@ pyenv() {
   fi
 }
 
+act() {
+  [[ -d venv ]] && . venv/bin/activate
+}
+
 pyenv-virtualenv() {
   export PYENV_ROOT=$(pyenv root)
   unfunction pyenv-virtualenv
