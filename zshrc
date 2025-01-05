@@ -132,6 +132,4 @@ if [ -d ${brew_prefix}/opt/chruby ]; then
   source ${brew_prefix}/opt/chruby/share/chruby/auto.sh
 fi
 
-[[ ~/.datavant.zsh ]] && source ~/.datavant.zsh
-
 [[ -s "/Users/jack.danger/.gvm/scripts/gvm" ]] && source "/Users/jack.danger/.gvm/scripts/gvm"
