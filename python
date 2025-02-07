@@ -84,3 +84,13 @@ pip_dependencies() {
     echo $footer
   fi
 }
+
+
+act() {
+  if [[ -d .venv ]]; then
+    . .venv/bin/activate
+  elif [[ -d venv ]]; then
+    . venv/bin/activate
+  fi
+}
+

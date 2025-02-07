@@ -15,10 +15,12 @@ name=$(basename $input ".${extension}")
 output="${name}.timelapse-${factor}x.${extension}"
 
 # Drop all but every $factor frames
-ffmpeg -i $input -vf "select='not(mod(n\,${factor}))',setpts=N/FRAME_RATE/TB" $output
+if [[ ! -f "${output}" ]]; then
+  ffmpeg -i $input -vf "select='not(mod(n\,${factor}))',setpts=N/FRAME_RATE/TB" $output
+fi
 
 # Install the python script that removes black frames
-which deblack &>/dev/null || pip install git+https://github.com/FarisHijazi/deblack
+which deblack &>/dev/null || pip3 install --user --break-system-packages git+https://github.com/FarisHijazi/deblack
 
 # And remove frames we can't even see
 deblack $output || true

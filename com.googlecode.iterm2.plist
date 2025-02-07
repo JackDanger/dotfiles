@@ -8,6 +8,8 @@
 	<true/>
 	<key>ConvertDosNewlines</key>
 	<true/>
+	<key>ConvertUnicodePunctuation</key>
+	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>0F449749-28E2-4DCA-8906-23281C812441</string>
 	<key>EscapeShellCharsWithBackslash</key>
@@ -271,13 +273,6 @@
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x2d-0x40000</key>
-				<dict>
-					<key>Action</key>
-					<integer>11</integer>
-					<key>Text</key>
-					<string>0x1f</string>
-				</dict>
 				<key>0x5b-0x40000</key>
 				<dict>
 					<key>Action</key>
@@ -567,7 +562,7 @@
 	<key>PasteSpecialChunkDelay</key>
 	<real>0.099999996802456373</real>
 	<key>PasteSpecialChunkSize</key>
-	<integer>16</integer>
+	<integer>256</integer>
 	<key>PasteSpecialRegex</key>
 	<string></string>
 	<key>PasteSpecialSubstitution</key>
