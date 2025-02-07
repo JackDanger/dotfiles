@@ -60,7 +60,7 @@ setopt CLOBBER
 plugins= #(python bundler)
 
 # auto virtualenv
-[[ -f $HOME/.dotfiles/virtualenv-auto-activate.sh ]] && source $HOME/.dotfiles/virtualenv-auto-activate.sh
+#[[ -f $HOME/.dotfiles/virtualenv-auto-activate.sh ]] && source $HOME/.dotfiles/virtualenv-auto-activate.sh
 
 # FZF
 export FZF_TMUX=0;
