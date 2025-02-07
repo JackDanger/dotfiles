@@ -39,9 +39,6 @@
   changed = yellow 
   untracked = cyan
 
-[buildkite]
-  apikey = 195ea92ddc907df820db17602100ba6409dae4c4
-
 [push]
   config = default
   default = tracking
