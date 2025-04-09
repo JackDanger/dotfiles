@@ -111,57 +111,116 @@ draft() {
 }
 
 open_pr() {
-  local state=$1
-  shift
+  local provided_base=""
+  local title=""
+  local gh_flags=()
 
-  local draft=""
-  [[ "$state" == 'draft' ]] && draft="--draft"
-
-  local title="$@"
-  local base=$(git merge-base HEAD origin/$(default-branch))
-  local msg
-  local gitlog_format
-  local commitcount=$(git log ${base}..HEAD --oneline | wc -l)
-  if [[ $commitcount -gt 1 ]]; then
-    if [[ -z $title ]]; then
-      # The subject line of the first commit in the branch
-      title=$(git log $(git log ${base}..HEAD --format="%h" | tail -n 1) --format="%s" | head -n 1)
-    fi
-    msg=$(git log ${base}..HEAD --reverse --format="%h
-%s
-%b")
-  else
-    msg=$(git log ${base}..HEAD --reverse --format="%s
-
-%b")
+  # Check if the first argument is "draft"
+  if [[ "$1" == "draft" ]]; then
+    gh_flags+=(--draft)
+    shift
+  fi
+  # If the first arg is 'open', just remove it
+  if [[ "$1" == "open" ]]; then
+    shift
   fi
 
-  if [[ -n $title ]]; then
+  # Parse remaining arguments:
+  # If an argument starts with "--", treat it as a flag for gh pr create.
+  # For flags that take an argument (like --base, --title, or --body), capture the next argument.
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --base|--title|--body)
+        gh_flags+=("$1" "$2")
+        # For --base, capture its value so we can override our computed base later.
+        if [[ "$1" == "--base" ]]; then
+          provided_base="$2"
+        fi
+        shift 2
+        ;;
+      --*)
+        gh_flags+=("$1")
+        shift
+        ;;
+      *)
+        # Assume anything else is part of the title.
+        if [[ -z "$title" ]]; then
+          title="$1"
+        else
+          title="$title $1"
+        fi
+        shift
+        ;;
+    esac
+  done
+
+  # Determine the base: if --base was provided, use it; otherwise compute it.
+  local base
+  if [[ -n "$provided_base" ]]; then
+    base="$provided_base"
+  else
+    base="origin/$(default-branch)"
+  fi
+
+  # Determine the shared history to begin comparison from
+  local merge_base=$(git merge-base HEAD "$base")
+
+  # Generate the commit message to prefill the PR description.
+  local msg
+  local commitcount
+  commitcount=$(git log "${merge_base}"..HEAD --oneline | wc -l)
+  if [[ $commitcount -gt 1 ]]; then
+    if [[ -z "$title" ]]; then
+      # Use the subject of the first commit in the branch.
+      title=$(git log "$(git log "${merge_base}"..HEAD --format="%h" | tail -n 1)" --format="%s" | head -n 1)
+    fi
+    msg=$(git log "${merge_base}"..HEAD --reverse --format="%h%n%s%n%b")
+  else
+    msg=$(git log "${merge_base}"..HEAD --reverse --format="%s%n%n%b")
+  fi
+
+  if [[ -n "$title" ]]; then
     msg="$title
 
 $msg"
   fi
 
   COMMIT_MSG_FILE=COMMIT.tmp
-  echo $msg > $COMMIT_MSG_FILE
+  echo "$msg" > "$COMMIT_MSG_FILE"
 
-  if edit_and_confirm $COMMIT_MSG_FILE; then
+  if edit_and_confirm "$COMMIT_MSG_FILE"; then
     echo "Creating pull request"
   else
-    echo "bailing"
-    rm -f $COMMIT_MSG_FILE
+    echo "Bailing"
+    rm -f "$COMMIT_MSG_FILE"
     return
   fi
 
   publish
 
-  title=$(head -n 1 ${COMMIT_MSG_FILE})
-  body=$(tail -n +3 ${COMMIT_MSG_FILE})
-  pr_url=$(gh pr create ${draft} -t $title -b "${body}")
+  # If the user didn’t supply --title or --body, pull them from the commit message file.
+  if ! printf "%s\n" "${gh_flags[@]}" | grep -q -- "--title"; then
+    title=$(head -n 1 "$COMMIT_MSG_FILE")
+    gh_flags+=(--title "$title")
+  fi
 
-  rm -f $COMMIT_MSG_FILE
-  if [[ -n $pr_url ]]; then
-    open $pr_url
+  if ! printf "%s\n" "${gh_flags[@]}" | grep -q -- "--body"; then
+    local body
+    body=$(tail -n +3 "$COMMIT_MSG_FILE")
+    gh_flags+=(--body "$body")
+  fi
+
+  # Only add --base if it wasn’t provided already.
+  if ! printf "%s\n" "${gh_flags[@]}" | grep -q -- "--base"; then
+    gh_flags+=(--base "${base/origin\//}")
+  fi
+
+  # Create the pull request using the assembled flags.
+  local pr_url
+  pr_url=$(gh pr create "${gh_flags[@]}")
+  rm -f "$COMMIT_MSG_FILE"
+  if [[ -n "$pr_url" ]]; then
+    open "$pr_url"
   fi
 }
 
@@ -253,7 +312,6 @@ publish() {
 }
 
 auto-fixup() {
-set -x
   staged_files=$(git diff --name-only)
   echo "staged files are: ${staged_files}"
   for file in $staged_files; do

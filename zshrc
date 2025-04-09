@@ -133,3 +133,10 @@ if [ -d ${brew_prefix}/opt/chruby ]; then
 fi
 
 [[ -s "/Users/jack.danger/.gvm/scripts/gvm" ]] && source "/Users/jack.danger/.gvm/scripts/gvm"
+
+# Added by Windsurf
+export PATH="/Users/jack.danger/.codeium/windsurf/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

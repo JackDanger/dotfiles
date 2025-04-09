@@ -607,9 +607,9 @@
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>QuickPasteBytesPerCall</key>
-	<integer>2565</integer>
+	<integer>3847</integer>
 	<key>QuickPasteDelayBetweenCalls</key>
-	<real>0.0029928917065262794</real>
+	<real>0.0019952610600739717</real>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>SoundForEsc</key>
