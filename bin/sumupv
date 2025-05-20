@@ -1,2 +1,15 @@
 #!/bin/bash
-awk 'BEGIN { sum = 0.0 } { print; sum += $0 } END { print "total:", sum }'
+awk '
+  BEGIN {
+    sum = 0
+  }
+  {
+    sum += $0
+    # \r returns cursor to start of line, without printing a newline
+    printf("\rTotal: %f", sum) > "/dev/stderr"
+    fflush()    # force the output to appear immediately
+  }
+  END {
+    print ""   # print a final newline so your prompt doesn’t sit on the same line
+  }
+'
