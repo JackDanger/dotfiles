@@ -61,8 +61,8 @@ vnoremap <leader>A "hy:Ag '<C-r>h'
 nmap <leader>a :Ag
 
 " Press F2 to paste without weird autointents
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
+"nnoremap <F2> :set invpaste paste?<CR>
+"set pastetoggle=<F2>
 
 map <leader>l :Align
 nmap <leader>] :TagbarToggle<CR>

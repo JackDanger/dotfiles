@@ -2,6 +2,7 @@
 ZSH=$HOME/.dotfiles/prezto
 ZSH_CUSTOM=$HOME/.dotfiles/zsh
 
+
 # Homebrew told me so
 HOMEBREW_HELP=/usr/local/share/zsh/help
 if [ -d $HOMEBREW_HELP ]; then
@@ -126,17 +127,10 @@ fi
 PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[${PS1DollarColor}]%}$ %f%b'
 
 
-brew_prefix=$(brew --prefix &>/dev/null)
-if [ -d ${brew_prefix}/opt/chruby ]; then
-  source ${brew_prefix}/opt/chruby/share/chruby/chruby.sh
-  source ${brew_prefix}/opt/chruby/share/chruby/auto.sh
-fi
-
-[[ -s "/Users/jack.danger/.gvm/scripts/gvm" ]] && source "/Users/jack.danger/.gvm/scripts/gvm"
+function gvm() {
+  unfunction gvm
+  [[ -s "/Users/jack.danger/.gvm/scripts/gvm" ]] && source "/Users/jack.danger/.gvm/scripts/gvm"
+}
 
 # Added by Windsurf
 export PATH="/Users/jack.danger/.codeium/windsurf/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

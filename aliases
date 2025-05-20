@@ -9,18 +9,27 @@ alias ap='ag --ignore log --ignore tags --pager="less -FRX"'
 
 function QQ() { exit; }
 
-if [[ -z "$(which fzf)" ]]; then
-  alias v=nvim
-else
-  function smartvim() {
-    if [[ -z "$1" ]]; then
+_has_fzf='unset'
+
+function smartvim() {
+  if [[ "${_has_fzf}" == "unset" ]]; then
+    if [[ -z "$(which fzf)" ]]; then
+      _has_fzf=true
+    else
+      _has_fzf=false
+    fi
+  fi
+  if [[ -z "$1" ]]; then
+    if [[ "${_has_fzf}" == "true" ]]; then
       ${VISUAL:-vim} $(fzf)
     else
       ${VISUAL:-vim} $*
     fi
-  }
-  alias v=smartvim
-fi
+  else
+    ${VISUAL:-vim} $*
+  fi
+}
+alias v=smartvim
 
 alias grab='cat | pbcopy'
 alias trail='tail -n 300 -F'

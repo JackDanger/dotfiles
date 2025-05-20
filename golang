@@ -1,6 +1,9 @@
 #!/bin/bash
 
-&>/dev/null which go && path+=$(go env GOPATH)/bin
+function go() {
+  unfunction go
+  &>/dev/null which go && path+=$(go env GOPATH)/bin
+}
 
 # `cd` to a specific package
 function gocd {

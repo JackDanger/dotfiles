@@ -23,7 +23,7 @@ typeset -U path
 path+=~/bin
 path+=~/.dotfiles/bin
 
-export EDITOR=$(which nvim vim | grep -v 'not found' | head -n 1)
+export EDITOR='nvim'
 export VISUAL=$EDITOR
 
 
@@ -37,8 +37,11 @@ if [[ -n `which unsetopt` ]]; then
 fi
 
 # chruby
-[[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
-[[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
+function chruby() {
+  unfunction chruby
+  [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
+  [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
+}
 
 # Vi!?
 #set -o vi
