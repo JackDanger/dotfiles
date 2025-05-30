@@ -61,7 +61,11 @@ vnoremap <leader>A "hy:Ag '<C-r>h'
 nmap <leader>a :Ag
 
 " Press F2 to paste without weird autointents
+<<<<<<< Updated upstream
 "nnoremap <F2> :set invpaste paste?<CR>
+=======
+nnoremap <F2> :set invpaste paste?<CR>
+>>>>>>> Stashed changes
 "set pastetoggle=<F2>
 
 map <leader>l :Align
