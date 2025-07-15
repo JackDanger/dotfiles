@@ -81,8 +81,8 @@ source $ZSH/runcoms/zshrc
 autoload -Uz promptinit && promptinit
 prompt jackdanger
 
-SAVEHIST=10000000
-HISTSIZE=10000000
+SAVEHIST=100000000000
+HISTSIZE=100000000000
 HISTFILE="$HOME/.zsh_history"
 setopt hist_find_no_dups
 setopt hist_ignore_all_dups

@@ -4,8 +4,10 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias l='ls -lAG'
 alias e=nvim
-alias a='ag --ignore log --ignore tags'
-alias ap='ag --ignore log --ignore tags --pager="less -FRX"'
+alias a='rg --color=always'
+function ap {
+  rg  --color=always $@ | less -FRX
+}
 
 function QQ() { exit; }
 
