@@ -12,7 +12,8 @@ endif
 let ftplugin_did_load_python = 1
 
 " Define python location
-let g:python3_host_prog = '/usr/bin/python3'
+
+let g:python3_host_prog = '/opt/homebrew/bin/python3'
 let g:pymode = 1
 let g:pymode_python = 'python3'
 let g:pymode_lint = 1

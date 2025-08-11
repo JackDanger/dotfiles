@@ -1,4 +1,5 @@
 #!/bin/sh
 
-echo 'cut -f 3 -d : /etc/passwd | while read user_id; do ls -1 -d /* | grep -v mnt | xargs -n 1 -I {} find {} -uid $(( 100000 + $user_id )) | xargs -I {} chown -h $user_id {} ; done'
+echo 'cut -f 3 -d : /etc/passwd | while read user_id; do find / -xdev -print0 | xargs -0 -I {} find {} -uid $(( 100000 + $user_id )) | xargs -I {} chown -h $user_id {} ; done'
+echo 'cut -f 3 -d : /etc/group | while read group_id; do find / -xdev -print0 | xargs -0 -I {} find {} -gid $(( 100000 + $group_id )) | xargs -I {} chgrp -h $group_id {} ; done'
 
