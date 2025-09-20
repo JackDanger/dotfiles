@@ -614,6 +614,8 @@
 	<real>0.0019952610600739717</real>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
+	<key>ShowSecureKeyboardEntryIndicator</key>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>TabTransform</key>
