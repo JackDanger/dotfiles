@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 # Usage: some_command | whentho
 
-while IFS= read -r line; do
-    printf '%s %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$line"
+
+timestamp() {
+    date '+%Y-%m-%d %H:%M:%S'
+}
+
+# Read input byte-by-byte to handle arbitrary content
+while IFS= read -r -d '' -n 1 char; do
+    buf+="$char"
+    if [[ "$char" == $'\n' ]]; then
+        printf '%s %s' "$(timestamp)" "$buf"
+        buf=""
+    fi
 done
+
+# Handle the last chunk if input doesn't end with a newline
+if [[ -n "$buf" ]]; then
+    printf '%s %s\n' "$(timestamp)" "$buf"
+fi
