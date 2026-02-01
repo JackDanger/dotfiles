@@ -3,3 +3,5 @@ tags
 node_modules
 .vimrc
 .vscode
+.specstory
+.cursorindexingignore

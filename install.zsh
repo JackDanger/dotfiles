@@ -17,10 +17,12 @@ system_install() {
 }
 
 system_install git
-system_install thesilversearcher
+system_install nvim
+system_install the_silver_searcher
 system_install chruby
 system_install ruby-install
 system_install fzf
+system_install asdf
 
 # Let's track most of our dotfiles in git
 dotfilenames=(
@@ -54,16 +56,6 @@ done
 mkdir -p ~/.ipython/profile_default
 if [[ ! -f ~/.ipython/profile_default/ipython_config.py ]]; then
   ln -s $dotfiles/ipython_config.py     ~/.ipython/profile_default/ipython_config.py
-fi
-
-# Ensure we have the go version manager installed
-if which gvm &>/dev/null; then
-  true
-else
-  echo "Installing gvm (the go version manager)"
-  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-  echo 'source ~/.gvm/scripts/gvm' >> ~/.profile.local
-  system_install golang
 fi
 
 if [[ "Darwin" == "$(uname)" ]]; then

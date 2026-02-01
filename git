@@ -340,8 +340,8 @@ auto-fixup() {
 merge-base() {
   command git merge-base ${1:-$(default-branch)} HEAD
 }
-# stolen from: http://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
-if [[ -z $ZSH ]]; then
+# Bash completion wrappers (skip in zsh)
+if [[ -n "$BASH_VERSION" ]]; then
   function make-completion-wrapper () {
       local function_name="$2"
       local arg_count=$(($#-3))
@@ -357,13 +357,9 @@ if [[ -z $ZSH ]]; then
       eval "$function"
   }
 
-  # we create a _git_checkout_mine function that will do the completion for "gco"
-  # using the completion function "_git"
   make-completion-wrapper _git _git_checkout_mine git checkout
-
-  # we tell bash to actually use _git_checkout_mine to complete "gco"
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine gco
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine gl
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine glp
   complete -o bashdefault -o default -o nospace -F _git_checkout_mine sha
-fi;
+fi

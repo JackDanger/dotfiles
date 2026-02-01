@@ -1,20 +1,15 @@
 #!/bin/bash
 
-function go() {
-  unfunction go
-  &>/dev/null which go && path+=$(go env GOPATH)/bin
-}
+# Go utilities - ASDF handles version management via .tool-versions
+# No wrapper functions needed since ASDF shims handle everything
 
 # `cd` to a specific package
 function gocd {
-  c `golang-package`
-}
-
-# find the directory of the first package name partially matching $1
-function golang-package {
-  if uname | grep Darwin -q; then
-    find $(go env GOPATH)/src -depth 3 -type d | fzf
-  else
-    find $(go env GOPATH)/src -depth -maxdepth 3 -type d | fzf
+  local gopath=$(command go env GOPATH 2>/dev/null)
+  if [[ -z "$gopath" ]]; then
+    echo "Error: GOPATH not set or Go not installed"
+    return 1
   fi
+  local selection=$(find "$gopath/src" -maxdepth 3 -type d 2>/dev/null | fzf)
+  [[ -n "$selection" ]] && cd "$selection"
 }
