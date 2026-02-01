@@ -41,9 +41,9 @@ export FZF_ALT_C_OPTS='--height 40% --reverse'
 # Prompt - simple and fast
 branch_and_dirty() {
   local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return
-  echo -n "%F{cyan}$branch "
+  echo -n "%B%F{yellow}$branch %b"
   if ! git diff --no-ext-diff --quiet HEAD 2>/dev/null; then
-    echo -n "%B%F{green}骯%b"
+    echo -n "%B%F{yellow}骯%b"
   fi
 }
 
