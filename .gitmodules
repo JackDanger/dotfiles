@@ -1,6 +1,3 @@
-[submodule "prezto"]
-	path = prezto
-	url = https://github.com/sorin-ionescu/prezto.git
 [submodule "vim-extensions/available/Align"]
 	path = vim-extensions/available/Align
 	url = https://github.com/vim-scripts/Align.git

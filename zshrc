@@ -1,136 +1,124 @@
-## Path to your oh-my-zsh configuration.
-ZSH=$HOME/.dotfiles/prezto
-ZSH_CUSTOM=$HOME/.dotfiles/zsh
+# Minimal fast zsh config - no prezto, no bloat
+# Target: < 50ms startup time
 
-
-# Homebrew told me so
-HOMEBREW_HELP=/usr/local/share/zsh/help
-if [ -d $HOMEBREW_HELP ]; then
-  unalias run-help
-  autoload run-help
-  HELPDIR=$HOMEBREW_HELP
-fi
-
-# COWBOY TIME
-setopt nocorrectall
-DISABLE_CORRECTION=true
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="jackdanger"
-
-# Example aliases
-alias profile="vim ~/.zshrc && . ~/.zshrc"
-
-# Set to this to use case-sensitive completion
-CASE_SENSITIVE="true"
-
-# Comment this out to disable bi-weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
-
-# We'll be using CTRL-l elsewhere
+# Emacs keybindings (CTRL-A, CTRL-E, etc.)
 bindkey -e
 bindkey "^o" clear-screen
-# # Discovered through:
-# # $ echo "<CTRL>v<FN>Del" | od -c
-# bindkey "^[[3~" delete-char
-# # And get meta-left and meta-right working
-# bindkey '\e\e[C' forward-word
-# bindkey '\e\e[D' backward-word
 
-# I know what I'm doing
+# Shell options
+setopt nocorrectall
 setopt CLOBBER
+setopt AUTO_CD
+setopt EXTENDED_GLOB
+setopt PROMPT_SUBST
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins= #(python bundler)
-
-# auto virtualenv
-#[[ -f $HOME/.dotfiles/virtualenv-auto-activate.sh ]] && source $HOME/.dotfiles/virtualenv-auto-activate.sh
-
-# FZF
-export FZF_TMUX=0;
-export FZF_CTRL_T_OPTS='--height 40% --reverse --preview "highlight -O ansi -l {} 2>/dev/null || cat {}"'
-export FZF_CTRL_R_OPTS='--height 40%';
-export FZF_ALT_C_OPTS='--height 40% --reverse';
-export FZF_COMPLETION_OPTS='--height 40% --reverse';
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source $HOME/.dotfiles/zsh/fzf-key-bindings.zsh
-
-# Prezto ZSH
-fpath=(~/.dotfiles/zsh $fpath)
-source $HOME/.dotfiles/zsh/git-completion.zsh
-source $ZSH/init.zsh
-source $ZSH/runcoms/zshrc
-#zstyle ":prezto:module:prompt" theme "jackdanger"
-autoload -Uz promptinit && promptinit
-prompt jackdanger
-
-SAVEHIST=100000000000
-HISTSIZE=100000000000
+# History
+SAVEHIST=100000000
+HISTSIZE=100000000
 HISTFILE="$HOME/.zsh_history"
 setopt hist_find_no_dups
 setopt hist_ignore_all_dups
-setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
-setopt hist_verify
 setopt inc_append_history_time
-setopt no_hist_allow_clobber
 setopt no_hist_beep
 setopt extendedhistory
+unsetopt SHARE_HISTORY
 
-# I know what I'm doing
-setopt CLOBBER
-
-# I don't know what I'm doing
+# Colors
+autoload -U colors && colors
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
-source ~/.dotfiles/profile
+# FZF - fast and useful
+export FZF_TMUX=0
+export FZF_CTRL_T_OPTS='--height 40% --reverse --preview "cat {} 2>/dev/null | head -100"'
+export FZF_CTRL_R_OPTS='--height 40%'
+export FZF_ALT_C_OPTS='--height 40% --reverse'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.dotfiles/zsh/fzf-key-bindings.zsh ] && source ~/.dotfiles/zsh/fzf-key-bindings.zsh
 
+# Prompt - simple and fast
 branch_and_dirty() {
-  if [ -d .git ] || [ -d ../.git ] || [ -d ../../.git ]; then
-    git rev-parse --abbrev-ref HEAD | tr "\n" " "
-    if [[ -n $(git diff-index --cached HEAD --) ]] ||
-       [[ -n $(git ls-files --exclude-standard -o -m -d) ]]; then
-      echo -n "骯"
-    fi
+  local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return
+  echo -n "%F{cyan}$branch "
+  if ! git diff --no-ext-diff --quiet HEAD 2>/dev/null; then
+    echo -n "%B%F{green}骯%b"
   fi
 }
 
-# Print a new line before each prompt (except for the first prompt of a session)
-# precmd() {
-#   precmd() {
-#     print ""
-#   }
-# }
-if [[ -z "${PS1Color}" ]]; then
-  PS1Color='green'
-  PS1DollarColor='red'
-fi
-PS1='%f%b%{$fg['${PS1Color}']%}$(pwd | xargs -I {} basename "{}")%f%b %{$fg_bold[green]%}$(branch_and_dirty)%f%b%{$fg[${PS1DollarColor}]%}$ %f%b'
+PS1='%F{green}%1~%f $(branch_and_dirty)%f%F{red}$%f '
 
+# Source your actual config
+source ~/.dotfiles/profile
 
-function gvm() {
-  unfunction gvm
-  [[ -s "/Users/jack.danger/.gvm/scripts/gvm" ]] && source "/Users/jack.danger/.gvm/scripts/gvm"
+# ASDF - just add shims to PATH (fast)
+export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
+export PATH="${ASDF_DATA_DIR}/shims:$PATH"
+
+# Lazy-load completion system on first Tab press
+# This is the key optimization - compinit takes 300ms+, defer it
+_load_completion() {
+  unset -f _load_completion
+  autoload -Uz compinit
+  # Use cached completion dump, regenerate daily
+  local zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
+  if [[ -f "$zcompdump" && $(date +'%j') == $(stat -f '%Sm' -t '%j' "$zcompdump" 2>/dev/null) ]]; then
+    compinit -C -d "$zcompdump"
+  else
+    mkdir -p "${zcompdump:h}"
+    compinit -d "$zcompdump"
+  fi
+  # Basic completion settings
+  zstyle ':completion:*' menu select
+  zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 }
 
-# Added by Windsurf
-export PATH="/Users/jack.danger/.codeium/windsurf/bin:$PATH"
+# Bind Tab to load completion on first use, then do normal completion
+_first_tab() {
+  _load_completion
+  zle expand-or-complete
+}
+zle -N _first_tab
+bindkey '^I' _first_tab
+
+# After first tab, rebind to normal completion
+_load_completion_and_rebind() {
+  _load_completion
+  bindkey '^I' expand-or-complete
+  zle expand-or-complete
+}
+zle -N _load_completion_and_rebind
+bindkey '^I' _load_completion_and_rebind
+
+# GITHUB_TOKEN cache (background refresh)
+_gh_token_cache="$HOME/.cache/gh_token"
+if [[ -f "$_gh_token_cache" ]] && [[ $(find "$_gh_token_cache" -mmin -60 2>/dev/null) ]]; then
+  export GITHUB_TOKEN="$(cat "$_gh_token_cache" 2>/dev/null)"
+else
+  {
+    mkdir -p "$HOME/.cache" 2>/dev/null
+    local token="$(gh auth token 2>/dev/null)"
+    [[ -n "$token" ]] && echo "$token" > "$_gh_token_cache"
+    export GITHUB_TOKEN="$token"
+  } &!
+fi
+unset _gh_token_cache
+
+# LaunchDarkly RC - lazy load on first prompt if present
+if [[ -f ~/.launchdarklyrc ]]; then
+  export GOENV_ROOT="$HOME/.goenv"
+  export PATH="$GOENV_ROOT/bin:$PATH:$HOME/.local/bin:$HOME/code/launchdarkly/dev/bin"
+  export AWS_SDK_LOAD_CONFIG=true
+  export TENV_AUTO_INSTALL="true"
+  [[ -n "$GITHUB_TOKEN" ]] && export HOMEBREW_GITHUB_API_TOKEN="$GITHUB_TOKEN"
+
+  _load_launchdarkly_rc() {
+    precmd_functions=(${precmd_functions[@]:#_load_launchdarkly_rc})
+    eval "$(goenv init -)" 2>/dev/null
+    go env -w "GOPRIVATE=github.com/launchdarkly" 2>/dev/null || true
+    alias awslogin_launchdarkly="awslogin launchdarkly-default"
+    alias awslogin_federal="awslogin federal-default"
+  }
+  precmd_functions=(_load_launchdarkly_rc $precmd_functions)
+fi

@@ -63,3 +63,16 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 . "$HOME/.cargo/env"
+export GITHUB_TOKEN="$(gh auth token 2>/dev/null)"
+
+# Lazy-load LaunchDarkly RC (same as zshrc) for faster startup
+if [[ -f ~/.launchdarklyrc ]]; then
+  export GOENV_ROOT="$HOME/.goenv"
+  export PATH="$GOENV_ROOT/bin:$PATH:$HOME/.local/bin:$HOME/code/launchdarkly/dev/bin"
+  export AWS_SDK_LOAD_CONFIG=true
+  export TENV_AUTO_INSTALL="true"
+  [[ -n "$GITHUB_TOKEN" ]] && export HOMEBREW_GITHUB_API_TOKEN="$GITHUB_TOKEN"
+
+  # Note: goenv init and other expensive operations deferred for bash
+  # They'll run when you first use go-related commands
+fi

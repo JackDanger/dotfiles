@@ -1,32 +1,25 @@
-# get the name of the branch we are on
+# get the name of the branch we are on (optimized)
 function git_prompt_info() {
-  if [[ -z "$(pwd | egrep '(sq|Development)/java')" ]]; then
-    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
-    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
-    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
-  fi
+  # Skip for specific slow directories
+  [[ -n "$(pwd | egrep '(sq|Development)/java')" ]] && return
+
+  # Try to get branch name - faster than symbolic-ref + fallback
+  local ref=$(command git rev-parse --abbrev-ref HEAD 2>/dev/null) || return 0
+  echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
 
-# Checks if working tree is dirty
+# Checks if working tree is dirty (optimized for maximum speed)
 parse_git_dirty() {
-  local SUBMODULE_SYNTAX=''
-  local GIT_STATUS=''
-  local CLEAN_MESSAGE='nothing to commit (working directory clean)'
-  if [[ "$(command git config --get oh-my-zsh.hide-status)" != "1" ]]; then
-    if [[ $POST_1_7_2_GIT -gt 0 ]]; then
-          SUBMODULE_SYNTAX="--ignore-submodules=dirty"
-    fi
-    if [[ "$DISABLE_UNTRACKED_FILES_DIRTY" == "true" ]]; then
-        GIT_STATUS=$(command git status -s ${SUBMODULE_SYNTAX} -uno 2> /dev/null | tail -n1)
-    else
-        GIT_STATUS=$(command git status -s ${SUBMODULE_SYNTAX} 2> /dev/null | tail -n1)
-    fi
-    if [[ -n $GIT_STATUS ]]; then
-      echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
-    else
-      echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
-    fi
+  if [[ "$(command git config --get oh-my-zsh.hide-status)" == "1" ]]; then
+    echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
+    return
+  fi
+
+  # Fastest check: compare working tree to HEAD in a single command
+  # This checks both staged and unstaged changes, ignores untracked files
+  if ! command git diff --no-ext-diff --quiet HEAD 2>/dev/null; then
+    echo "$ZSH_THEME_GIT_PROMPT_DIRTY"
   else
     echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
   fi
