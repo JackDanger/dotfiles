@@ -35,7 +35,10 @@ return {
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = false }), -- Only confirm explicit selection
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            local copilot_ok, copilot = pcall(require, "copilot.suggestion")
+            if copilot_ok and copilot.is_visible() then
+              copilot.accept()
+            elseif cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
@@ -112,12 +115,12 @@ return {
         auto_trigger = true,
         debounce = 75,
         keymap = {
-          accept = "<M-l>", -- Alt+l to accept
+          accept = false, -- Handled by Tab in cmp mapping
           accept_word = "<M-w>", -- Alt+w to accept word
           accept_line = "<M-e>", -- Alt+e to accept line
           next = "<M-]>", -- Alt+] for next suggestion
           prev = "<M-[>", -- Alt+[ for previous
-          dismiss = "<C-]>", -- Ctrl+] to dismiss
+          dismiss = "<M-x>", -- Alt+x to dismiss (C-] conflicts with LSP goto def)
         },
       },
       panel = {

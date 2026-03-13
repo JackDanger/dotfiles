@@ -27,8 +27,8 @@ export FZF_DEFAULT_OPTS='--reverse --inline-info'
 export FZF_DEFAULT_COMMAND="ag -l" # Supports ignoring files via .agignore
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 
-# Neovim doesn't look for the normal vim init file
-export VIMINIT="source ~/.vimrc"
+# Neovim now uses ~/.config/nvim/init.lua by default
+# (VIMINIT removed - was forcing old vimrc)
 
 if [[ -z `which seq` ]]; then
   seq() { for ((i=$1; i<= $2; i++)); do echo $i; done }

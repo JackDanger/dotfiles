@@ -10,15 +10,45 @@ return {
     end,
   },
 
-  -- Treesitter: parser installation (highlighting is built into Neovim 0.10+)
+  -- Treesitter: syntax highlighting and parser installation
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     lazy = false,
-    config = function()
-      -- Treesitter highlighting is enabled by default in Neovim 0.10+
-      -- This plugin just handles parser installation
-
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "css",
+        "diff",
+        "go",
+        "gomod",
+        "gosum",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "luadoc",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "ruby",
+        "rust",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+      },
+      auto_install = true,
+      highlight = { enable = true },
+      indent = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.config").setup(opts)
       -- Folding via treesitter
       vim.opt.foldmethod = "expr"
       vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"

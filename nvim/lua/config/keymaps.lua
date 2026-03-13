@@ -44,9 +44,16 @@ map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
+-- Surround shortcuts (uses nvim-surround)
+-- <leader>s then a char to surround word, e.g. <leader>s" wraps word in quotes
+map("n", "<leader>s", "ysiw", { remap = true, desc = "Surround word" })
+map("n", "<leader>S", "ysiW", { remap = true, desc = "Surround WORD" })
+
 -- Quickfix navigation (your @n/@p mappings)
 map("n", "@n", "<cmd>cnext<CR>", { desc = "Next quickfix" })
 map("n", "@p", "<cmd>cprevious<CR>", { desc = "Previous quickfix" })
+map("i", "@n", "<ESC><cmd>w<CR><cmd>cnext<CR>", { desc = "Save and next quickfix" })
+map("i", "@p", "<ESC><cmd>w<CR><cmd>cprevious<CR>", { desc = "Save and prev quickfix" })
 map("n", "<leader>q", "<cmd>copen<CR>", { desc = "Open quickfix" })
 map("n", "<leader>Q", "<cmd>cclose<CR>", { desc = "Close quickfix" })
 

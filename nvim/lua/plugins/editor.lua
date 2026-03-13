@@ -30,7 +30,7 @@ return {
   -- Fuzzy finder (replaces FZF)
   {
     "nvim-telescope/telescope.nvim",
-    branch = "master",
+    branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },

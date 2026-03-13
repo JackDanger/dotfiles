@@ -56,7 +56,7 @@ opt.updatetime = 200
 opt.timeoutlen = 800
 opt.ttimeoutlen = 0
 opt.redrawtime = 1500
-opt.lazyredraw = true
+-- Note: lazyredraw is incompatible with modern async plugins (telescope, cmp, etc.)
 
 -- Completion
 opt.pumheight = 10
