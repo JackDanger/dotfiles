@@ -134,6 +134,20 @@ return {
     },
   },
 
+  -- Text alignment (replaces old Align plugin)
+  {
+    "echasnovski/mini.align",
+    keys = {
+      { "<leader>l", mode = { "n", "v" }, desc = "Align" },
+    },
+    opts = {
+      mappings = {
+        start = "<leader>l",
+        start_with_preview = "<leader>L",
+      },
+    },
+  },
+
   -- Comment toggling
   {
     "numToStr/Comment.nvim",

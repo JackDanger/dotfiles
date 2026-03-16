@@ -2,9 +2,6 @@ set nocompatible
 set encoding=utf-8
 
 
-" Load all active extensions
-set rtp+=~/.dotfiles/vim-extensions/use/*
-
 " Some local filetype-specific config
 set rtp+=~/.dotfiles/vim
 
@@ -64,7 +61,6 @@ nmap <leader>a :Ag
 "nnoremap <F2> :set invpaste paste?<CR>
 "set pastetoggle=<F2>
 
-map <leader>l :Align
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader>h :nohl<CR>
 
