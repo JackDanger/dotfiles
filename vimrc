@@ -5,6 +5,11 @@ set encoding=utf-8
 " Some local filetype-specific config
 set rtp+=~/.dotfiles/vim
 
+" Add homebrew FZF plugin
+if isdirectory('/opt/homebrew/opt/fzf')
+  set rtp+=/opt/homebrew/opt/fzf
+endif
+
 " Make backspace behave in a sane manner.
 set backspace=indent,eol,start
 
@@ -43,8 +48,12 @@ command Q q
 nmap EE :e!<CR>
 nmap QQ :q!<CR>
 
-" There's one good color scheme
-colorscheme dichromatic
+" There's one good color scheme (set by nvim lua config on startup)
+try
+  colorscheme dichromatic
+catch /^Vim\%((\a\+)\)\=:E185/
+  " If dichromatic is not available yet (lazy loading), nvim's lua config will set it
+endtry
 
 " From http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
 " By pressing ctrl + r in the visual mode you will be prompted to enter text to replace with. Press enter and then confirm each change you agree with 'y' or decline with 'n'.
