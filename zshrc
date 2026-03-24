@@ -105,21 +105,3 @@ else
   } &!
 fi
 unset _gh_token_cache
-
-# LaunchDarkly RC - lazy load on first prompt if present
-if [[ -f ~/.launchdarklyrc ]]; then
-  export GOENV_ROOT="$HOME/.goenv"
-  export PATH="$GOENV_ROOT/bin:$PATH:$HOME/.local/bin:$HOME/code/launchdarkly/dev/bin"
-  export AWS_SDK_LOAD_CONFIG=true
-  export TENV_AUTO_INSTALL="true"
-  [[ -n "$GITHUB_TOKEN" ]] && export HOMEBREW_GITHUB_API_TOKEN="$GITHUB_TOKEN"
-
-  _load_launchdarkly_rc() {
-    precmd_functions=(${precmd_functions[@]:#_load_launchdarkly_rc})
-    eval "$(goenv init -)" 2>/dev/null
-    go env -w "GOPRIVATE=github.com/launchdarkly" 2>/dev/null || true
-    alias awslogin_launchdarkly="awslogin launchdarkly-default"
-    alias awslogin_federal="awslogin federal-default"
-  }
-  precmd_functions=(_load_launchdarkly_rc $precmd_functions)
-fi
