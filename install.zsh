@@ -19,27 +19,20 @@ system_install() {
 system_install git
 system_install nvim
 system_install the_silver_searcher
-system_install chruby
-system_install ruby-install
 system_install fzf
 system_install asdf
 
 # Let's track most of our dotfiles in git
 dotfilenames=(
 bashrc
-gemrc
 gitconfig
 gitignore
 jq
-pystartup
-pryrc
-pypirc
 sshrc
 tmux.conf
 vimrc
 vimrc
 zshrc
-prezto
 )
 for filename in $dotfilenames; do
   symlink=~/.${filename}

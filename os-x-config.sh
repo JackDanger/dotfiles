@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 # Forked from:
 # https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
