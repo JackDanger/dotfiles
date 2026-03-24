@@ -21,6 +21,7 @@ system_install nvim
 system_install the_silver_searcher
 system_install fzf
 system_install asdf
+system_install uv
 
 # Let's track most of our dotfiles in git
 dotfilenames=(
