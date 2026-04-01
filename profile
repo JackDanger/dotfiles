@@ -36,16 +36,6 @@ if [[ -n `which unsetopt` ]]; then
   unsetopt nomatch 2>/dev/null
 fi
 
-# chruby
-function chruby() {
-  unfunction chruby
-  [[ -f /usr/local/share/chruby/chruby.sh ]] && source /usr/local/share/chruby/chruby.sh
-  [[ -f /usr/local/share/chruby/auto.sh ]] && source /usr/local/share/chruby/auto.sh
-}
-
-# Vi!?
-#set -o vi
-
 # Don't you dare decide this for me
 export HOMEBREW_NO_AUTO_UPDATE=1
 
