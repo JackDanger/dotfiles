@@ -46,6 +46,15 @@ for filename in $dotfilenames; do
   fi
 done
 
+# Neovim config
+mkdir -p ~/.config
+if [[ ! -e ~/.config/nvim ]]; then
+  echo " + creating ~/.config/nvim -> $dotfiles/nvim"
+  ln -s $dotfiles/nvim ~/.config/nvim
+else
+  echo " - ~/.config/nvim already exists"
+fi
+
 # Special ipython config location
 mkdir -p ~/.ipython/profile_default
 if [[ ! -f ~/.ipython/profile_default/ipython_config.py ]]; then

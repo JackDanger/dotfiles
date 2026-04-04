@@ -8,7 +8,6 @@ opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 0
 opt.confirm = true -- Confirm before closing unsaved buffer
 opt.cursorline = true
-opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
 
 -- UI

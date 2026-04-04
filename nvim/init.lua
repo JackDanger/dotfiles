@@ -1,6 +1,10 @@
 -- Modern Neovim Configuration
 -- No Python dependencies, pure Lua
 
+-- Disable netrw (using neo-tree instead)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Set leader keys BEFORE loading lazy.nvim
 vim.g.mapleader = "\\"
 vim.g.maplocalleader = "\\"

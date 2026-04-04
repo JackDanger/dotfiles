@@ -10,6 +10,18 @@ return {
       "MunifTanjim/nui.nvim",
     },
     cmd = "Neotree",
+    lazy = false,
+    init = function()
+      vim.api.nvim_create_autocmd("BufEnter", {
+        once = true,
+        callback = function()
+          local stats = vim.uv.fs_stat(vim.api.nvim_buf_get_name(0))
+          if stats and stats.type == "directory" then
+            require("neo-tree.command").execute({ action = "focus", source = "filesystem", position = "left" })
+          end
+        end,
+      })
+    end,
     keys = {
       { "<leader>n", "<cmd>Neotree toggle<CR>", desc = "Toggle file tree" },
       { "<leader>N", "<cmd>Neotree reveal<CR>", desc = "Reveal current file" },
