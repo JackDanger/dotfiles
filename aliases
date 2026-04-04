@@ -14,7 +14,6 @@ function QQ() { exit; }
 _has_fzf='unset'
 
 function smartvim() {
-	set -x
   if [[ "${_has_fzf}" == "unset" ]]; then
     if [[ -n "$(which fzf)" ]]; then
       _has_fzf=true

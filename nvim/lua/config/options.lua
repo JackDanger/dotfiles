@@ -46,6 +46,7 @@ opt.autoread = true
 opt.autowrite = true
 opt.backup = false
 opt.swapfile = false
+opt.directory = vim.fn.stdpath("data") .. "/swap//"
 opt.writebackup = false
 opt.undofile = true
 opt.undolevels = 10000
