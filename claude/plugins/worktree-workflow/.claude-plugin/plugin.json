@@ -1,7 +1,7 @@
 {
   "name": "worktree-workflow",
-  "description": "Enforces worktree + branch + PR pattern for all development. /branch creates an isolated git worktree, does all work there, and opens a PR.",
-  "version": "1.0.0",
+  "description": "Enforces worktree + branch + PR pattern for all development. /b creates isolated git worktrees, spawns parallel agents for multi-task work, and opens PRs with correct base branches.",
+  "version": "2.0.0",
   "author": {
     "name": "Jack Danger",
     "email": "anthropic@jackdanger.com"
