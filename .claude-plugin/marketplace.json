@@ -1,0 +1,26 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "jackdanger-dotfiles",
+  "description": "Personal Claude Code plugins from Jack Danger's dotfiles",
+  "owner": {
+    "name": "Jack Danger",
+    "email": "anthropic@jackdanger.com"
+  },
+  "plugins": [
+    {
+      "name": "worktree-workflow",
+      "description": "Enforces worktree + branch + PR pattern for all development. /branch creates an isolated git worktree, does all work there, and opens a PR.",
+      "author": {
+        "name": "Jack Danger"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/JackDanger/dotfiles.git",
+        "path": "claude/plugins/worktree-workflow",
+        "ref": "main",
+        "sha": "305f27da262891330e1a28ce55ccd0c4067f5a8a"
+      }
+    }
+  ]
+}
