@@ -4,7 +4,7 @@ A Claude Code plugin that enforces the worktree + branch + PR pattern for all de
 
 ## What it does
 
-Adds a `/branch` command. Invoke it at the start of any task and Claude will:
+Adds a `/b` command. Invoke it at the start of any task and Claude will:
 
 1. Create a `git worktree` + feature branch
 2. Do all file editing inside that worktree
@@ -14,17 +14,17 @@ Adds a `/branch` command. Invoke it at the start of any task and Claude will:
 ## Usage
 
 ```
-/branch fix the audio-selection bug in gpu.rs
+/b fix the audio-selection bug in gpu.rs
 ```
 
 ```
-/branch add Intel QSV fallback
+/b add Intel QSV fallback
 ```
 
 Or without arguments — Claude derives the slug from your last message:
 
 ```
-/branch
+/b
 ```
 
 ## Installation

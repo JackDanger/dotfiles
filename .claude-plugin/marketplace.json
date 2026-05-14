@@ -14,13 +14,7 @@
         "name": "Jack Danger"
       },
       "category": "productivity",
-      "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/JackDanger/dotfiles.git",
-        "path": "claude/plugins/worktree-workflow",
-        "ref": "main",
-        "sha": "305f27da262891330e1a28ce55ccd0c4067f5a8a"
-      }
+      "source": "./claude/plugins/worktree-workflow"
     }
   ]
 }
