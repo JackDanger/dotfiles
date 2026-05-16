@@ -24,7 +24,16 @@ alias applying='git show $(cat .git/rebase-merge/stopped-sha) --color-moved'
 alias gco='git checkout'
 alias grm='git rm'
 alias gmv='git mv'
-alias m='git checkout $(default-branch)'
+unalias m 2>/dev/null; function m {
+  local default=$(default-branch)
+  local target=$(git worktree list | awk -v branch="[$default]" '$3 == branch {print $1}')
+  local current_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [[ -n "$target" && "$current_root" != "$target" ]]; then
+    cd "$target"
+  elif [[ -z "$target" ]]; then
+    git checkout "$default"
+  fi
+}
 alias clean='git clean -df'
 alias copyhead='git rev-parse HEAD | pbcopy'
 alias stash='git stash'
@@ -71,6 +80,14 @@ function gb() {
   )
   if [[ "${current}" != "${selected}" ]]; then
     git checkout $selected
+  fi
+}
+
+wt() {
+  local selected
+  selected=$(git worktree list | fzf | awk '{print $1}')
+  if [[ -n "$selected" ]]; then
+    cd "$selected"
   fi
 }
 

@@ -8,13 +8,13 @@
   },
   "plugins": [
     {
-      "name": "worktree-workflow",
-      "description": "Enforces worktree + branch + PR pattern for all development. /b creates isolated git worktrees, spawns parallel agents for multi-task work, and opens PRs with correct base branches.",
+      "name": "b",
+      "description": "Enforces worktree + branch + PR pattern for all development. /b:b creates isolated git worktrees, spawns parallel agents for multi-task work, and opens PRs with correct base branches.",
       "author": {
         "name": "Jack Danger"
       },
       "category": "productivity",
-      "source": "./claude/plugins/worktree-workflow"
+      "source": "./claude/plugins/b"
     }
   ]
 }
