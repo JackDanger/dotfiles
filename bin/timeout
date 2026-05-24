@@ -20,6 +20,6 @@ function watch_and_kill() {
 
 seconds=$1
 shift
-watch_and_kill $seconds $$ &
+watch_and_kill $seconds $$ </dev/null >/dev/null 2>&1 &
 exec "$@"
 
