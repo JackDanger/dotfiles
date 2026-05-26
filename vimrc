@@ -232,6 +232,11 @@ set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
 set statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
+" Fix wildmenu/completion popup colors (dichromatic leaves these unreadable)
+highlight WildMenu ctermfg=white ctermbg=darkblue guifg=white guibg=#005f87
+highlight Pmenu ctermfg=white ctermbg=darkblue guifg=white guibg=#005f87
+highlight PmenuSel ctermfg=black ctermbg=cyan guifg=black guibg=#00afff
+
 " Use any per-project .vimrc files
 set exrc
 
