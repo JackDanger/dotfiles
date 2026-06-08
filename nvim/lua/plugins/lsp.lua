@@ -66,10 +66,10 @@ return {
           map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
           map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
 
-          -- Documentation
+          -- Documentation (signature help on <C-s> to leave <C-k> for tmux nav)
           map("n", "K", vim.lsp.buf.hover, "Hover documentation")
-          map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
-          map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
+          map("n", "<leader>k", vim.lsp.buf.signature_help, "Signature help")
+          map("i", "<C-s>", vim.lsp.buf.signature_help, "Signature help")
 
           -- Actions
           map("n", "<leader>la", vim.lsp.buf.code_action, "Code action")

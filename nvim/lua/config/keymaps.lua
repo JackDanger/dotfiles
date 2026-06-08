@@ -57,6 +57,12 @@ map("i", "@p", "<ESC><cmd>w<CR><cmd>cprevious<CR>", { desc = "Save and prev quic
 map("n", "<leader>q", "<cmd>copen<CR>", { desc = "Open quickfix" })
 map("n", "<leader>Q", "<cmd>cclose<CR>", { desc = "Close quickfix" })
 
+-- Buffer navigation
+map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+map("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
+map("n", "<leader>`", "<cmd>buffer #<CR>", { desc = "Last buffer" })
+
 -- Scroll keeping cursor centered
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down centered" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up centered" })

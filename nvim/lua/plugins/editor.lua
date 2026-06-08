@@ -55,6 +55,9 @@ return {
       { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help tags" },
       { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent files" },
       { "<leader>fc", "<cmd>Telescope commands<CR>", desc = "Commands" },
+      { "<leader>fk", "<cmd>Telescope keymaps<CR>", desc = "Keymaps" },
+      { "<leader>fR", "<cmd>Telescope resume<CR>", desc = "Resume last picker" },
+      { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<CR>", desc = "Search in buffer" },
       { "<leader>fs", "<cmd>Telescope lsp_document_symbols<CR>", desc = "Document symbols" },
       { "<leader>fS", "<cmd>Telescope lsp_workspace_symbols<CR>", desc = "Workspace symbols" },
       { "<leader>fd", "<cmd>Telescope diagnostics<CR>", desc = "Diagnostics" },
@@ -145,6 +148,19 @@ return {
         map("n", "[c", gs.prev_hunk, "Previous hunk")
         map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
         map("n", "<leader>gr", gs.reset_hunk, "Reset hunk")
+        map("v", "<leader>gr", function()
+          gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, "Reset hunk (selection)")
+        map("n", "<leader>gh", gs.stage_hunk, "Stage hunk")
+        map("v", "<leader>gh", function()
+          gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, "Stage hunk (selection)")
+        map("n", "<leader>gu", gs.undo_stage_hunk, "Undo stage hunk")
+        map("n", "<leader>gR", gs.reset_buffer, "Reset buffer")
+        map("n", "<leader>gB", function()
+          gs.blame_line({ full = true })
+        end, "Blame line (full)")
+        map("n", "<leader>gt", gs.toggle_current_line_blame, "Toggle inline blame")
       end,
     },
   },
@@ -153,12 +169,13 @@ return {
   {
     "echasnovski/mini.align",
     keys = {
-      { "<leader>l", mode = { "n", "v" }, desc = "Align" },
+      { "ga", mode = { "n", "v" }, desc = "Align" },
+      { "gA", mode = { "n", "v" }, desc = "Align with preview" },
     },
     opts = {
       mappings = {
-        start = "<leader>l",
-        start_with_preview = "<leader>L",
+        start = "ga",
+        start_with_preview = "gA",
       },
     },
   },
@@ -199,6 +216,7 @@ return {
         { "<leader>g", group = "git" },
         { "<leader>l", group = "lsp" },
         { "<leader>c", group = "code" },
+        { "<leader>b", group = "buffer" },
       })
     end,
   },
