@@ -6,7 +6,24 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
+      -- dichromatic leaves popup-menu groups unreadable (black on black).
+      -- Reapply on every colorscheme load so completion/wildmenu stay legible.
+      local function fix_menu_colors()
+        local set = vim.api.nvim_set_hl
+        set(0, "Pmenu", { fg = "#ffffff", bg = "#005f87" })
+        set(0, "PmenuSel", { fg = "#000000", bg = "#00afff" })
+        set(0, "PmenuSbar", { bg = "#003f57" })
+        set(0, "PmenuThumb", { bg = "#00afff" })
+        set(0, "WildMenu", { fg = "#000000", bg = "#00afff" })
+        -- nvim-cmp uses Pmenu but kind/abbr need explicit fg to be visible
+        set(0, "CmpItemAbbr", { fg = "#ffffff" })
+        set(0, "CmpItemAbbrMatch", { fg = "#00ffff", bold = true })
+        set(0, "CmpItemMenu", { fg = "#9e9e9e" })
+        set(0, "CmpItemKind", { fg = "#d7afff" })
+      end
+      vim.api.nvim_create_autocmd("ColorScheme", { callback = fix_menu_colors })
       vim.cmd.colorscheme("dichromatic")
+      fix_menu_colors()
     end,
   },
 

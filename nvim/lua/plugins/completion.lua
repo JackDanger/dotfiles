@@ -84,9 +84,10 @@ return {
         },
       })
 
-      -- Cmdline completion
+      -- Cmdline completion (abbr only: no "Variable" kind label clutter)
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
+        formatting = { fields = { "abbr" } },
         sources = cmp.config.sources({
           { name = "path" },
         }, {
@@ -97,6 +98,7 @@ return {
       -- Search completion
       cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
+        formatting = { fields = { "abbr" } },
         sources = {
           { name = "buffer" },
         },
