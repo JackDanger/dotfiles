@@ -20,6 +20,7 @@ system_install git
 system_install nvim
 system_install the_silver_searcher
 system_install fzf
+system_install fd
 system_install asdf
 system_install uv
 

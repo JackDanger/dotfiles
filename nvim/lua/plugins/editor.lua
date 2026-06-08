@@ -70,13 +70,17 @@ return {
     },
     opts = {
       defaults = {
-        file_ignore_patterns = { "node_modules", ".git/", "%.pyc" },
+        file_ignore_patterns = { "node_modules", ".git/", "%.pyc", ".claude/worktrees" },
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",
+        preview = { treesitter = false }, -- avoid ft_to_lang API breakage
       },
       pickers = {
-        find_files = { hidden = true },
+        find_files = {
+          hidden = false,
+          find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+        },
       },
     },
     config = function(_, opts)

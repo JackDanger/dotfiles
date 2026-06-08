@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugins from lua/plugins/*.lua
 require("lazy").setup("plugins", {
   defaults = { lazy = true },
-  install = { colorscheme = { "dichromatic" } },
+  install = { colorscheme = { "dichromatic" }, max_concurrency = 4 },
   checker = { enabled = false }, -- Don't auto-check for updates
   change_detection = { notify = false },
   performance = {

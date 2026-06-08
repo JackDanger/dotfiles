@@ -105,3 +105,4 @@ else
   } &!
 fi
 unset _gh_token_cache
+export PATH="$HOME/go/bin:$PATH"
