@@ -76,3 +76,7 @@ if [[ -f ~/.launchdarklyrc ]]; then
   # Note: goenv init and other expensive operations deferred for bash
   # They'll run when you first use go-related commands
 fi
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/jackdanger/.local/bin:$PATH"
