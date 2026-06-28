@@ -40,7 +40,8 @@
 
 [push]
   config = default
-  default = tracking
+	default = current
+	autoSetupRemote = true
 [rebase]
   autosquash = true
 [rerere]
