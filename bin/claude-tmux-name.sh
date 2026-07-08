@@ -21,8 +21,24 @@ set -euo pipefail
 mode="${1:-}"
 [ -z "${TMUX_PANE:-}" ] && exit 0   # not in tmux; nothing to do
 
+# If the user manually renames the window (tmux prefix+, or `rename-window`),
+# the new name stops matching @claude_last_name. Detect that and go quiet for
+# the rest of the session instead of stomping their name back on the next turn.
+user_overrode() {
+  local last current
+  last="$(tmux show-window-options -v -t "$TMUX_PANE" @claude_last_name 2>/dev/null || true)"
+  [ -z "$last" ] && return 1   # nothing set yet; we haven't renamed anything
+  current="$(tmux display-message -p -t "$TMUX_PANE" '#{window_name}' 2>/dev/null || true)"
+  [ "$current" != "$last" ]
+}
+
 set_name() {  # $1 = desired window name (already trimmed); skip if empty
-  [ -n "${1:-}" ] && tmux rename-window -t "$TMUX_PANE" "$1" 2>/dev/null || true
+  [ -z "${1:-}" ] && return 0
+  if user_overrode; then
+    return 0
+  fi
+  tmux rename-window -t "$TMUX_PANE" "$1" 2>/dev/null || true
+  tmux set-window-option -t "$TMUX_PANE" @claude_last_name "$1" 2>/dev/null || true
 }
 
 case "$mode" in
@@ -31,6 +47,7 @@ case "$mode" in
     # the name we set. rename-window also does this implicitly, but a resumed
     # session may not hit the prompt hook before the format reasserts.
     tmux set-window-option -t "$TMUX_PANE" automatic-rename off 2>/dev/null || true
+    tmux set-window-option -t "$TMUX_PANE" -u @claude_last_name 2>/dev/null || true
     ;;
 
   prompt)
@@ -53,6 +70,7 @@ case "$mode" in
   end)
     # Restore the default cwd-basename auto-rename behavior.
     tmux set-window-option -t "$TMUX_PANE" automatic-rename on 2>/dev/null || true
+    tmux set-window-option -t "$TMUX_PANE" -u @claude_last_name 2>/dev/null || true
     ;;
 esac
 

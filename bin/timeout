@@ -42,10 +42,8 @@ shift
 set -m
 "$@" &
 cmd_pid=$!
-disown "$cmd_pid" 2>/dev/null || true
 watch_and_kill "$seconds" "$cmd_pid" "$fired_marker" </dev/null >/dev/null 2>&1 &
 watcher_pid=$!
-disown "$watcher_pid" 2>/dev/null || true
 set +e
 wait "$cmd_pid"
 status=$?
